@@ -1,11 +1,11 @@
 repos:
--   repo: https://github.com/phantomcyber/dev-cicd-tools
-    rev: v1.13
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
     hooks:
-    -   id: org-hook
-    -   id: package-app-dependencies
--   repo: https://github.com/Yelp/detect-secrets
-    rev: v1.2.0
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+-   repo: https://github.com/psf/black
+    rev: 22.10.0
     hooks:
-    -   id: detect-secrets
-        args: ['--no-verify']
+    -   id: black
