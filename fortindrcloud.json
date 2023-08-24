@@ -299,16 +299,6 @@
                     "description": "Filter devices that have been noted to only have a certain directionality of traffic (\"external\" vs \"internal\").",
                     "data_type": "string",
                     "value_list": ["internal","external"]
-                },
-                "sort_by": {
-                    "description": "Sort output by: \"ip_address\", \"internal\", \"external\".",
-                    "data_type": "string",
-                    "value_list": ["ip_address", "internal","external"]
-                },
-                "sort_direction": {
-                    "description": "Sort direction (\"asc\" vs \"desc\").",
-                    "data_type": "string",
-                    "value_list": ["asc", "desc"]
                 }
             },
             "output": [
@@ -584,7 +574,7 @@
         },
         {
             "action": "fortindr create task",
-            "identifier": "fnc_crate_task",
+            "identifier": "fnc_create_task",
             "description": "Create a new PCAP task.",
             "verbose": "",
             "type": "investigate",
@@ -628,8 +618,7 @@
                 },
                 "sensor_ids": {
                     "data_type": "string",
-                    "description": " Sensor IDs on which this task will run (separate multiple accounts by comma).",
-                    "required": true,
+                    "description": " List of sensor IDs, separated by ',', on which this task will run (separate multiple accounts by comma).",
                     "allow_list": true
                 }
             },
@@ -654,8 +643,169 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data",
-                    "data_type": "string"
+                    "data_path": "action_result.data.*.task.task_uuid",
+                    "data_type": "string",
+                    "example_values": [
+                        "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
+                    ],
+                    "column_name": "Task UUID",
+                    "description": "Unique ID of the task."
+                },
+                {
+                    "data_path": "action_result.data.*.task.description",
+                    "data_type": "string",
+                    "column_name": "Description",
+                    "description": "Description of the task."
+                },
+                {
+                    "data_path": "action_result.data.*.task.name",
+                    "data_type": "string",
+                    "example_values": [
+                       "Meh-Ike phone 10001"
+                    ],
+                    "column_name": "Name",
+                    "description": "Name of the task."
+                },
+                {
+                    "data_path": "action_result.data.*.task.sensor_ids",
+                    "data_type": "string",
+                    "example_values": [
+                       "[\"sen1\"]"
+                    ],
+                    "column_name": "Sensor IDs",
+                    "description": "Sensors this task is running on."
+                },
+                {
+                    "data_path": "action_result.data.*.task.account_code",
+                    "data_type": "string",
+                    "example_values": [
+                        "gig"
+                    ],
+                    "column_name": "Account Code",
+                    "description": "ID code of the customer account."
+                },
+                {
+                    "data_path": "action_result.data.*.task.bpf",
+                    "data_type": "string",
+                    "example_values": [
+                        "src host x.x.x.x and dst port 10001"
+                    ],
+                    "column_name": "BPF",
+                    "description": "Berkeley Packet Filter for the task."
+                },
+                {
+                    "data_path": "action_result.data.*.task.created_uuid",
+                    "data_type": "string",
+                    "example_values": [
+                        "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
+                    ],
+                    "column_name": "Creator UUID",
+                    "description": "Unique ID of the user that created the task."
+                },
+                {
+                    "data_path": "action_result.data.*.task.updated_uuid",
+                    "data_type": "string",
+                    "example_values": [
+                        "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
+                    ],
+                    "column_name": "Updated UUID",
+                    "description": "Unique ID of the user that updated the task."
+                },
+                {
+                    "data_path": "action_result.data.*.task.created_email",
+                    "data_type": "string",
+                    "example_values": [
+                       "test@test.com"
+                    ],
+                    "column_name": "Creator Email",
+                    "description": "Email address of the user that created the task."
+                },
+                {
+                    "data_path": "action_result.data.*.task.updated_email",
+                    "data_type": "string",
+                    "column_name": "Updated Email",
+                    "example_values": [
+                       "test@test.com"
+                    ],
+                    "description": "Email address of the user that updated the task."
+                },
+                {
+                    "data_path": "action_result.data.*.task.created",
+                    "data_type": "string",
+                    "example_values": [
+                       "2019-01-30T00:00:00.000Z"
+                    ],
+                    "column_name": "Created",
+                    "description": "Date when the task was created."
+                },
+                {
+                    "data_path": "action_result.data.*.task.updated",
+                    "data_type": "string",
+                    "example_values": [
+                       "2019-01-30T00:00:00.000Z"
+                    ],
+                    "column_name": "Updated",
+                    "description": "Sensors this task is running on."
+                },
+                {
+                    "data_path": "action_result.data.*.task.requested_start_time",
+                    "data_type": "string",
+                    "example_values": [
+                       "2019-01-30T00:00:00.000Z"
+                    ],
+                    "column_name": "Requested Start Time",
+                    "description": "Requested date for the task start."
+                },
+                {
+                    "data_path": "action_result.data.*.task.requested_end_time",
+                    "data_type": "string",
+                    "example_values": [
+                       "2019-01-30T00:00:00.000Z"
+                    ],
+                    "column_name": "Requested End Time",
+                    "description": "Requested date for the task to end"
+                },
+                {
+                    "data_path": "action_result.data.*.task.actual_start_time",
+                    "data_type": "string",
+                    "example_values": [
+                       "2019-01-30T00:00:00.000Z"
+                    ],
+                    "column_name": "Start Time",
+                    "description": "Date when the task actually started."
+                },
+                {
+                    "data_path": "action_result.data.*.task.actual_end_time",
+                    "data_type": "string",
+                    "example_values": [
+                       "2019-01-30T00:00:00.000Z"
+                    ],
+                    "column_name": "End Time",
+                    "description": "Date when the task actually ended"
+                },
+                {
+                    "data_path": "action_result.data.*.task.status",
+                    "data_type": "string",
+                    "example_values": [
+                       "inactive"
+                    ],
+                    "column_name": "Status",
+                    "description": "Current status of the task."
+                },
+                {
+                    "data_path": "action_result.data.*.task.files",
+                    "data_type": "string",
+                    "column_name": "Files",
+                    "description": "Files captured for this task."
+                },
+                {
+                    "data_path": "action_result.data.*.task.has_files",
+                    "data_type": "boolean",
+                    "example_values": [
+                       "true","false"
+                    ],
+                    "column_name": "Has Files",
+                    "description": "If this task has files (true/false)."
                 }
             ],
             "render": {
@@ -706,15 +856,14 @@
                     "required": false
                 },
                 "event_type": {
-                    "description": "The type of event. Limited to flow, dns, http, ssl, and x509.",
+                    "description": "The type of event.",
                     "data_type": "string",
-                    "value_list": ["flow", "dns", "http", "ssl", "x509"],
                     "required": false
                 },
                 "group_by": {
                     "description": "Optionally group results by: sensor_id, event_type.",
                     "data_type": "string",
-                    "value_list": ["sensor_id", "event_type"],
+                    "value_list": ["sensor_id", "event_type","account_code"],
                     "required": false
                 }
             },
@@ -2483,14 +2632,14 @@
             "type": "investigate",
             "read_only": true,
             "parameters": {
-                "name": {
-                    "data_type": "string",
-                    "description": "The name of the rule.",
-                    "required": true
-                },
                 "account_uuid": {
                     "data_type": "string",
                     "description": "Account where the rule will be created.",
+                    "required": true
+                },
+                "name": {
+                    "data_type": "string",
+                    "description": "The name of the rule.",
                     "required": true
                 },
                 "category": {
@@ -2524,7 +2673,7 @@
                 "description": {
                     "data_type": "string",
                     "description": "A description for the rule.",
-                    "required": true
+                    "required": false
                 },
                 "severity": {
                     "data_type": "string",
@@ -2538,42 +2687,43 @@
                     "required": true,
                     "value_list": ["high", "moderate", "low"]
                 },
+                "primary_attack_id": {
+                    "data_type": "string",
+                    "description": "Primary Attack ID",
+                    "required": false
+                },
+                "secondary_attack_id": {
+                    "data_type": "string",
+                    "description": "Secondary Attack ID",
+                    "required": false
+                },
+                "specificity": {
+                    "data_type": "string",
+                    "description": "Specificity",
+                    "required": false
+                },
+                "device_ip_fields": {
+                    "data_type": "string",
+                    "description": "List, seaprated by ',', of the fields to check for impacted devices. Using 'DEFAULT' if not provided.",
+                    "required": false,
+                    "allow_list": true
+                },
+                "indicator_fields": {
+                    "data_type": "string",
+                    "description": "List, separated by ',' of the indicator's fields.",
+                    "required": false,
+                    "allow_list": true
+                },
                 "run_account_uuids": {
                     "data_type": "string",
                     "description": "Account UUIDs on which this rule will run. This will usually be just your own account UUID. (separate multiple accounts by comma)",
-                    "required": true
+                    "required": true,
+                    "allow_list": true
                 },
                 "auto_resolution_minutes": {
                     "data_type": "numeric",
                     "description": "The number of minutes after which detections will be auto-resolved. If 0 then detections have to be manually resolved.",
-                    "required": true
-                },
-                "device_ip_fields": {
-                    "data_type": "string",
-                    "description": "List of event fields to check for impacted devices.",
-                    "required": true,
-                    "value_list": [
-                        "DEFAULT",
-                        "src.ip",
-                        "dst.ip",
-                        "dhcp:assignment.ip",
-                        "dns:answers.ip",
-                        "http:host.ip",
-                        "http:uri.host.ip",
-                        "http:referrer.host.ip",
-                        "http:headers.location.host.ip",
-                        "http:headers.origin.host.ip",
-                        "http:headers.proxied_client_ips.ip",
-                        "http:headers.refresh.uri.host.ip",
-                        "smtp:helo.ip",
-                        "smtp:x_originating_ip.ip",
-                        "smtp:path.ip",
-                        "software:host.ip",
-                        "ssl:server_name_indication.ip",
-                        "suricata:http.host.ip",
-                        "x509:san_dns.ip",
-                        "x509:san_ip.ip"
-                    ]
+                    "required": false
                 }
             },
             "output": [
@@ -2597,8 +2747,181 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data",
-                    "data_type": "string"
+                    "data_path": "action_result.data.*.rule.uuid",
+                    "data_type": "string",
+                    "example_values": [
+                       "55f39b72-2622-4137-9051-bc2ff364f059"
+                    ],
+                    "column_name": "Id"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.account_uuid",
+                    "data_type": "string",
+                    "example_values": [
+                       "55f39b72-2622-4137-9051-bc2ff364f059"
+                    ],
+                    "column_name": "Account"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.shared_account_uuids",
+                    "data_type": "string",
+                    "example_values": [
+                       "55f39b72-2622-4137-9051-bc2ff364f059"
+                    ],
+                    "column_name": "Shared Accounts"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.run_account_uuids",
+                    "data_type": "string",
+                    "example_values": [
+                       "[\"55f39b72-2622-4137-9051-bc2ff364f059\"]"
+                    ],
+                    "column_name": "Run Accounts"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.name",
+                    "data_type": "string",
+                    "example_values": [
+                       "AR T1595"
+                    ],
+                    "column_name": "Name"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.category",
+                    "data_type": "string",
+                    "example_values": [
+                       "Attack:Infection Vector"
+                    ],
+                    "column_name": "Category"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.query_signature",
+                    "data_type": "string",
+                    "example_values": [
+                        "ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns'"
+                    ],
+                    "column_name": "Signature"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.description",
+                    "data_type": "string",
+                    "column_name": "Description"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.severity",
+                    "data_type": "string",
+                    "example_values": [
+                       "high","moderate","low"
+                    ],
+                    "column_name": "Severity"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.confidence",
+                    "data_type": "string",
+                    "example_values": [
+                       "high","moderate","low"
+                    ],
+                    "column_name": "Confidence"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.auto_resolution_minutes",
+                    "data_type": "numeric",
+                    "example_values": [
+                       "10080"
+                    ],
+                    "column_name": "Resolution Minutes"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.enabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                       "true","false"
+                    ],
+                    "column_name": "Enabled"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.created_user_uuid",
+                    "data_type": "string",
+                    "example_values": [
+                       "55f39b72-2622-4137-9051-bc2ff364f059"
+                    ],
+                    "column_name": "Created User ID"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.created",
+                    "data_type": "string",
+                    "example_values": [
+                       "2019-01-30T00:00:00.000Z"
+                    ],
+                    "column_name": "Created"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.updated_user_uuid",
+                    "data_type": "string",
+                    "example_values": [
+                       "55f39b72-2622-4137-9051-bc2ff364f059"
+                    ],
+                    "column_name": "Updated User ID"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.updated",
+                    "data_type": "string",
+                    "example_values": [
+                       "2019-01-30T00:00:00.000Z"
+                    ],
+                    "column_name": "Updated"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.critical_updated",
+                    "data_type": "string",
+                    "example_values": [
+                       "2019-01-30T00:00:00.000Z"
+                    ],
+                    "column_name": "Critical Updated"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.primary_attack_id",
+                    "data_type": "string",
+                    "column_name": "Primary Attack ID"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.secondary_attack_id",
+                    "data_type": "string",
+                    "column_name": "Secondary Attack ID"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.specificity",
+                    "data_type": "string",
+                    "column_name": "Specificity"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.rule_accounts",
+                    "data_type": "string",
+                    "column_name": "Rule Accounts"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.device_ip_fields",
+                    "data_type": "string",
+                    "example_values": [
+                       "DEFAULT"
+                    ],
+                    "column_name": "Device IP Fields"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.indicator_fields",
+                    "data_type": "string",
+                    "example_values": [
+                       "src.ip"
+                    ],
+                    "column_name": "Indicator Fields"
+                },
+                {
+                    "data_path": "action_result.data.*.rule.source_excludes",
+                    "data_type": "string",
+                    "example_values": [
+                       "Zscaler"
+                    ],
+                    "column_name": "Source Excludes"
                 }
             ],
             "render": {

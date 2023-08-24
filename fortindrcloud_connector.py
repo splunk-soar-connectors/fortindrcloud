@@ -225,12 +225,12 @@ class EntityAPI:
 
     def _getEntityFile(self, arg: dict[str, Any] = {}) -> Dict[str, Any]:
         """ """
-        entity = arg.pop("entity", "")
+        hash = arg.pop("hash", "")
 
         return Request_Info(
             request="GetEntityFile",
             base_url=self._get_url(),
-            endpoint="v1/entity/{0}/file".format(entity),
+            endpoint="v1/entity/{0}/file".format(hash),
             method="get",
         )
 
@@ -433,9 +433,11 @@ class FortiNDRCloudConnector(BaseConnector):
         for arg in multiple_values:
             values: List[Any] = []
             if arg in args:
-                values.extend(args[arg].split(","))
+                value = args[arg].split(",")
+                value = [v.strip() for v in value if v.strip()]
+                values.extend(value)
             else:
-                values.append(args[arg])
+                values.append(args[arg].strip())
 
             args[arg] = tuple(values)
         return args
@@ -529,13 +531,13 @@ class FortiNDRCloudConnector(BaseConnector):
         self.save_state(self._state)
         return phantom.APP_SUCCESS
 
-    def _process_empty_response(self, response):
-        if response.status_code == 200:
+    def _process_empty_response(self, r):
+        if 200 <= r.status_code < 399:
             return {}
             # return RetVal(phantom.APP_SUCCESS, {})
 
         m = "Empty response and no information in the header"
-        raise Exception(f"{m} Status Code {response.status_code}")
+        raise Exception(f"{m} Status Code {r.status_code}")
 
     def _process_html_response(self, response):
         # An html response, treat it like an error
@@ -596,6 +598,7 @@ class FortiNDRCloudConnector(BaseConnector):
         response = None
         try:
             # Process a json response
+
             if "json" in r.headers.get("Content-Type", ""):
                 response = self._process_json_response(r)
 
@@ -629,6 +632,7 @@ class FortiNDRCloudConnector(BaseConnector):
     def _prepare_summary(self, response: List, request_info: Request_Info):
         summary = {
             "response_count": len(response) if response is not None else 1,
+            "method": request_info.method,
             "endpoint": request_info.base_url + request_info.endpoint,
             "request": request_info.request,
         }
@@ -694,6 +698,9 @@ class FortiNDRCloudConnector(BaseConnector):
         if request_summary and hasattr(action_result, "add_debug_data"):
             action_result.add_debug_data(request_summary)
 
+        if summary is not None:
+            action_result.update_summary(summary)
+
         if exception is not None:
             em = f"The call to the {api_info.api_name} API, "
             em += f"to handle {request_info.request} request failed "
@@ -715,9 +722,6 @@ class FortiNDRCloudConnector(BaseConnector):
 
         if response is not None:
             action_result.add_data(response)
-
-        if summary is not None:
-            action_result.update_summary(summary)
 
         return action_result.set_status(
             phantom.APP_SUCCESS, f"{request_info.request} request successfully handled."
@@ -854,6 +858,9 @@ class FortiNDRCloudConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         param.pop("context", None)
 
+        if "include" in param:
+            param = self._split_multivalue_args(param, ["include"])
+
         api_info, request_info = self.prepare_request(
             api="Sensors", request="getSensors"
         )
@@ -869,9 +876,13 @@ class FortiNDRCloudConnector(BaseConnector):
         except Exception as e:
             exception = e
 
-        result = {"sensors": response["sensors"]}
+        sensors = []
+        if response and "sensors" in response:
+            sensors = response["sensors"]
 
-        summary = self._prepare_summary(response["sensors"], request_info=request_info)
+        result = {"sensors": sensors}
+
+        summary = self._prepare_summary(response=sensors, request_info=request_info)
 
         return self.validate_request(
             response=result,
@@ -905,10 +916,13 @@ class FortiNDRCloudConnector(BaseConnector):
         except Exception as e:
             exception = e
 
-        devices = response["devices"]["device_list"]
+        devices = []
+        if response and "devices" in response:
+            devices = response["devices"]["device_list"]
+
         result = {"devices": devices}
 
-        summary = self._prepare_summary(devices, request_info=request_info)
+        summary = self._prepare_summary(response=devices, request_info=request_info)
 
         return self.validate_request(
             response=result,
@@ -945,11 +959,15 @@ class FortiNDRCloudConnector(BaseConnector):
         except Exception as e:
             exception = e
 
-        tasks = response.pop(key)
-        response["tasks"] = tasks if not taskid else [tasks]
+        tasks = []
+        if response and key in response:
+            tasks = response.pop(key)
 
-        result = {"tasks": response["tasks"]}
-        summary = self._prepare_summary(response["tasks"], request_info=request_info)
+        if taskid:
+            tasks = [tasks]
+
+        result = {"tasks": tasks}
+        summary = self._prepare_summary(response=tasks, request_info=request_info)
 
         return self.validate_request(
             response=result,
@@ -976,16 +994,27 @@ class FortiNDRCloudConnector(BaseConnector):
         exception = None
         request_summary = None
 
+        if "sensor_ids" in param:
+            param = self._split_multivalue_args(param, ["sensor_ids"])
+        else:
+            param.update({"sensor_ids": []})
+
         try:
             response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
+                api_info=api_info, request_info=request_info, data=json.dumps(param)
             )
         except Exception as e:
             exception = e
 
-        summary = self._prepare_summary(response=None, request_info=request_info)
+        tasks = []
+        result = {}
+        if response and "pcaptask" in response:
+            tasks = [response.pop("pcaptask")]
+            result.update({"task": tasks[0]})
+
+        summary = self._prepare_summary(response=tasks, request_info=request_info)
         return self.validate_request(
-            response=None,
+            response=result,
             request_summary=request_summary,
             exception=exception,
             summary=summary,
@@ -1015,7 +1044,10 @@ class FortiNDRCloudConnector(BaseConnector):
         except Exception as e:
             exception = e
 
-        events = response.pop("data")
+        events = []
+        if response and "data" in response:
+            events = response.pop("data")
+
         result = {"telemetry_events": events}
         summary = self._prepare_summary(response=events, request_info=request_info)
         return self.validate_request(
@@ -1034,6 +1066,10 @@ class FortiNDRCloudConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         param.pop("context", None)
 
+        latest_each_month = param.pop("latest_each_month", False)
+        if latest_each_month:
+            param.update({"latest_each_month": True})
+
         api_info, request_info = self.prepare_request(
             api="Sensors", request="getTelemetryNetworkUsage"
         )
@@ -1049,7 +1085,10 @@ class FortiNDRCloudConnector(BaseConnector):
         except Exception as e:
             exception = e
 
-        usage = response.pop("network_usage")
+        usage = []
+        if response and "network_usage" in response:
+            usage = response.pop("network_usage")
+
         result = {"telemetry_network_usage": usage}
         summary = self._prepare_summary(response=usage, request_info=request_info)
         return self.validate_request(
@@ -1085,7 +1124,10 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Request response: {0} .".format(response))
 
-        packetstats = response.pop("data")
+        packetstats = []
+        if response and "data" in response:
+            packetstats = response.pop("data")
+
         result = {"telemetry_packetstats": packetstats}
         summary = self._prepare_summary(response=packetstats, request_info=request_info)
         return self.validate_request(
@@ -1218,10 +1260,10 @@ class FortiNDRCloudConnector(BaseConnector):
         # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
         param.pop("context", None)
-        entity = param.pop("entity", "")
+        hash = param.pop("hash", "")
 
         api_info, request_info = self.prepare_request(
-            api="Entity", request="getEntityDHCP", arg={"entity": entity}
+            api="Entity", request="getEntityFile", arg={"hash": hash}
         )
 
         response = None
@@ -1338,7 +1380,7 @@ class FortiNDRCloudConnector(BaseConnector):
         # if there are more detections to be retrieved, pull the
         # remaining detections incrementally
 
-        if response and response["detections"]:
+        if response and "detections" in response:
             if inc_polling:
                 response, rs = self._get_detections_inc(result=response, param=param)
                 request_summary["requests"].extend(rs["requests"])
@@ -1454,7 +1496,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         summary = self._prepare_summary(response=None, request_info=request_info)
         return self.validate_request(
-            response=None,
+            response=response,
             request_summary=request_summary,
             exception=exception,
             summary=summary,
@@ -1566,16 +1608,33 @@ class FortiNDRCloudConnector(BaseConnector):
         exception = None
         request_summary = None
 
+        if "run_account_uuids" in param:
+            param = self._split_multivalue_args(param, ["run_account_uuids"])
+
+        if "device_ip_fields" in param:
+            param = self._split_multivalue_args(param, ["device_ip_fields"])
+        else:
+            param.update({"device_ip_fields": ["DEFAULT"]})
+
+        if "indicator_fields" in param:
+            param = self._split_multivalue_args(param, ["indicator_fields"])
+
         try:
             response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
+                api_info=api_info, request_info=request_info, data=json.dumps(param)
             )
         except Exception as e:
             exception = e
 
-        summary = self._prepare_summary(response=None, request_info=request_info)
+        rules = []
+        result = {}
+        if response and "rule" in response:
+            rules = [response.pop("rule")]
+            result.update({"rule": rules[0]})
+
+        summary = self._prepare_summary(response=rules, request_info=request_info)
         return self.validate_request(
-            response=None,
+            response=result,
             request_summary=request_summary,
             exception=exception,
             summary=summary,
@@ -1629,7 +1688,7 @@ class FortiNDRCloudConnector(BaseConnector):
             ret_val = self._handle_fnc_get_detection_rule_events(param)
         elif action_id == "fnc_get_detection_events":
             ret_val = self._handle_fnc_get_detection_events(param)
-        elif action_id == "fnc_crate_detection_rule":
+        elif action_id == "fnc_create_detection_rule":
             ret_val = self._handle_fnc_create_detection_rule(param)
 
         return ret_val
