@@ -631,8 +631,8 @@ class FortiNDRCloudConnector(BaseConnector):
     def _prepare_summary(self, response: List, request_info: Request_Info):
         summary = {
             "response_count": len(response) if response is not None else 1,
-            "method": request_info.method,
-            "endpoint": request_info.base_url + request_info.endpoint,
+            # "method": request_info.method,
+            # "endpoint": request_info.base_url + request_info.endpoint,
             "request": request_info.request,
         }
         summary.update()
