@@ -1,6 +1,6 @@
 {
 	"appid": "bb31bf87-e183-44e8-b641-a2006252517b",
-	"name": "FortiNDR Cloud Application for Splunk SOAR",
+	"name": "FortiNDR Cloud",
 	"description": "This app allows the use of the information provided by the FortiNDR Cloud Service to perform containment and investigative actions on Splunk SOAR",
 	"type": "generic",
 	"product_vendor": "Fortinet Inc.",
