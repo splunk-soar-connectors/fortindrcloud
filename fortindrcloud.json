@@ -1,7 +1,7 @@
 {
     "appid": "bb31bf87-e183-44e8-b641-a2006252517b",
     "name": "FortiNDR Cloud Application for Splunk SOAR",
-    "description": "This app allows the use of the information provided by the FortiNDR Cloud Service to perform containment and investigative actions on Splunk SOAR.",
+    "description": "This app allows the use of the information provided by the FortiNDR Cloud Service to perform containment and investigative actions on Splunk SOAR",
     "type": "generic",
     "product_vendor": "Fortinet Inc.",
     "logo": "fortindrcloud.svg",
@@ -27,7 +27,7 @@
             "name": "api_key",
             "data_type": "password",
             "required": true,
-            "description": "API Token to connect to FortiNDR Cloud RESTful APIs.",
+            "description": "API Token to connect to FortiNDR Cloud RESTful APIs",
             "order": 0
         },
         "api_base_url": {
@@ -35,13 +35,13 @@
             "data_type": "string",
             "default": "https://<API>-<Region>.<Domain>/",
             "required": true,
-            "description": "Provide the Base URL to access the APIs by replacing the <Region> and <Domain> in https://<API>-<Region>.<Domain>/ with the appropriate value.",
+            "description": "Provide the Base URL to access the APIs by replacing the <Region> and <Domain> in https://<API>-<Region>.<Domain>/ with the appropriate value",
             "order": 1
         },
         "first_poll": {
             "data_type": "string",
             "order": 2,
-            "description": "First Poll (<number> <time unit>, e.g., 12 hours, 7 days).",
+            "description": "First Poll (<number> <time unit>, e.g., 12 hours, 7 days)",
             "required": false,
             "default": "7 days",
             "name": "first_poll"
@@ -49,7 +49,7 @@
         "polling_delay": {
             "data_type": "numeric",
             "order": 4,
-            "description": "Polling delay in minute. This is required to allow time for the detections to be added before polling them.",
+            "description": "Polling delay in minute. This is required to allow time for the detections to be added before polling them",
             "default": 10,
             "required": false,
             "name": "polling_delay"
@@ -57,14 +57,14 @@
         "account_uuid": {
             "data_type": "string",
             "order": 6,
-            "description": "Account UUID to filter retrieved detections.",
+            "description": "Account UUID to filter retrieved detections",
             "required": false,
             "name": "account_uuid"
         },
         "muted": {
             "data_type": "boolean",
             "order": 3,
-            "description": "Set to true to include muted detections. Default to false.",
+            "description": "Set to true to include muted detections. Default to false",
             "name": "muted",
             "id": 0,
             "default": false
@@ -72,7 +72,7 @@
         "muted_rule": {
             "data_type": "boolean",
             "order": 5,
-            "description": "Set to true to include muted rules. Default to false.",
+            "description": "Set to true to include muted rules. Default to false",
             "name": "muted_rule",
             "id": 0,
             "default": false
@@ -80,7 +80,7 @@
         "muted_device": {
             "data_type": "boolean",
             "order": 7,
-            "description": "Set to true to include muted devices. Default to false.",
+            "description": "Set to true to include muted devices. Default to false",
             "name": "muted_device",
             "id": 0,
             "default": false
@@ -90,7 +90,7 @@
         {
             "action": "test connectivity",
             "identifier": "test_connectivity",
-            "description": "Validate the asset configuration for connectivity using supplied configuration.",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -100,36 +100,36 @@
         {
             "action": "on poll",
             "identifier": "on_poll",
-            "description": "Retrieve latest Detections from the FortiNDR Cloud Service.",
+            "description": "Retrieve latest Detections from the FortiNDR Cloud Service",
             "type": "ingest",
             "read_only": true,
             "parameters": {
                 "start_time": {
-                    "description": "First Poll (<number> <time unit>, e.g., 12 hours, 7 days).",
+                    "description": "First Poll (<number> <time unit>, e.g., 12 hours, 7 days)",
                     "data_type": "string",
                     "order": 0,
                     "name": "start_time"
                 },
                 "end_time": {
-                    "description": "Parameter Ignored in this app.",
+                    "description": "Parameter Ignored in this app",
                     "data_type": "numeric",
                     "order": 1,
                     "name": "end_time"
                 },
                 "container_id": {
-                    "description": "Parameter Ignored in this app.",
+                    "description": "Parameter Ignored in this app",
                     "data_type": "numeric",
                     "order": 2,
                     "name": "container_id"
                 },
                 "container_count": {
-                    "description": "Parameter Ignored in this app.",
+                    "description": "Parameter Ignored in this app",
                     "data_type": "numeric",
                     "order": 3,
                     "name": "container_count"
                 },
                 "artifact_count": {
-                    "description": "Parameter Ignored in this app.",
+                    "description": "Parameter Ignored in this app",
                     "data_type": "numeric",
                     "order": 4,
                     "name": "artifact_count"
@@ -141,30 +141,30 @@
         {
             "action": "get sensors",
             "identifier": "fnc_get_sensors",
-            "description": "Get a list of all sensors.",
+            "description": "Get a list of all sensors",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "account_uuid": {
-                    "description": "UUID of account to filter by.",
+                    "description": "UUID of account to filter by",
                     "data_type": "string"
                 },
                 "account_code": {
-                    "description": "Account code to filter by.",
+                    "description": "Account code to filter by",
                     "data_type": "string"
                 },
                 "sensor_id": {
-                    "description": "ID of the sensor to filter by.",
+                    "description": "ID of the sensor to filter by",
                     "data_type": "string"
                 },
                 "include": {
-                    "description": "Include additional metadata such as status, interfaces, admin.sensor, admin.zeek, admin.suricata, and network_usage.",
+                    "description": "Include additional metadata such as status, interfaces, admin.sensor, admin.zeek, admin.suricata, and network_usage",
                     "data_type": "string",
                     "allow_list": true
                 },
                 "enabled": {
-                    "description": "Filter by true or false. If not provided, all the sensors are returned.",
+                    "description": "Filter by true or false. If not provided, all the sensors are returned",
                     "data_type": "boolean"
                 }
             },
@@ -279,29 +279,29 @@
         {
             "action": "get devices",
             "identifier": "fnc_get_devices",
-            "description": "Get a list of all devices.",
+            "description": "Get a list of all devices",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "start_date": {
-                    "description": "Filter devices based on when they were seen.",
+                    "description": "Filter devices based on when they were seen",
                     "data_type": "string"
                 },
                 "end_date": {
-                    "description": "Filter devices based on when they were seen.",
+                    "description": "Filter devices based on when they were seen",
                     "data_type": "string"
                 },
                 "cidr": {
-                    "description": "Filter devices that are under a specific CIDR.",
+                    "description": "Filter devices that are under a specific CIDR",
                     "data_type": "string"
                 },
                 "sensor_id": {
-                    "description": "Filter devices that were observed by a specific sensor.",
+                    "description": "Filter devices that were observed by a specific sensor",
                     "data_type": "string"
                 },
                 "traffic_direction": {
-                    "description": "Filter devices that have been noted to only have a certain directionality of traffic (\"external\" vs \"internal\").",
+                    "description": "Filter devices that have been noted to only have a certain directionality of traffic (\"external\" vs \"internal\")",
                     "data_type": "string",
                     "value_list": ["internal","external"]
                 }
@@ -333,7 +333,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Date",
-                    "description": "Date when the device was first seen."
+                    "description": "Date when the device was first seen"
                 },
                 {
                     "data_path": "action_result.data.*.devices.*.external",
@@ -342,7 +342,7 @@
                         "true","false"
                     ],
                     "column_name": "External",
-                    "description": "If external traffic has been observed for this device."
+                    "description": "If external traffic has been observed for this device"
                 },
                 {
                     "data_path": "action_result.data.*.devices.*.internal",
@@ -351,7 +351,7 @@
                         "true","false"
                     ],
                     "column_name": "Internal",
-                    "description": "If internal traffic has been observed for this device."
+                    "description": "If internal traffic has been observed for this device"
                 },
                 {
                     "data_path": "action_result.data.*.devices.*.ip_address",
@@ -360,7 +360,7 @@
                         "8.8.8.8"
                     ],
                     "column_name": "IP Address",
-                    "description": "IP address of the device."
+                    "description": "IP address of the device"
                 }
             ],
             "render": {
@@ -373,13 +373,13 @@
         {
             "action": "get tasks",
             "identifier": "fnc_get_tasks",
-            "description": "Get a list of all the PCAP tasks.",
+            "description": "Get a list of all the PCAP tasks",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "task_uuid": {
-                    "description": "Filter to a specific task.",
+                    "description": "Filter to a specific task",
                     "data_type": "string",
                     "required": false
                 }
@@ -411,7 +411,7 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Task UUID",
-                    "description": "Unique ID of the task."
+                    "description": "Unique ID of the task"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.actual_start_time",
@@ -420,7 +420,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Start Time",
-                    "description": "Date when the task actually started."
+                    "description": "Date when the task actually started"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.requested_start_time",
@@ -429,7 +429,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Requested Start Time",
-                    "description": "Requested date for the task start."
+                    "description": "Requested date for the task start"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.updated_email",
@@ -438,7 +438,7 @@
                     "example_values": [
                        "test@test.com"
                     ],
-                    "description": "Email address of the user that updated the task."
+                    "description": "Email address of the user that updated the task"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.created_uuid",
@@ -447,7 +447,7 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Creator UUID",
-                    "description": "Unique ID of the user that created the task."
+                    "description": "Unique ID of the user that created the task"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.created",
@@ -456,7 +456,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Created",
-                    "description": "Date when the task was created."
+                    "description": "Date when the task was created"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.name",
@@ -465,7 +465,7 @@
                        "Meh-Ike phone 10001"
                     ],
                     "column_name": "Name",
-                    "description": "Name of the task."
+                    "description": "Name of the task"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.status",
@@ -474,7 +474,7 @@
                        "inactive"
                     ],
                     "column_name": "Status",
-                    "description": "Current status of the task."
+                    "description": "Current status of the task"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.created_email",
@@ -483,7 +483,7 @@
                        "test@test.com"
                     ],
                     "column_name": "Creator Email",
-                    "description": "Email address of the user that created the task."
+                    "description": "Email address of the user that created the task"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.updated_uuid",
@@ -492,7 +492,7 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Updated UUID",
-                    "description": "Unique ID of the user that updated the task."
+                    "description": "Unique ID of the user that updated the task"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.bpf",
@@ -501,7 +501,7 @@
                         "src host x.x.x.x and dst port 10001"
                     ],
                     "column_name": "BPF",
-                    "description": "Berkeley Packet Filter for the task."
+                    "description": "Berkeley Packet Filter for the task"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.actual_end_time",
@@ -510,7 +510,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "End Time",
-                    "description": "Date when the task actually ended."
+                    "description": "Date when the task actually ended"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.account_code",
@@ -519,7 +519,7 @@
                         "gig"
                     ],
                     "column_name": "Account Code",
-                    "description": "ID code of the customer account."
+                    "description": "ID code of the customer account"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.requested_end_time",
@@ -528,7 +528,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Requested End Time",
-                    "description": "Requested date for the task to end."
+                    "description": "Requested date for the task to end"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.updated",
@@ -537,13 +537,13 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Updated",
-                    "description": "Sensors this task is running on."
+                    "description": "Sensors this task is running on"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.description",
                     "data_type": "string",
                     "column_name": "Description",
-                    "description": "Description of the task."
+                    "description": "Description of the task"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.has_files",
@@ -552,7 +552,7 @@
                        "true","false"
                     ],
                     "column_name": "Has Files",
-                    "description": "If this task has files (true/false)."
+                    "description": "If this task has files (true/false)"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.sensor_ids",
@@ -561,13 +561,13 @@
                        "[\"sen1\"]"
                     ],
                     "column_name": "Sensor IDs",
-                    "description": "Sensors this task is running on."
+                    "description": "Sensors this task is running on"
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.files",
                     "data_type": "string",
                     "column_name": "Files",
-                    "description": "Files captured for this task."
+                    "description": "Files captured for this task"
                 }
             ],
             "render": {
@@ -580,29 +580,29 @@
         {
             "action": "create task",
             "identifier": "fnc_create_task",
-            "description": "Create a new PCAP task.",
+            "description": "Create a new PCAP task",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "name": {
                     "data_type": "string",
-                    "description": "The name of the task.",
+                    "description": "The name of the task",
                     "required": true
                 },
                 "account_uuid": {
                     "data_type": "string",
-                    "description": "Account where the task will be created.",
+                    "description": "Account where the task will be created",
                     "required": true
                 },
                 "description": {
                     "data_type": "string",
-                    "description": "A description for the task.",
+                    "description": "A description for the task",
                     "required": true
                 },
                 "bpf": {
                     "data_type": "string",
-                    "description": "The Berkeley Packet Filter for capture filtering.",
+                    "description": "The Berkeley Packet Filter for capture filtering",
                     "required": true
                 },
                 "requested_start_date": {
@@ -610,7 +610,7 @@
                     "example_values": [
                        "2019-01-30T00:00:00.000Z"
                     ],
-                    "description": "The date the task will become active. (2019-01-30T00:00:00.000Z).",
+                    "description": "The date the task will become active. (2019-01-30T00:00:00.000Z)",
                     "required": true
                 },
                 "requested_end_date": {
@@ -618,12 +618,12 @@
                     "example_values": [
                        "2019-01-30T00:00:00.000Z"
                     ],
-                    "description": "The date the task will become inactive. (2019-12-31T23:59:59.000Z).",
+                    "description": "The date the task will become inactive. (2019-12-31T23:59:59.000Z)",
                     "required": true
                 },
                 "sensor_ids": {
                     "data_type": "string",
-                    "description": " List of sensor IDs, separated by ',', on which this task will run (separate multiple accounts by comma).",
+                    "description": " List of sensor IDs, separated by ',', on which this task will run (separate multiple accounts by comma)",
                     "allow_list": true
                 }
             },
@@ -644,7 +644,7 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Detection Rule created successfully."
+                        "Detection Rule created successfully"
                     ]
                 },
                 {
@@ -654,13 +654,13 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Task UUID",
-                    "description": "Unique ID of the task."
+                    "description": "Unique ID of the task"
                 },
                 {
                     "data_path": "action_result.data.*.task.description",
                     "data_type": "string",
                     "column_name": "Description",
-                    "description": "Description of the task."
+                    "description": "Description of the task"
                 },
                 {
                     "data_path": "action_result.data.*.task.name",
@@ -669,7 +669,7 @@
                        "Meh-Ike phone 10001"
                     ],
                     "column_name": "Name",
-                    "description": "Name of the task."
+                    "description": "Name of the task"
                 },
                 {
                     "data_path": "action_result.data.*.task.sensor_ids",
@@ -678,7 +678,7 @@
                        "[\"sen1\"]"
                     ],
                     "column_name": "Sensor IDs",
-                    "description": "Sensors this task is running on."
+                    "description": "Sensors this task is running on"
                 },
                 {
                     "data_path": "action_result.data.*.task.account_code",
@@ -687,7 +687,7 @@
                         "gig"
                     ],
                     "column_name": "Account Code",
-                    "description": "ID code of the customer account."
+                    "description": "ID code of the customer account"
                 },
                 {
                     "data_path": "action_result.data.*.task.bpf",
@@ -696,7 +696,7 @@
                         "src host x.x.x.x and dst port 10001"
                     ],
                     "column_name": "BPF",
-                    "description": "Berkeley Packet Filter for the task."
+                    "description": "Berkeley Packet Filter for the task"
                 },
                 {
                     "data_path": "action_result.data.*.task.created_uuid",
@@ -705,7 +705,7 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Creator UUID",
-                    "description": "Unique ID of the user that created the task."
+                    "description": "Unique ID of the user that created the task"
                 },
                 {
                     "data_path": "action_result.data.*.task.updated_uuid",
@@ -714,7 +714,7 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Updated UUID",
-                    "description": "Unique ID of the user that updated the task."
+                    "description": "Unique ID of the user that updated the task"
                 },
                 {
                     "data_path": "action_result.data.*.task.created_email",
@@ -723,7 +723,7 @@
                        "test@test.com"
                     ],
                     "column_name": "Creator Email",
-                    "description": "Email address of the user that created the task."
+                    "description": "Email address of the user that created the task"
                 },
                 {
                     "data_path": "action_result.data.*.task.updated_email",
@@ -732,7 +732,7 @@
                     "example_values": [
                        "test@test.com"
                     ],
-                    "description": "Email address of the user that updated the task."
+                    "description": "Email address of the user that updated the task"
                 },
                 {
                     "data_path": "action_result.data.*.task.created",
@@ -741,7 +741,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Created",
-                    "description": "Date when the task was created."
+                    "description": "Date when the task was created"
                 },
                 {
                     "data_path": "action_result.data.*.task.updated",
@@ -750,7 +750,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Updated",
-                    "description": "Sensors this task is running on."
+                    "description": "Sensors this task is running on"
                 },
                 {
                     "data_path": "action_result.data.*.task.requested_start_time",
@@ -759,7 +759,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Requested Start Time",
-                    "description": "Requested date for the task start."
+                    "description": "Requested date for the task start"
                 },
                 {
                     "data_path": "action_result.data.*.task.requested_end_time",
@@ -768,7 +768,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Requested End Time",
-                    "description": "Requested date for the task to end."
+                    "description": "Requested date for the task to end"
                 },
                 {
                     "data_path": "action_result.data.*.task.actual_start_time",
@@ -777,7 +777,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Start Time",
-                    "description": "Date when the task actually started."
+                    "description": "Date when the task actually started"
                 },
                 {
                     "data_path": "action_result.data.*.task.actual_end_time",
@@ -786,7 +786,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "End Time",
-                    "description": "Date when the task actually ended."
+                    "description": "Date when the task actually ended"
                 },
                 {
                     "data_path": "action_result.data.*.task.status",
@@ -795,13 +795,13 @@
                        "inactive"
                     ],
                     "column_name": "Status",
-                    "description": "Current status of the task."
+                    "description": "Current status of the task"
                 },
                 {
                     "data_path": "action_result.data.*.task.files",
                     "data_type": "string",
                     "column_name": "Files",
-                    "description": "Files captured for this task."
+                    "description": "Files captured for this task"
                 },
                 {
                     "data_path": "action_result.data.*.task.has_files",
@@ -810,7 +810,7 @@
                        "true","false"
                     ],
                     "column_name": "Has Files",
-                    "description": "If this task has files (true/false)."
+                    "description": "If this task has files (true/false)"
                 }
             ],
             "render": {
@@ -823,50 +823,50 @@
         {
             "action": "get telemetry events",
             "identifier": "fnc_get_telemetry_events",
-            "description": "Get event telemetry data grouped by time.",
+            "description": "Get event telemetry data grouped by time",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "interval": {
-                    "description": "Interval to group by: hour (default) or day.",
+                    "description": "Interval to group by: hour (default) or day",
                     "data_type": "string",
                     "value_list": ["hour", "day"],
                     "default": "hour",
                     "required": false
                 },
                 "start_date": {
-                    "description": "Start date/time to query for. The default is 1 day ago for interval=hour or 30 days ago for interval=day.",
+                    "description": "Start date/time to query for. The default is 1 day ago for interval=hour or 30 days ago for interval=day",
                     "data_type": "string",
                     "required": false
                 },
                 "end_date": {
-                    "description": "End date/time to query for. The default is the current time.",
+                    "description": "End date/time to query for. The default is the current time",
                     "data_type": "string",
                     "required": false
                 },
                 "account_uuid": {
-                    "description": "Account uuid to filter by.",
+                    "description": "Account uuid to filter by",
                     "data_type": "string",
                     "required": false
                 },
                 "account_code": {
-                    "description": "Account code to filter by.",
+                    "description": "Account code to filter by",
                     "data_type": "string",
                     "required": false
                 },
                 "sensor_id": {
-                    "description": "Sensor id to filter by.",
+                    "description": "Sensor id to filter by",
                     "data_type": "string",
                     "required": false
                 },
                 "event_type": {
-                    "description": "The type of event.",
+                    "description": "The type of event",
                     "data_type": "string",
                     "required": false
                 },
                 "group_by": {
-                    "description": "Optionally group results by: sensor_id, event_type.",
+                    "description": "Optionally group results by: sensor_id, event_type",
                     "data_type": "string",
                     "value_list": ["sensor_id", "event_type","account_code"],
                     "required": false
@@ -899,7 +899,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Timestamp",
-                    "description": "Timestamp of the grouped data."
+                    "description": "Timestamp of the grouped data"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_events.*.event_count",
@@ -908,7 +908,7 @@
                        "1000"
                     ],
                     "column_name": "Event Count",
-                    "description": "Number of events."
+                    "description": "Number of events"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_events.*.sensor_id",
@@ -917,7 +917,7 @@
                        "sen1"
                     ],
                     "column_name": "Sensor ID",
-                    "description": "Sensor name (if grouped by sensor_id)."
+                    "description": "Sensor name (if grouped by sensor_id)"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_events.*.event_type",
@@ -926,7 +926,7 @@
                        "flow"
                     ],
                     "column_name": "Event Type",
-                    "description": "Type of event (if grouped by event_type)."
+                    "description": "Type of event (if grouped by event_type)"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_events.*.account_code",
@@ -935,7 +935,7 @@
                        "act"
                     ],
                     "column_name": "Account Code",
-                    "description": "Account Code (if grouped by account_code)."
+                    "description": "Account Code (if grouped by account_code)"
                 }
             ],
             "render": {
@@ -948,39 +948,39 @@
         {
             "action": "get telemetry packetstats",
             "identifier": "fnc_get_telemetry_packetstats",
-            "description": "Get packetstats telemetry data grouped by time.",
+            "description": "Get packetstats telemetry data grouped by time",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "interval": {
-                    "description": "Aggregation interval. default by hour if not specified.",
+                    "description": "Aggregation interval. default by hour if not specified",
                     "data_type": "string",
                     "default": "h",
                     "required": false
                 },
                 "start_date": {
-                    "description": "Scopes the returned metrics to dates after the given start_date. If empty returns most current packet stats.",
+                    "description": "Scopes the returned metrics to dates after the given start_date. If empty returns most current packet stats",
                     "data_type": "string",
                     "required": false
                 },
                 "end_date": {
-                    "description": "Scopes the returned metrics to dates before the given end_date. If empty returns most current packet stats.",
+                    "description": "Scopes the returned metrics to dates before the given end_date. If empty returns most current packet stats",
                     "data_type": "string",
                     "required": false
                 },
                 "account_code": {
-                    "description": "Account code to filter by.",
+                    "description": "Account code to filter by",
                     "data_type": "string",
                     "required": false
                 },
                 "sensor_id": {
-                    "description": "Scopes the returned metrics to the interfaces of the specified sensor ID.",
+                    "description": "Scopes the returned metrics to the interfaces of the specified sensor ID",
                     "data_type": "string",
                     "required": false
                 },
                 "group_by": {
-                    "description": "Option to group by the following fields: interface_name, sensor_id, account_code.",
+                    "description": "Option to group by the following fields: interface_name, sensor_id, account_code",
                     "data_type": "string",
                     "value_list": ["interface_name", "sensor_id", "account_code"],
                     "required": false
@@ -1013,7 +1013,7 @@
                        "gig"
                     ],
                     "column_name": "Account Code",
-                    "description": "Account code the data was filtered by."
+                    "description": "Account code the data was filtered by"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_packetstats.*.timestamp",
@@ -1022,13 +1022,13 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Timestamp",
-                    "description": "Timestamp of the grouped data."
+                    "description": "Timestamp of the grouped data"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_packetstats.*.interface_name",
                     "data_type": "string",
                     "column_name": "Interface Name",
-                    "description": "Interface the packet data was recorded from."
+                    "description": "Interface the packet data was recorded from"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_packetstats.*.rx_bits_per_second",
@@ -1037,7 +1037,7 @@
                        "168359035095"
                     ],
                     "column_name": "RX Bits Per Second",
-                    "description": "Received throughput (bits per second)."
+                    "description": "Received throughput (bits per second)"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_packetstats.*.rx_bytes",
@@ -1046,7 +1046,7 @@
                        "1044065401242303200"
                     ],
                     "column_name": "RX Bytes",
-                    "description": "Received data size (bytes)."
+                    "description": "Received data size (bytes)"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_packetstats.*.rx_errors",
@@ -1055,7 +1055,7 @@
                        "543523121859"
                     ],
                     "column_name": "RX Errors",
-                    "description": "Number of received errors."
+                    "description": "Number of received errors"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_packetstats.*.rx_packets",
@@ -1064,7 +1064,7 @@
                        "1511658249026538"
                     ],
                     "column_name": "RX Packets",
-                    "description": "Number of received packets."
+                    "description": "Number of received packets"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_packetstats.*.sensor_id",
@@ -1073,7 +1073,7 @@
                        "sen1"
                     ],
                     "column_name": "Sensor ID",
-                    "description": "Sensor ID packet data was recorded from."
+                    "description": "Sensor ID packet data was recorded from"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_packetstats.*.tx_bytes",
@@ -1082,7 +1082,7 @@
                        "1380372603073006"
                     ],
                     "column_name": "TX Bytes",
-                    "description": "Transmitted data size (bytes)."
+                    "description": "Transmitted data size (bytes)"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_packetstats.*.tx_errors",
@@ -1091,7 +1091,7 @@
                        "0"
                     ],
                     "column_name": "TX Errors",
-                    "description": "Number of transmitted errors."
+                    "description": "Number of transmitted errors"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_packetstats.*.tx_packets",
@@ -1100,7 +1100,7 @@
                        "963173536282"
                     ],
                     "column_name": "TX Packets",
-                    "description": "Number of transmitted packets."
+                    "description": "Number of transmitted packets"
                 }
             ],
             "render": {
@@ -1113,52 +1113,52 @@
         {
             "action": "get telemetry network",
             "identifier": "fnc_get_telemetry_network",
-            "description": "Get network telemetry data grouped by time.",
+            "description": "Get network telemetry data grouped by time",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "account_code": {
-                    "description": "Account code to filter by.",
+                    "description": "Account code to filter by",
                     "data_type": "string",
                     "required": false
                 },
                 "interval": {
-                    "description": "The interval to filter by (day, month_to_day).",
+                    "description": "The interval to filter by (day, month_to_day)",
                     "data_type": "string",
                     "value_list": ["day", "month_to_day"],
                     "required": false
                 },
                 "latest_each_month": {
-                    "description": "Filters out all but the latest day and month_to_date for each month.",
+                    "description": "Filters out all but the latest day and month_to_date for each month",
                     "data_type": "boolean",
                     "required": false
                 },
                 "sort_order": {
-                    "description": "Sorts by account code first, then timestamp. asc or desc. The default is desc.",
+                    "description": "Sorts by account code first, then timestamp. asc or desc. The default is desc",
                     "data_type": "string",
                     "value_list": ["asc", "desc"],
                     "required": false
                 },
                 "limit": {
-                    "description": "The maximum number of records to return, default: 100, max: 1000.",
+                    "description": "The maximum number of records to return, default: 100, max: 1000",
                     "data_type": "numeric",
                     "default": 100,
                     "required": false
                 },
                 "offset": {
-                    "description": "The number of records to skip past. Default: 0.",
+                    "description": "The number of records to skip past. Default: 0",
                     "data_type": "numeric",
                     "default": 0,
                     "required": false
                 },
                 "start_date": {
-                    "description": "Start date to filter by.",
+                    "description": "Start date to filter by",
                     "data_type": "string",
                     "required": false
                 },
                 "end_date": {
-                    "description": "End date to filter by.",
+                    "description": "End date to filter by",
                     "data_type": "string",
                     "required": false
                 }
@@ -1180,7 +1180,7 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Telemetry network retrieved successfully."
+                        "Telemetry network retrieved successfully"
                     ]
                 },
                 {
@@ -1190,7 +1190,7 @@
                        "gig"
                     ],
                     "column_name": "Account Code",
-                    "description": "The account code for the network usage."
+                    "description": "The account code for the network usage"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_network_usage.*.percentile_bps",
@@ -1199,7 +1199,7 @@
                        "6050493542"
                     ],
                     "column_name": "Percentile BPS",
-                    "description": "The top percentile BPS value across sensors."
+                    "description": "The top percentile BPS value across sensors"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_network_usage.*.percentile",
@@ -1208,7 +1208,7 @@
                        "95"
                     ],
                     "column_name": "Percentile",
-                    "description": "Percentile of BPS records to calculate for percentile_bps."
+                    "description": "Percentile of BPS records to calculate for percentile_bps"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_network_usage.*.interval",
@@ -1217,7 +1217,7 @@
                        "day"
                     ],
                     "column_name": "Interval",
-                    "description": "Time span the calculation was performed over (day, month_to_day)."
+                    "description": "Time span the calculation was performed over (day, month_to_day)"
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_network_usage.*.timestamp",
@@ -1226,7 +1226,7 @@
                        "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Timestamp",
-                    "description": "The date the calculation was performed until."
+                    "description": "The date the calculation was performed until"
                 }
             ],
             "render": {
@@ -1239,23 +1239,23 @@
         {
             "action": "get entity summary",
             "identifier": "fnc_get_entity_summary",
-            "description": "Get summary information about an IP or domain.",
+            "description": "Get summary information about an IP or domain",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "entity": {
-                    "description": "Entity name to retrieve summary information for.",
+                    "description": "Entity name to retrieve summary information for",
                     "data_type": "string",
                     "required": true
                 },
                 "entity_type": {
-                    "description": "Type of the entity we are searching. Allowed values are: ip, domain or file.",
+                    "description": "Type of the entity we are searching. Allowed values are: ip, domain or file",
                     "data_type": "string",
                     "required": false
                 },
                 "account_uuid": {
-                    "description": "Account uuid to filter by. If absent, all the caller's allowed accounts will be queried.",
+                    "description": "Account uuid to filter by. If absent, all the caller's allowed accounts will be queried",
                     "data_type": "string",
                     "required": false
                 }
@@ -1277,7 +1277,7 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Entity summary retrieved successfully."
+                        "Entity summary retrieved successfully"
                     ]
                 },
                 {
@@ -1368,45 +1368,45 @@
         {
             "action": "get entity pdns",
             "identifier": "fnc_get_entity_pdns",
-            "description": "Get passive DNS information about an IP or domain.",
+            "description": "Get passive DNS information about an IP or domain",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "entity": {
-                    "description": "IP or Domain to get passive DNS data for.",
+                    "description": "IP or Domain to get passive DNS data for",
                     "data_type": "string",
                     "required": true
                 },
                 "record_type": {
-                    "description": "Limit results to the specified DNS query type(s). Supported types are: A, AAAA, CNAME, MX, NS. Case insensitive.",
+                    "description": "Limit results to the specified DNS query type(s). Supported types are: A, AAAA, CNAME, MX, NS. Case insensitive",
                     "data_type": "string",
                     "allow_list": true
                 },
                 "source": {
-                    "description": "Limit the results to the specified data source(s). Note that not all Sources populate all fields. Supported sources are: ICEBRG_DNS. Case insensitive.",
+                    "description": "Limit the results to the specified data source(s). Note that not all Sources populate all fields. Supported sources are: ICEBRG_DNS. Case insensitive",
                     "data_type": "string",
                     "allow_list": true
                 },
                 "resolve_external": {
-                    "description": "When true, the service will query non-ICEBRG data sources. false by default.",
+                    "description": "When true, the service will query non-ICEBRG data sources. false by default",
                     "data_type": "boolean"
                 },
                 "start_date": {
-                    "description": "The earliest date before which to exclude results. Day granularity, inclusive.",
+                    "description": "The earliest date before which to exclude results. Day granularity, inclusive",
                     "data_type": "string"
                 },
                 "end_date": {
-                    "description": "The latest date after which to exclude results. Day granularity, inclusive.",
+                    "description": "The latest date after which to exclude results. Day granularity, inclusive",
                     "data_type": "string"
                 },
                 "account_uuid": {
-                    "description": "Limit results to the specified account UUID(s). Defaults to all accounts for which the user has permission.",
+                    "description": "Limit results to the specified account UUID(s). Defaults to all accounts for which the user has permission",
                     "data_type": "string",
                     "allow_list": true
                 },
                 "limit": {
-                    "description": "Maximum number of records to be returned. Default 1000.",
+                    "description": "Maximum number of records to be returned. Default 1000",
                     "data_type": "numeric"
                 }
             },
@@ -1427,7 +1427,7 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Entity pdns retrieved successfully."
+                        "Entity pdns retrieved successfully"
                     ]
                 },
                 {
@@ -1505,26 +1505,26 @@
         {
             "action": "get entity dhcp",
             "identifier": "fnc_get_entity_dhcp",
-            "description": "Get DHCP information about an IP address.",
+            "description": "Get DHCP information about an IP address",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "entity": {
-                    "description": "IP to get DHCP data for.",
+                    "description": "IP to get DHCP data for",
                     "data_type": "string",
                     "required": true
                 },
                 "start_date": {
-                    "description": "The earliest date before which to exclude results. Day granularity, inclusive.",
+                    "description": "The earliest date before which to exclude results. Day granularity, inclusive",
                     "data_type": "string"
                 },
                 "end_date": {
-                    "description": "The latest date after which to exclude results. Day granularity, inclusive.",
+                    "description": "The latest date after which to exclude results. Day granularity, inclusive",
                     "data_type": "string"
                 },
                 "account_uuid": {
-                    "description": "Limit results to the specified account UUID(s). Defaults to all accounts for which the user has permission.",
+                    "description": "Limit results to the specified account UUID(s). Defaults to all accounts for which the user has permission",
                     "data_type": "string",
                     "allow_list": true
                 }
@@ -1546,7 +1546,7 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Entity dhcp retrieved successfully."
+                        "Entity dhcp retrieved successfully"
                     ]
                 },
                 {
@@ -1624,13 +1624,13 @@
         {
             "action": "get entity file",
             "identifier": "fnc_get_entity_file",
-            "description": "Get information about a file.",
+            "description": "Get information about a file",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "hash": {
-                    "description": "File hash. Can be an MD5, SHA1, or SHA256 hash of the file.",
+                    "description": "File hash. Can be an MD5, SHA1, or SHA256 hash of the file",
                     "data_type": "string",
                     "required": true
                 }
@@ -1759,91 +1759,91 @@
         {
             "action": "get detections",
             "identifier": "fnc_get_detections",
-            "description": "Get information about the detections.",
+            "description": "Get information about the detections",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "rule_uuid": {
-                    "description": "Filter to a specific rule.",
+                    "description": "Filter to a specific rule",
                     "data_type": "string"
                 },
                 "account_uuid": {
-                    "description": "For those with access to multiple accounts, specify a single account to return results from.",
+                    "description": "For those with access to multiple accounts, specify a single account to return results from",
                     "data_type": "string"
                 },
                 "status": {
-                    "description": "Filter by detection status: active, resolved.",
+                    "description": "Filter by detection status: active, resolved",
                     "data_type": "string",
                     "value_list": ["active","resolved"]
                 },
                 "device_ip": {
-                    "description": "Device IP to filter by.",
+                    "description": "Device IP to filter by",
                     "data_type": "string"
                 },
                 "sensor_id": {
-                    "description": "Sensor ID to filter by.",
+                    "description": "Sensor ID to filter by",
                     "data_type": "string"
                 },
                 "muted": {
-                    "description": "List detections that a user muted: true / false.",
+                    "description": "List detections that a user muted: true / false",
                     "data_type": "boolean"
                 },
                 "muted_device": {
-                    "description": "List detections for muted devices: true / false.",
+                    "description": "List detections for muted devices: true / false",
                     "data_type": "boolean"
                 },
                 "muted_rule": {
-                    "description": "List detections for muted rules.",
+                    "description": "List detections for muted rules",
                     "data_type": "boolean"
                 },
                 "include": {
-                    "description": "Include additional information in the response (i.e. 'rules,indicators' add the rules and the indicators to the response).",
+                    "description": "Include additional information in the response (i.e. 'rules,indicators' add the rules and the indicators to the response)",
                     "data_type": "string",
                     "allow_list": true,
                     "value_list": ["rules","indicators","rules,indicators"]
                 },
                 "sort_by": {
-                    "description": "Field to sort by (first_seen, last_seen, status, device_ip, indicator_count).",
+                    "description": "Field to sort by (first_seen, last_seen, status, device_ip, indicator_count)",
                     "data_type": "string",
                     "value_list": ["first_seen","last_seen","status","device_ip","indicator_count"]
                 },
                 "sort_order": {
-                    "description": "Sort direction ('asc' vs 'desc').",
+                    "description": "Sort direction ('asc' vs 'desc')",
                     "data_type": "string",
                     "value_list": ["asc","desc"]
                 },
                 "offset": {
-                    "description": "The number of records to skip past.",
+                    "description": "The number of records to skip past",
                     "data_type": "numeric"
                 },
                 "limit": {
-                    "description": "The number of records to return, default: 100, max: 10000.",
+                    "description": "The number of records to return, default: 100, max: 10000",
                     "data_type": "numeric",
                     "default": 100
                 },
                 "created_start_date": {
-                    "description": "Created start date to filter by (inclusive).",
+                    "description": "Created start date to filter by (inclusive)",
                     "data_type": "string"
                 },
                 "created_end_date": {
-                    "description": "Created end date to filter by (exclusive).",
+                    "description": "Created end date to filter by (exclusive)",
                     "data_type": "string"
                 },
                 "created_or_shared_start_date": {
-                    "description": "Created or shared start date to filter by (inclusive).",
+                    "description": "Created or shared start date to filter by (inclusive)",
                     "data_type": "string"
                 },
                 "created_or_shared_end_date": {
-                    "description": " Created or shared end date to filter by (exclusive).",
+                    "description": " Created or shared end date to filter by (exclusive)",
                     "data_type": "string"
                 },
                 "active_start_date": {
-                    "description": "Active start date to filter by (inclusive).",
+                    "description": "Active start date to filter by (inclusive)",
                     "data_type": "string"
                 },
                 "active_end_date": {
-                    "description": "Active end date to filter by (exclusive).",
+                    "description": "Active end date to filter by (exclusive)",
                     "data_type": "string"
                 }
             },
@@ -2026,35 +2026,35 @@
         {
             "action": "get detection rules",
             "identifier": "fnc_get_detection_rules",
-            "description": "Get a list of detection rules.",
+            "description": "Get a list of detection rules",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "account_uuid": {
-                    "description": "For those with access to multiple accounts, specify a single account to return results from.",
+                    "description": "For those with access to multiple accounts, specify a single account to return results from",
                     "data_type": "string"
                 },
                 "search": {
-                    "description": "Filter name or category.",
+                    "description": "Filter name or category",
                     "data_type": "string"
                 },
                 "has_detections": {
-                    "description": "Include rules that have unmuted, unresolved detections.",
+                    "description": "Include rules that have unmuted, unresolved detections",
                     "data_type": "boolean"
                 },
                 "severity": {
-                    "description": "Filter by severity: high, moderate, low.",
+                    "description": "Filter by severity: high, moderate, low",
                     "data_type": "string",
                     "value_list": ["high","moderate","low"]
                 },
                 "confidence": {
-                    "description": "Filter by confidence: high, moderate, low.",
+                    "description": "Filter by confidence: high, moderate, low",
                     "data_type": "string",
                     "value_list": ["high","moderate","low"]
                 },
                 "category": {
-                    "description": "Category to filter by.",
+                    "description": "Category to filter by",
                     "data_type": "string",
                     "value_list": [
                         "Attack:Command and Control",
@@ -2076,15 +2076,15 @@
                     ]
                 },
                 "rule_account_muted": {
-                    "description": "Include muted rules: true / false.",
+                    "description": "Include muted rules: true / false",
                     "data_type": "boolean"
                 },
                 "enabled": {
-                    "description": "Enabled rules only.",
+                    "description": "Enabled rules only",
                     "data_type": "boolean"
                 },
                 "sort_by": {
-                    "description": "The field to sort by: created, updated, detections, severity, confidence, category, last_seen, detections_muted. Defaults to updated.",
+                    "description": "The field to sort by: created, updated, detections, severity, confidence, category, last_seen, detections_muted. Defaults to updated",
                     "data_type": "string",
                     "value_list": [
                         "created",
@@ -2098,16 +2098,16 @@
                     ]
                 },
                 "sort_order": {
-                    "description": "Sort direction ('asc' vs 'desc').",
+                    "description": "Sort direction ('asc' vs 'desc')",
                     "data_type": "string",
                     "value_list": ["asc","desc"]
                 },
                 "offset": {
-                    "description": "The number of records to skip past.",
+                    "description": "The number of records to skip past",
                     "data_type": "numeric"
                 },
                 "limit": {
-                    "description": "The number of records to return, default: 100, max: 1000.",
+                    "description": "The number of records to return, default: 100, max: 1000",
                     "data_type": "numeric",
                     "default": 100
                 }
@@ -2278,19 +2278,19 @@
         {
             "action": "resolve detection",
             "identifier": "fnc_resolve_detection",
-            "description": "Resolve a specific detection.",
+            "description": "Resolve a specific detection",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "detection_uuid": {
                     "data_type": "string",
-                    "description": "Detection UUID to resolve.",
+                    "description": "Detection UUID to resolve",
                     "required": true
                 },
                 "resolution": {
                     "data_type": "string",
-                    "description": "Resolution state. Options: true_positive_mitigated, true_positive_no_action, false_positive, unknown'.",
+                    "description": "Resolution state. Options: true_positive_mitigated, true_positive_no_action, false_positive, unknown'",
                     "required": true,
                     "value_list": [
                         "true_positive_mitigated",
@@ -2301,7 +2301,7 @@
                 },
                 "resolution_comment": {
                     "data_type": "string",
-                    "description": "Optional comment for the resolution.",
+                    "description": "Optional comment for the resolution",
                     "required": false
                 }
             },
@@ -2340,26 +2340,26 @@
         {
             "action": "get rule events",
             "identifier": "fnc_get_rule_events",
-            "description": "Get a list of the events that matched on a specific rule.",
+            "description": "Get a list of the events that matched on a specific rule",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "rule_uuid": {
-                    "description": "Rule UUID to get events for.",
+                    "description": "Rule UUID to get events for",
                     "data_type": "string",
                     "required": true
                 },
                 "account_uuid": {
-                    "description": "Account uuid to filter by.",
+                    "description": "Account uuid to filter by",
                     "data_type": "string"
                 },
                 "offset": {
-                    "description": "The number of records to skip past.",
+                    "description": "The number of records to skip past",
                     "data_type": "numeric"
                 },
                 "limit": {
-                    "description": "The number of records to return, default: 100, max: 1000.",
+                    "description": "The number of records to return, default: 100, max: 1000",
                     "data_type": "numeric",
                     "default": 100
                 }
@@ -2480,22 +2480,22 @@
         {
             "action": "get detection events",
             "identifier": "fnc_get_detection_events",
-            "description": "Get a list of the events associated with a specific detection.",
+            "description": "Get a list of the events associated with a specific detection",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "detection_uuid": {
-                    "description": "Detection uuid to filter by.",
+                    "description": "Detection uuid to filter by",
                     "data_type": "string",
                     "required": true
                 },
                 "offset": {
-                    "description": "The number of records to skip past.",
+                    "description": "The number of records to skip past",
                     "data_type": "numeric"
                 },
                 "limit": {
-                    "description": "The number of records to return, default: 100, max: 1000.",
+                    "description": "The number of records to return, default: 100, max: 1000",
                     "data_type": "numeric",
                     "default": 100
                 }
@@ -2632,24 +2632,24 @@
         {
             "action": "create detection rule",
             "identifier": "fnc_create_detection_rule",
-            "description": "Create a new detection rule.",
+            "description": "Create a new detection rule",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
                 "account_uuid": {
                     "data_type": "string",
-                    "description": "Account where the rule will be created.",
+                    "description": "Account where the rule will be created",
                     "required": true
                 },
                 "name": {
                     "data_type": "string",
-                    "description": "The name of the rule.",
+                    "description": "The name of the rule",
                     "required": true
                 },
                 "category": {
                     "data_type": "string",
-                    "description": "The category of the rule.",
+                    "description": "The category of the rule",
                     "required": true,
                     "value_list": [
                         "Attack:Command and Control",
@@ -2672,62 +2672,62 @@
                 },
                 "query_signature": {
                     "data_type": "string",
-                    "description": " The IQL query for the rule.",
+                    "description": " The IQL query for the rule",
                     "required": true
                 },
                 "description": {
                     "data_type": "string",
-                    "description": "A description for the rule.",
+                    "description": "A description for the rule",
                     "required": false
                 },
                 "severity": {
                     "data_type": "string",
-                    "description": "The severity of the rule.",
+                    "description": "The severity of the rule",
                     "required": true,
                     "value_list": ["high", "moderate", "low"]
                 },
                 "confidence": {
                     "data_type": "string",
-                    "description": "The confidence of the rule.",
+                    "description": "The confidence of the rule",
                     "required": true,
                     "value_list": ["high", "moderate", "low"]
                 },
                 "primary_attack_id": {
                     "data_type": "string",
-                    "description": "Primary Attack ID.",
+                    "description": "Primary Attack ID",
                     "required": false
                 },
                 "secondary_attack_id": {
                     "data_type": "string",
-                    "description": "Secondary Attack ID.",
+                    "description": "Secondary Attack ID",
                     "required": false
                 },
                 "specificity": {
                     "data_type": "string",
-                    "description": "Specificity.",
+                    "description": "Specificity",
                     "required": false
                 },
                 "device_ip_fields": {
                     "data_type": "string",
-                    "description": "List, separated by ',', of the fields to check for impacted devices. Using 'DEFAULT' if not provided.",
+                    "description": "List, separated by ',', of the fields to check for impacted devices. Using 'DEFAULT' if not provided",
                     "required": false,
                     "allow_list": true
                 },
                 "indicator_fields": {
                     "data_type": "string",
-                    "description": "List, separated by ',' of the indicator's fields.",
+                    "description": "List, separated by ',' of the indicator's fields",
                     "required": false,
                     "allow_list": true
                 },
                 "run_account_uuids": {
                     "data_type": "string",
-                    "description": "Account UUIDs on which this rule will run. This will usually be just your own account UUID. (separate multiple accounts by comma).",
+                    "description": "Account UUIDs on which this rule will run. This will usually be just your own account UUID. (separate multiple accounts by comma)",
                     "required": true,
                     "allow_list": true
                 },
                 "auto_resolution_minutes": {
                     "data_type": "numeric",
-                    "description": "The number of minutes after which detections will be auto-resolved. If 0 then detections have to be manually resolved.",
+                    "description": "The number of minutes after which detections will be auto-resolved. If 0 then detections have to be manually resolved",
                     "required": false
                 }
             },
