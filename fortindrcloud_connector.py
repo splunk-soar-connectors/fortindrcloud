@@ -1,25 +1,29 @@
 from __future__ import print_function, unicode_literals
-from typing import Any, Dict, List
 
 import collections
 import json
 import re
 import sys
-from datetime import timedelta, datetime
-from dateparser import parse as parse_date
+from datetime import datetime, timedelta
+from typing import Any, Dict, List
 
 import phantom.app as phantom
+import requests
+from bs4 import BeautifulSoup
+from dateparser import parse as parse_date
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
-import requests
-from bs4 import BeautifulSoup
+from fortindrcloud_consts import (
+    DATE_FORMAT,
+    DEFAULT_FIRST_POLL,
+    DEFAULT_LIMIT,
+    DEFAULT_POLLING_DELAY,
+    MAX_DETECTIONS,
+    TRAINING_ACC,
+)
 
 # Usage of the consts file is recommended
-
-from fortindrcloud_consts import TRAINING_ACC, MAX_DETECTIONS, DEFAULT_LIMIT
-from fortindrcloud_consts import DATE_FORMAT, DEFAULT_POLLING_DELAY
-from fortindrcloud_consts import DEFAULT_FIRST_POLL
 
 
 class Request_Info:
