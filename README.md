@@ -30,25 +30,25 @@ The below configuration variables are required for this App to operate on **Fort
 
 ### Supported Actions
 
-[fortindr create detection rule](#) \- Create a new detection rule.
-[fortindr get detection events](#) \- Get a list of the events associated with a specific detection.
-[fortindr get detection rule events](#) \- Get a list of the events that matched on a specific rule.
-[fortindr resolve detection](#) \- Resolve a specific detection.
-[fortindr get detection rules](#) \- Get a list of detection rules.
-[fortindr get detections](#) \- Get information about the detections.
-[fortindr get entity file](#) \- Get information about a file.
-[fortindr get entity dhcp](#) \- Get DHCP information about an IP address.
-[fortindr get entity pdns](#) \- Get passive DNS information about an IP or domain.
-[fortindr get entity summary](#) \- Get summary information about an IP or domain.
-[fortindr get telemetry network](#) \- Get network telemetry data grouped by time.
-[fortindr get telemetry packetstats](#) \- Get packetstats telemetry data grouped by time.
-[fortindr get telemetry events](#) \- Get event telemetry data grouped by time.
-[fortindr create task](#) \- Create a new PCAP task.
-[fortindr get tasks](#) \- Get a list of all the PCAP tasks.
-[fortindr get devices](#) \- Get a list of all devices.
-[fortindr get sensors](#) \- Get a list of all sensors.
-[on poll](#) \- Retrieve latest Detections from the FortiNDR Cloud Service.
-[test connectivity](#) \- Validate the asset configuration for connectivity using supplied configuration
+[fortindr create detection rule](#action-fortindr-create-detection-rule) - Create a new detection rule.
+[fortindr get detection events](#action-fortindr-get-detection-events) - Get a list of the events associated with a specific detection.
+[fortindr get detection rule events](#action-fortindr-get-detection-rule-events) - Get a list of the events that matched on a specific rule.
+[fortindr resolve detection](#action-fortindr-resolve-detection) - Resolve a specific detection.
+[fortindr get detection rules](#action-fortindr-get-detection-rules) - Get a list of detection rules.
+[fortindr get detections](#action-fortindr-get-detections) - Get information about the detections.
+[fortindr get entity file](#action-fortindr-get-entity-file) - Get information about a file.
+[fortindr get entity dhcp](#action-fortindr-get-entity-dhcp) - Get DHCP information about an IP address.
+[fortindr get entity pdns](#action-fortindr-get-entity-pdns) - Get passive DNS information about an IP or domain.
+[fortindr get entity summary](#action-fortindr-get-entity-summary) - Get summary information about an IP or domain.
+[fortindr get telemetry network](#action-fortindr-get-telemetry-network) - Get network telemetry data grouped by time.
+[fortindr get telemetry packetstats](#action-fortindr-get-telemetry-packetstats) - Get packetstats telemetry data grouped by time.
+[fortindr get telemetry events](#action-fortindr-get-telemetry-events) - Get event telemetry data grouped by time.
+[fortindr create task](#action-fortindr-create-task) - Create a new PCAP task.
+[fortindr get tasks](#action-fortindr-get-tasks) - Get a list of all the PCAP tasks.
+[fortindr get devices](#action-fortindr-get-devices) - Get a list of all devices.
+[fortindr get sensors](#action-fortindr-get-sensors) - Get a list of all sensors.
+[on poll](#action-on-poll) - Retrieve latest Detections from the FortiNDR Cloud Service.
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration
 
 action: 'fortindr create detection rule'
 ----------------------------------------
