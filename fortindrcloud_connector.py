@@ -1524,7 +1524,7 @@ class FortiNDRCloudConnector(BaseConnector):
             request_info=request_info,
         )
 
-    def _handle_fnc_get_detection_rule_events(self, param):
+    def _handle_fnc_get_rule_events(self, param):
         # Add an action result object to self (BaseConnector)
         # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -1549,7 +1549,7 @@ class FortiNDRCloudConnector(BaseConnector):
         events = []
         if response and "events" in response:
             events = response["events"]
-        result = {"detection_rule_event": events}
+        result = {"rule_event": events}
         summary = self._prepare_summary(
             response=events, request_info=request_info)
         return self.validate_request(
@@ -1706,8 +1706,8 @@ class FortiNDRCloudConnector(BaseConnector):
             ret_val = self._handle_fnc_get_detection_rules(param)
         elif action_id == "fnc_resolve_detection":
             ret_val = self._handle_fnc_resolve_detection(param)
-        elif action_id == "fnc_get_detection_rule_events":
-            ret_val = self._handle_fnc_get_detection_rule_events(param)
+        elif action_id == "fnc_get_rule_events":
+            ret_val = self._handle_fnc_get_rule_events(param)
         elif action_id == "fnc_get_detection_events":
             ret_val = self._handle_fnc_get_detection_events(param)
         elif action_id == "fnc_create_detection_rule":

@@ -139,7 +139,7 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get sensors",
+            "action": "get sensors",
             "identifier": "fnc_get_sensors",
             "description": "Get a list of all sensors.",
             "verbose": "",
@@ -277,7 +277,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get devices",
+            "action": "get devices",
             "identifier": "fnc_get_devices",
             "description": "Get a list of all devices.",
             "verbose": "",
@@ -371,7 +371,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get tasks",
+            "action": "get tasks",
             "identifier": "fnc_get_tasks",
             "description": "Get a list of all the PCAP tasks.",
             "verbose": "",
@@ -578,7 +578,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr create task",
+            "action": "create task",
             "identifier": "fnc_create_task",
             "description": "Create a new PCAP task.",
             "verbose": "",
@@ -821,7 +821,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get telemetry events",
+            "action": "get telemetry events",
             "identifier": "fnc_get_telemetry_events",
             "description": "Get event telemetry data grouped by time.",
             "verbose": "",
@@ -946,7 +946,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get telemetry packetstats",
+            "action": "get telemetry packetstats",
             "identifier": "fnc_get_telemetry_packetstats",
             "description": "Get packetstats telemetry data grouped by time.",
             "verbose": "",
@@ -1111,7 +1111,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get telemetry network",
+            "action": "get telemetry network",
             "identifier": "fnc_get_telemetry_network",
             "description": "Get network telemetry data grouped by time.",
             "verbose": "",
@@ -1237,7 +1237,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get entity summary",
+            "action": "get entity summary",
             "identifier": "fnc_get_entity_summary",
             "description": "Get summary information about an IP or domain.",
             "verbose": "",
@@ -1366,7 +1366,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get entity pdns",
+            "action": "get entity pdns",
             "identifier": "fnc_get_entity_pdns",
             "description": "Get passive DNS information about an IP or domain.",
             "verbose": "",
@@ -1503,7 +1503,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get entity dhcp",
+            "action": "get entity dhcp",
             "identifier": "fnc_get_entity_dhcp",
             "description": "Get DHCP information about an IP address.",
             "verbose": "",
@@ -1622,7 +1622,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get entity file",
+            "action": "get entity file",
             "identifier": "fnc_get_entity_file",
             "description": "Get information about a file.",
             "verbose": "",
@@ -1757,7 +1757,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get detections",
+            "action": "get detections",
             "identifier": "fnc_get_detections",
             "description": "Get information about the detections.",
             "verbose": "",
@@ -2024,7 +2024,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get detection rules",
+            "action": "get detection rules",
             "identifier": "fnc_get_detection_rules",
             "description": "Get a list of detection rules.",
             "verbose": "",
@@ -2276,7 +2276,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr resolve detection",
+            "action": "resolve detection",
             "identifier": "fnc_resolve_detection",
             "description": "Resolve a specific detection.",
             "verbose": "",
@@ -2338,8 +2338,8 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get detection rule events",
-            "identifier": "fnc_get_detection_rule_events",
+            "action": "get rule events",
+            "identifier": "fnc_get_rule_events",
             "description": "Get a list of the events that matched on a specific rule.",
             "verbose": "",
             "type": "investigate",
@@ -2385,7 +2385,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rule_event.src_ip",
+                    "data_path": "action_result.data.*.rule_event.src_ip",
                     "data_type": "string",
                     "example_values": [
                        "8.8.8.8"
@@ -2393,7 +2393,7 @@
                     "column_name": "Src IP"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rule_event.dst_ip",
+                    "data_path": "action_result.data.*.rule_event.dst_ip",
                     "data_type": "string",
                     "example_values": [
                        "9.9.9.9"
@@ -2401,7 +2401,7 @@
                     "column_name": "Dest IP"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rule_event.src_port",
+                    "data_path": "action_result.data.*.rule_event.src_port",
                     "data_type": "numeric",
                     "example_values": [
                        "53"
@@ -2409,7 +2409,7 @@
                     "column_name": "Src Port"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rule_event.dst_port",
+                    "data_path": "action_result.data.*.rule_event.dst_port",
                     "data_type": "numeric",
                     "example_values": [
                        "32"
@@ -2417,12 +2417,12 @@
                     "column_name": "Dst Port"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rule_event.host_domain",
+                    "data_path": "action_result.data.*.rule_event.host_domain",
                     "data_type": "string",
                     "column_name": "Host Domain"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rule_event.flow_id",
+                    "data_path": "action_result.data.*.rule_event.flow_id",
                     "data_type": "string",
                     "example_values": [
                        "Cpv6xc2a3gA6fA8WE"
@@ -2430,7 +2430,7 @@
                     "column_name": "Flow ID"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rule_event.event_type",
+                    "data_path": "action_result.data.*.rule_event.event_type",
                     "data_type": "string",
                     "example_values": [
                        "dns"
@@ -2438,7 +2438,7 @@
                     "column_name": "Event Type"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rule_event.sensor_id",
+                    "data_path": "action_result.data.*.rule_event.sensor_id",
                     "data_type": "string",
                     "example_values": [
                        "sen1"
@@ -2446,7 +2446,7 @@
                     "column_name": "Sensor ID"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rule_event.timestamp",
+                    "data_path": "action_result.data.*.rule_event.timestamp",
                     "data_type": "string",
                     "example_values": [
                        "2019-01-30T00:00:00.000Z"
@@ -2454,7 +2454,7 @@
                     "column_name": "Timestamp"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rule_event.customer_id",
+                    "data_path": "action_result.data.*.rule_event.customer_id",
                     "data_type": "string",
                     "example_values": [
                        "gig"
@@ -2462,7 +2462,7 @@
                     "column_name": "Customer Id"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rule_event.uuid",
+                    "data_path": "action_result.data.*.rule_event.uuid",
                     "data_type": "string",
                     "example_values": [
                        "a7015381-0484-11ee-a43f-067ff9e63f5b"
@@ -2478,7 +2478,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr get detection events",
+            "action": "get detection events",
             "identifier": "fnc_get_detection_events",
             "description": "Get a list of the events associated with a specific detection.",
             "verbose": "",
@@ -2630,7 +2630,7 @@
              "versions": "EQ(*)"
         },
         {
-            "action": "fortindr create detection rule",
+            "action": "create detection rule",
             "identifier": "fnc_create_detection_rule",
             "description": "Create a new detection rule.",
             "verbose": "",

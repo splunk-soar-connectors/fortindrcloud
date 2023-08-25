@@ -30,27 +30,27 @@ The below configuration variables are required for this App to operate on **Fort
 
 ### Supported Actions
 
-- [fortindr create detection rule](#action-fortindr-create-detection-rule) - Create a new detection rule.
-- [fortindr get detection events](#action-fortindr-get-detection-events) - Get a list of the events associated with a specific detection.
-- [fortindr get detection rule events](#action-fortindr-get-detection-rule-events) - Get a list of the events that matched on a specific rule.
-- [fortindr resolve detection](#action-fortindr-resolve-detection) - Resolve a specific detection.
-- [fortindr get detection rules](#action-fortindr-get-detection-rules) - Get a list of detection rules.
-- [fortindr get detections](#action-fortindr-get-detections) - Get information about the detections.
-- [fortindr get entity file](#action-fortindr-get-entity-file) - Get information about a file.
-- [fortindr get entity dhcp](#action-fortindr-get-entity-dhcp) - Get DHCP information about an IP address.
-- [fortindr get entity pdns](#action-fortindr-get-entity-pdns) - Get passive DNS information about an IP or domain.
-- [fortindr get entity summary](#action-fortindr-get-entity-summary) - Get summary information about an IP or domain.
-- [fortindr get telemetry network](#action-fortindr-get-telemetry-network) - Get network telemetry data grouped by time.
-- [fortindr get telemetry packetstats](#action-fortindr-get-telemetry-packetstats) - Get packetstats telemetry data grouped by time.
-- [fortindr get telemetry events](#action-fortindr-get-telemetry-events) - Get event telemetry data grouped by time.
-- [fortindr create task](#action-fortindr-create-task) - Create a new PCAP task.
-- [fortindr get tasks](#action-fortindr-get-tasks) - Get a list of all the PCAP tasks.
-- [fortindr get devices](#action-fortindr-get-devices) - Get a list of all devices.
-- [fortindr get sensors](#action-fortindr-get-sensors) - Get a list of all sensors.
+- [create detection rule](#action-create-detection-rule) - Create a new detection rule.
+- [get detection events](#action-get-detection-events) - Get a list of the events associated with a specific detection.
+- [get rule events](#action-get-rule-events) - Get a list of the events that matched on a specific rule.
+- [resolve detection](#action-resolve-detection) - Resolve a specific detection.
+- [get detection rules](#action-get-detection-rules) - Get a list of detection rules.
+- [get detections](#action-get-detections) - Get information about the detections.
+- [get entity file](#action-get-entity-file) - Get information about a file.
+- [get entity dhcp](#action-get-entity-dhcp) - Get DHCP information about an IP address.
+- [get entity pdns](#action-get-entity-pdns) - Get passive DNS information about an IP or domain.
+- [get entity summary](#action-get-entity-summary) - Get summary information about an IP or domain.
+- [get telemetry network](#action-get-telemetry-network) - Get network telemetry data grouped by time.
+- [get telemetry packetstats](#action-get-telemetry-packetstats) - Get packetstats telemetry data grouped by time.
+- [get telemetry events](#action-get-telemetry-events) - Get event telemetry data grouped by time.
+- [create task](#action-create-task) - Create a new PCAP task.
+- [get tasks](#action-get-tasks) - Get a list of all the PCAP tasks.
+- [get devices](#action-get-devices) - Get a list of all devices.
+- [get sensors](#action-get-sensors) - Get a list of all sensors.
 - [on poll](#action-on-poll) - Retrieve latest Detections from the FortiNDR Cloud Service.
 - [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration
 
-action: 'fortindr create detection rule'
+action: 'create detection rule'
 ----------------------------------------
 
 Create a new detection rule.
@@ -110,7 +110,7 @@ Read only: **True**
 | action\_result.data.*.rule.indicator\_fields | string |     | src.ip |
 | action\_result.data.*.rule.source\_excludes | string |     | Zscaler |
 
-action: 'fortindr get detection events'
+action: 'get detection events'
 ---------------------------------------
 
 Get a list of the events associated with a specific detection.
@@ -148,7 +148,7 @@ Read only: **True**
 | action\_result.data.*.detection\_events.*.rule_uuid | string |     | a7015381-0484-11ee-a43f-067ff9e63f5b |
 | action\_result.data.*.detection\_events.*.uuid | string |     | a7015381-0484-11ee-a43f-067ff9e63f5b |
 
-action: 'fortindr get detection rule events'
+action: 'get rule events'
 --------------------------------------------
 
 Get a list of the events that matched on a specific rule.
@@ -173,19 +173,19 @@ Read only: **True**
 | action_result.status | string |     | success  <br>failed |
 | action_result.summary | string |     |     |
 | action_result.message | string |     | Detection Rule Events retrieved successfully. |
-| action\_result.data.*.detection\_rule\_event.src\_ip | string |     | 8.8.8.8 |
-| action\_result.data.*.detection\_rule\_event.dst\_ip | string |     | 9.9.9.9 |
-| action\_result.data.*.detection\_rule\_event.src\_port | numeric |     | 53  |
-| action\_result.data.*.detection\_rule\_event.dst\_port | numeric |     | 32  |
-| action\_result.data.*.detection\_rule\_event.host\_domain | string |     |     |
-| action\_result.data.*.detection\_rule\_event.flow\_id | string |     | Cpv6xc2a3gA6fA8WE |
-| action\_result.data.*.detection\_rule\_event.event\_type | string |     | dns |
-| action\_result.data.*.detection\_rule\_event.sensor\_id | string |     | sen1 |
-| action\_result.data.*.detection\_rule_event.timestamp | string |     | 2019-01-30T00:00:00.000Z |
-| action\_result.data.*.detection\_rule\_event.customer\_id | string |     | gig |
-| action\_result.data.*.detection\_rule_event.uuid | string |     | a7015381-0484-11ee-a43f-067ff9e63f5b |
+| action\_result.data.*.rule\_event.src\_ip | string |     | 8.8.8.8 |
+| action\_result.data.*.rule\_event.dst\_ip | string |     | 9.9.9.9 |
+| action\_result.data.*.rule\_event.src\_port | numeric |     | 53  |
+| action\_result.data.*.rule\_event.dst\_port | numeric |     | 32  |
+| action\_result.data.*.rule\_event.host\_domain | string |     |     |
+| action\_result.data.*.rule\_event.flow\_id | string |     | Cpv6xc2a3gA6fA8WE |
+| action\_result.data.*.rule\_event.event\_type | string |     | dns |
+| action\_result.data.*.rule\_event.sensor\_id | string |     | sen1 |
+| action\_result.data.*.rule\_event.timestamp | string |     | 2019-01-30T00:00:00.000Z |
+| action\_result.data.*.rule\_event.customer\_id | string |     | gig |
+| action\_result.data.*.rule\_event.uuid | string |     | a7015381-0484-11ee-a43f-067ff9e63f5b |
 
-action: 'fortindr resolve detection'
+action: 'resolve detection'
 ------------------------------------
 
 Resolve a specific detection.
@@ -211,7 +211,7 @@ Read only: **True**
 | action_result.message | string |     | Detection resolved successfully. |
 | action_result.data | string |     |     |
 
-action: 'fortindr get detection rules'
+action: 'get detection rules'
 --------------------------------------
 
 Get a list of detection rules.
@@ -263,7 +263,7 @@ Read only: **True**
 | action\_result.data.*.detection\_rule.severity | string |     | high  <br>moderate  <br>low |
 | action\_result.data.*.detection\_rule.category | string |     | Attack:Infection Vector |
 
-action: 'fortindr get detections'
+action: 'get detections'
 ---------------------------------
 
 Get information about the detections.
@@ -323,7 +323,7 @@ Read only: **True**
 | action_result.data.*.detections.*.updated | string |     | 2019-01-30T00:00:00.000Z |
 | action\_result.data.*.detections.*.device\_ip | string |     | 10.70.43.58 |
 
-action: 'fortindr get entity file'
+action: 'get entity file'
 ----------------------------------
 
 Get information about a file.
@@ -358,7 +358,7 @@ Read only: **True**
 | action\_result.data.*.entity\_file.pe | string |     |     |
 | action\_result.data.*.entity\_file.prevalence\_count\_internal | numeric |     | 0   |
 
-action: 'fortindr get entity dhcp'
+action: 'get entity dhcp'
 ----------------------------------
 
 Get DHCP information about an IP address.
@@ -392,7 +392,7 @@ Read only: **True**
 | action\_result.data.*.entity\_dhcp.sensor_id | string |     | sen1 |
 | action\_result.data.*.entity\_dhcp.start\_lease\_as_long | numeric |     | 1618939557975 |
 
-action: 'fortindr get entity pdns'
+action: 'get entity pdns'
 ----------------------------------
 
 Get passive DNS information about an IP or domain.
@@ -430,7 +430,7 @@ Read only: **True**
 | action\_result.data.*.entity\_pdns.customer_id | string |     | cust |
 | action\_result.data.*.entity\_pdns.source | string |     | icebrg_dns |
 
-action: 'fortindr get entity summary'
+action: 'get entity summary'
 -------------------------------------
 
 Get summary information about an IP or domain.
@@ -465,7 +465,7 @@ Read only: **True**
 | action\_result.data.*.entity\_summary.tags.*.entity | string |     | 8.8.8.8 |
 | action\_result.data.*.entity\_summary.tags.*.public | boolean |     |     |
 
-action: 'fortindr get telemetry network'
+action: 'get telemetry network'
 ----------------------------------------
 
 Get network telemetry data grouped by time.
@@ -500,7 +500,7 @@ Read only: **True**
 | action\_result.data.*.telemetry\_network_usage.*.interval | string |     | day |
 | action\_result.data.*.telemetry\_network_usage.*.timestamp | string |     | 2019-01-30T00:00:00.000Z |
 
-action: 'fortindr get telemetry packetstats'
+action: 'get telemetry packetstats'
 --------------------------------------------
 
 Get packetstats telemetry data grouped by time.
@@ -539,7 +539,7 @@ Read only: **True**
 | action\_result.data.*.telemetry\_packetstats.*.tx_errors | numeric |     | 0   |
 | action\_result.data.*.telemetry\_packetstats.*.tx_packets | numeric |     | 963173536282 |
 
-action: 'fortindr get telemetry events'
+action: 'get telemetry events'
 ---------------------------------------
 
 Get event telemetry data grouped by time.
@@ -574,7 +574,7 @@ Read only: **True**
 | action\_result.data.*.telemetry\_events.*.event_type | string |     | flow |
 | action\_result.data.*.telemetry\_events.*.account_code | string |     | act |
 
-action: 'fortindr create task'
+action: 'create task'
 ------------------------------
 
 Create a new PCAP task.
@@ -622,7 +622,7 @@ Read only: **True**
 | action_result.data.*.task.files | string |     |     |
 | action\_result.data.*.task.has\_files | boolean |     | true  <br>false |
 
-action: 'fortindr get tasks'
+action: 'get tasks'
 ----------------------------
 
 Get a list of all the PCAP tasks.
@@ -664,7 +664,7 @@ Read only: **True**
 | action\_result.data.*.tasks.*.sensor\_ids | string |     | \["sen1"\] |
 | action_result.data.*.tasks.*.files | string |     |     |
 
-action: 'fortindr get devices'
+action: 'get devices'
 ------------------------------
 
 Get a list of all devices.
@@ -695,7 +695,7 @@ Read only: **True**
 | action_result.data.*.devices.*.internal | boolean |     | true  <br>false |
 | action\_result.data.*.devices.*.ip\_address | string |     | 8.8.8.8 |
 
-action: 'fortindr get sensors'
+action: 'get sensors'
 ------------------------------
 
 Get a list of all sensors.
