@@ -1,5 +1,5 @@
 {
-	"appid": "bb31bf87-e183-44e8-b641-a2006252517b",
+	"appid": "e1e4ac8b-cb1b-43c3-bca8-2cbc5d5886ac",
 	"name": "FortiNDRCloud",
 	"description": "This app allows the use of the information provided by the FortiNDR Cloud Service to perform containment and investigative actions on Splunk SOAR",
 	"type": "generic",
@@ -77,7 +77,8 @@
 			"default": false
 		}
 	},
-	"actions": [{
+	"actions": [
+		{
 			"action": "test connectivity",
 			"identifier": "test_connectivity",
 			"description": "Validate the asset configuration for connectivity using supplied configuration",
@@ -3380,7 +3381,7 @@
 	},
 	"fips_compliant": true,
 	"latest_tested_versions": [""],
-	"directory": "fortindrcloud_bb31bf87-e183-44e8-b641-a2006252517b",
+	"directory": "fortindrcloud_e1e4ac8b-cb1b-43c3-bca8-2cbc5d5886ac",
 	"version": 1,
 	"appname": "-",
 	"executable": "spawn3",
