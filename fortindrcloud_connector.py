@@ -378,7 +378,9 @@ class FortiNDRCloudConnector(BaseConnector):
         rule_severity = ""
         rule_confidence = ""
         rule_category = ""
+        created = ""
         first_seen = ""
+        last_seen = ""
         status = ""
         uuid = ""
 
@@ -393,8 +395,12 @@ class FortiNDRCloudConnector(BaseConnector):
                 detection["rule_confidence"])
         if "rule_category" in detection:
             rule_category = detection["rule_category"]
+        if "created" in detection:
+            created = detection["created"]
         if "first_seen" in detection:
             first_seen = detection["first_seen"]
+        if "last_seen" in detection:
+            last_seen = detection["last_seen"]
         if "status" in detection:
             status = detection["status"]
         if "uuid" in detection:
@@ -409,7 +415,9 @@ class FortiNDRCloudConnector(BaseConnector):
         container["data"] = json.dumps(detection)
         container["custom_fields"] = {
             "fnc_category": rule_category,
+            "fnc_created": created,
             "fnc_first_seen": first_seen,
+            "fnc_last_seen": last_seen,
             "fnc_severity": rule_severity,
             "fnc_confidence": rule_confidence,
             "fnc_status": status,
@@ -497,6 +505,10 @@ class FortiNDRCloudConnector(BaseConnector):
         muted_rule = config.get("muted_rule", False)
         if not muted_rule:
             request_params["muted_rule"] = False
+
+        account_uuid = config.get("account_uuid", "")
+        if account_uuid:
+            request_params["account_uuid"] = account_uuid
 
         return request_params
 
