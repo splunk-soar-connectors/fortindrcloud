@@ -98,8 +98,8 @@ class SensorAPI:
             return self._createTask()
         elif request == "getTelemetryEvents":
             return self._getTelemetryEvents()
-        elif request == "getTelemetryNetworkUsage":
-            return self._getTelemetryNetworkUsage()
+        elif request == "getTelemetryNetwork":
+            return self._getTelemetryNetwork()
         elif request == "getTelemetryPacketStats":
             return self._getTelemetryPacketStats()
 
@@ -155,10 +155,10 @@ class SensorAPI:
             method="get",
         )
 
-    def _getTelemetryNetworkUsage(self) -> Dict[str, Any]:
+    def _getTelemetryNetwork(self) -> Dict[str, Any]:
         """ """
         return Request_Info(
-            request="GetTelemetryNetworkUsage",
+            request="GetTelemetryNetwork",
             base_url=self._get_url(),
             endpoint="v1/telemetry/network_usage",
             method="get",
@@ -569,9 +569,6 @@ class FortiNDRCloudConnector(BaseConnector):
 
         try:
             soup = BeautifulSoup(response.text, "html.parser")
-            # Remove the script, style, footer and navigation part from the HTML message
-            for element in soup(["script", "style", "footer", "nav"]):
-                element.extract()
             error_text = soup.text
             split_lines = error_text.split("\n")
             split_lines = [x.strip() for x in split_lines if x.strip()]
@@ -1106,7 +1103,7 @@ class FortiNDRCloudConnector(BaseConnector):
             param.update({"latest_each_month": True})
 
         api_info, request_info = self.prepare_request(
-            api="Sensors", request="getTelemetryNetworkUsage"
+            api="Sensors", request="getTelemetryNetwork"
         )
 
         response = None
@@ -1124,7 +1121,7 @@ class FortiNDRCloudConnector(BaseConnector):
         if response and "network_usage" in response:
             usage = response.pop("network_usage")
 
-        result = {"telemetry_network_usage": usage}
+        result = {"network_usage": usage}
         summary = self._prepare_summary(
             response=usage, request_info=request_info)
         return self.validate_request(
@@ -1164,7 +1161,7 @@ class FortiNDRCloudConnector(BaseConnector):
         if response and "data" in response:
             packetstats = response.pop("data")
 
-        result = {"telemetry_packetstats": packetstats}
+        result = {"packetstats": packetstats}
         summary = self._prepare_summary(
             response=packetstats, request_info=request_info)
         return self.validate_request(
@@ -1504,7 +1501,7 @@ class FortiNDRCloudConnector(BaseConnector):
         rules = []
         if response and "rules" in response:
             rules = response["rules"]
-        result = {"detection_rule": rules}
+        result = {"detection_rules": rules}
         summary = self._prepare_summary(
             response=rules, request_info=request_info)
         return self.validate_request(
@@ -1577,7 +1574,7 @@ class FortiNDRCloudConnector(BaseConnector):
         events = []
         if response and "events" in response:
             events = response["events"]
-        result = {"rule_event": events}
+        result = {"rule_events": events}
         summary = self._prepare_summary(
             response=events, request_info=request_info)
         return self.validate_request(
