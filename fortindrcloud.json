@@ -199,27 +199,27 @@
 					"data_type": "string",
 					"example_values": [
 						"Sensors retrieved successfully."
-					]
+	 				]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.account_uuid",
 					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.sensors.*.created",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Created"
+					"data_path": "action_result.parameter.account_code",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.sensors.*.updated",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Updated"
+					"data_path": "action_result.parameter.sensor_id",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.include",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.enabled",
+					"data_type": "string"
 				},
 				{
 					"data_path": "action_result.data.*.sensors.*.sensor_id",
@@ -227,7 +227,8 @@
 					"example_values": [
 						"sen1"
 					],
-					"column_name": "Sensor ID"
+					"column_name": "Sensor ID",
+					"column_order": 0
 				},
 				{
 					"data_path": "action_result.data.*.sensors.*.account_code",
@@ -235,7 +236,26 @@
 					"example_values": [
 						"gig"
 					],
-					"column_name": "Account Code"
+					"column_name": "Account Code",
+					"column_order": 1
+				},
+				{
+					"data_path": "action_result.data.*.sensors.*.created",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Created",
+					"column_order": 2
+				},
+				{
+					"data_path": "action_result.data.*.sensors.*.updated",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Updated",
+					"column_order": 3
 				},
 				{
 					"data_path": "action_result.data.*.sensors.*.location",
@@ -243,7 +263,8 @@
 					"example_values": [
 						"{ \"latitude\": 0, \"longitude\": 0 }"
 					],
-					"column_name": "Location"
+					"column_name": "Location",
+					"column_order": 4
 				},
 				{
 					"data_path": "action_result.data.*.sensors.*.subdivison",
@@ -251,7 +272,8 @@
 					"example_values": [
 						"USA"
 					],
-					"column_name": "Subdivision"
+					"column_name": "Subdivision",
+					"column_order": 5
 				},
 				{
 					"data_path": "action_result.data.*.sensors.*.city",
@@ -259,7 +281,8 @@
 					"example_values": [
 						"San Jose"
 					],
-					"column_name": "City"
+					"column_name": "City",
+					"column_order": 6
 				},
 				{
 					"data_path": "action_result.data.*.sensors.*.country",
@@ -267,7 +290,8 @@
 					"example_values": [
 						"USA"
 					],
-					"column_name": "Country"
+					"column_name": "Country",
+					"column_order": 7
 				},
 				{
 					"data_path": "action_result.data.*.sensors.*.tags",
@@ -275,7 +299,8 @@
 					"example_values": [
 						"Demo Sensor"
 					],
-					"column_name": "Tags"
+					"column_name": "Tags",
+					"column_order": 8
 				},
 				{
 					"data_path": "action_result.data.*.sensors.*.pcap_enabled",
@@ -284,12 +309,37 @@
 						true,
                         false
 					],
-					"column_name": "PCAP Enabled"
+					"column_name": "PCAP Enabled",
+					"column_order": 9
+				},
+				{
+					"data_path": "action_result.data.*.sensors.*.serial_number",
+					"data_type": "string",
+					"column_name": "Serial Number",
+					"column_order": 10
+				},
+				{
+					"data_path": "action_result.data.*.sensors.*.status",
+					"data_type": "string",
+					"column_name": "Status",
+					"column_order": 11
+				},
+				{
+					"data_path": "action_result.data.*.sensors.*.interfaces",
+					"data_type": "string",
+					"column_name": "Interfaces",
+					"column_order": 12
+				},
+				{
+					"data_path": "action_result.data.*.sensors.*.admin",
+					"data_type": "string",
+					"column_name": "Admin",
+					"column_order": 13
 				}
 			],
 			"render": {
 				"type": "table",
-				"width": 12,
+				"width": 14,
 				"title": "FortiNDR Cloud Get Sensors"
 			},
 			"versions": "EQ(*)"
@@ -370,8 +420,34 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.start_date",
 					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.end_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.cidr",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.sensor_id",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.traffic_direction",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.data.*.devices.*.ip_address",
+					"data_type": "string",
+					"example_values": [
+						"8.8.8.8"
+					],
+					"column_name": "IP Address",
+					"column_order": 0,
+					"description": "IP address of the device"
 				},
 				{
 					"data_path": "action_result.data.*.devices.*.date",
@@ -380,6 +456,7 @@
 						"2019-01-30T00:00:00.000Z"
 					],
 					"column_name": "Date",
+					"column_order": 1,
 					"description": "Date when the device was first seen"
 				},
 				{
@@ -390,6 +467,7 @@
                         false
 					],
 					"column_name": "External",
+					"column_order": 2,
 					"description": "If external traffic has been observed for this device"
 				},
 				{
@@ -400,16 +478,8 @@
                         false
 					],
 					"column_name": "Internal",
+					"column_order": 3,
 					"description": "If internal traffic has been observed for this device"
-				},
-				{
-					"data_path": "action_result.data.*.devices.*.ip_address",
-					"data_type": "string",
-					"example_values": [
-						"8.8.8.8"
-					],
-					"column_name": "IP Address",
-					"description": "IP address of the device"
 				}
 			],
 			"render": {
@@ -471,7 +541,7 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.task_uuid",
 					"data_type": "string"
 				},
 				{
@@ -481,52 +551,8 @@
 						"32329e78-c51f-4da4-bd56-6bfb35d84a9c"
 					],
 					"column_name": "Task UUID",
+					"column_order": 0,
 					"description": "Unique ID of the task"
-				},
-				{
-					"data_path": "action_result.data.*.tasks.*.actual_start_time",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Start Time",
-					"description": "Date when the task actually started"
-				},
-				{
-					"data_path": "action_result.data.*.tasks.*.requested_start_time",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Requested Start Time",
-					"description": "Requested date for the task start"
-				},
-				{
-					"data_path": "action_result.data.*.tasks.*.updated_email",
-					"data_type": "string",
-					"column_name": "Updated Email",
-					"example_values": [
-						"test@test.com"
-					],
-					"description": "Email address of the user that updated the task"
-				},
-				{
-					"data_path": "action_result.data.*.tasks.*.created_uuid",
-					"data_type": "string",
-					"example_values": [
-						"32329e78-c51f-4da4-bd56-6bfb35d84a9c"
-					],
-					"column_name": "Creator UUID",
-					"description": "Unique ID of the user that created the task"
-				},
-				{
-					"data_path": "action_result.data.*.tasks.*.created",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Created",
-					"description": "Date when the task was created"
 				},
 				{
 					"data_path": "action_result.data.*.tasks.*.name",
@@ -535,7 +561,15 @@
 						"Meh-Ike phone 10001"
 					],
 					"column_name": "Name",
+					"column_order": 1,
 					"description": "Name of the task"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.description",
+					"data_type": "string",
+					"column_name": "Description",
+					"column_order": 2,
+					"description": "Description of the task"
 				},
 				{
 					"data_path": "action_result.data.*.tasks.*.status",
@@ -544,43 +578,8 @@
 						"inactive"
 					],
 					"column_name": "Status",
+					"column_order": 3,
 					"description": "Current status of the task"
-				},
-				{
-					"data_path": "action_result.data.*.tasks.*.created_email",
-					"data_type": "string",
-					"example_values": [
-						"test@test.com"
-					],
-					"column_name": "Creator Email",
-					"description": "Email address of the user that created the task"
-				},
-				{
-					"data_path": "action_result.data.*.tasks.*.updated_uuid",
-					"data_type": "string",
-					"example_values": [
-						"32329e78-c51f-4da4-bd56-6bfb35d84a9c"
-					],
-					"column_name": "Updated UUID",
-					"description": "Unique ID of the user that updated the task"
-				},
-				{
-					"data_path": "action_result.data.*.tasks.*.bpf",
-					"data_type": "string",
-					"example_values": [
-						"src host x.x.x.x and dst port 10001"
-					],
-					"column_name": "BPF",
-					"description": "Berkeley Packet Filter for the task"
-				},
-				{
-					"data_path": "action_result.data.*.tasks.*.actual_end_time",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "End Time",
-					"description": "Date when the task actually ended"
 				},
 				{
 					"data_path": "action_result.data.*.tasks.*.account_code",
@@ -589,16 +588,58 @@
 						"gig"
 					],
 					"column_name": "Account Code",
+					"column_order": 4,
 					"description": "ID code of the customer account"
 				},
 				{
-					"data_path": "action_result.data.*.tasks.*.requested_end_time",
+					"data_path": "action_result.data.*.tasks.*.sensor_ids",
+					"data_type": "string",
+					"example_values": [
+						"[\"sen1\"]"
+					],
+					"column_name": "Sensor IDs",
+					"column_order": 5,
+					"description": "Sensors this task is running on"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.bpf",
+					"data_type": "string",
+					"example_values": [
+						"src host x.x.x.x and dst port 10001"
+					],
+					"column_name": "BPF",
+					"column_order": 6,
+					"description": "Berkeley Packet Filter for the task"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.created",
 					"data_type": "string",
 					"example_values": [
 						"2019-01-30T00:00:00.000Z"
 					],
-					"column_name": "Requested End Time",
-					"description": "Requested date for the task to end"
+					"column_name": "Created",
+					"column_order": 7,
+					"description": "Date when the task was created"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.created_uuid",
+					"data_type": "string",
+					"example_values": [
+						"32329e78-c51f-4da4-bd56-6bfb35d84a9c"
+					],
+					"column_name": "Creator UUID",
+					"column_order": 8,
+					"description": "Unique ID of the user that created the task"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.created_email",
+					"data_type": "string",
+					"example_values": [
+						"test@test.com"
+					],
+					"column_name": "Creator Email",
+					"column_order": 9,
+					"description": "Email address of the user that created the task"
 				},
 				{
 					"data_path": "action_result.data.*.tasks.*.updated",
@@ -607,13 +648,68 @@
 						"2019-01-30T00:00:00.000Z"
 					],
 					"column_name": "Updated",
+					"column_order": 10,
 					"description": "Sensors this task is running on"
 				},
 				{
-					"data_path": "action_result.data.*.tasks.*.description",
+					"data_path": "action_result.data.*.tasks.*.updated_uuid",
 					"data_type": "string",
-					"column_name": "Description",
-					"description": "Description of the task"
+					"example_values": [
+						"32329e78-c51f-4da4-bd56-6bfb35d84a9c"
+					],
+					"column_name": "Updated UUID",
+					"column_order": 11,
+					"description": "Unique ID of the user that updated the task"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.updated_email",
+					"data_type": "string",
+					"column_name": "Updated Email",
+					"column_order": 12,
+					"example_values": [
+						"test@test.com"
+					],
+					"description": "Email address of the user that updated the task"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.requested_start_time",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Requested Start Time",
+					"column_order": 13,
+					"description": "Requested date for the task start"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.actual_start_time",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Start Time",
+					"column_order": 14,
+					"description": "Date when the task actually started"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.requested_end_time",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Requested End Time",
+					"column_order": 15,
+					"description": "Requested date for the task to end"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.actual_end_time",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "End Time",
+					"column_order": 16,
+					"description": "Date when the task actually ended"
 				},
 				{
 					"data_path": "action_result.data.*.tasks.*.has_files",
@@ -623,21 +719,14 @@
                         false
 					],
 					"column_name": "Has Files",
+					"column_order": 17,
 					"description": "If this task has files (true/false)"
-				},
-				{
-					"data_path": "action_result.data.*.tasks.*.sensor_ids",
-					"data_type": "string",
-					"example_values": [
-						"[\"sen1\"]"
-					],
-					"column_name": "Sensor IDs",
-					"description": "Sensors this task is running on"
 				},
 				{
 					"data_path": "action_result.data.*.tasks.*.files",
 					"data_type": "string",
 					"column_name": "Files",
+					"column_order": 18,
 					"description": "Files captured for this task"
 				}
 			],
@@ -743,179 +832,222 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.name",
 					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.task.task_uuid",
+					"data_path": "action_result.parameter.account_uuid",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.description",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.bpf",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.requested_start_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.requested_end_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.sensor_ids",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.task_uuid",
 					"data_type": "string",
 					"example_values": [
 						"32329e78-c51f-4da4-bd56-6bfb35d84a9c"
 					],
 					"column_name": "Task UUID",
+					"column_order": 0,
 					"description": "Unique ID of the task"
 				},
 				{
-					"data_path": "action_result.data.*.task.description",
-					"data_type": "string",
-					"column_name": "Description",
-					"description": "Description of the task"
-				},
-				{
-					"data_path": "action_result.data.*.task.name",
+					"data_path": "action_result.data.*.tasks.*.name",
 					"data_type": "string",
 					"example_values": [
 						"Meh-Ike phone 10001"
 					],
 					"column_name": "Name",
+					"column_order": 1,
 					"description": "Name of the task"
 				},
 				{
-					"data_path": "action_result.data.*.task.sensor_ids",
+					"data_path": "action_result.data.*.tasks.*.description",
 					"data_type": "string",
-					"example_values": [
-						"[\"sen1\"]"
-					],
-					"column_name": "Sensor IDs",
-					"description": "Sensors this task is running on"
+					"column_name": "Description",
+					"column_order": 2,
+					"description": "Description of the task"
 				},
 				{
-					"data_path": "action_result.data.*.task.account_code",
+					"data_path": "action_result.data.*.tasks.*.status",
+					"data_type": "string",
+					"example_values": [
+						"inactive"
+					],
+					"column_name": "Status",
+					"column_order": 3,
+					"description": "Current status of the task"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.account_code",
 					"data_type": "string",
 					"example_values": [
 						"gig"
 					],
 					"column_name": "Account Code",
+					"column_order": 4,
 					"description": "ID code of the customer account"
 				},
 				{
-					"data_path": "action_result.data.*.task.bpf",
+					"data_path": "action_result.data.*.tasks.*.sensor_ids",
+					"data_type": "string",
+					"example_values": [
+						"[\"sen1\"]"
+					],
+					"column_name": "Sensor IDs",
+					"column_order": 5,
+					"description": "Sensors this task is running on"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.bpf",
 					"data_type": "string",
 					"example_values": [
 						"src host x.x.x.x and dst port 10001"
 					],
 					"column_name": "BPF",
+					"column_order": 6,
 					"description": "Berkeley Packet Filter for the task"
 				},
 				{
-					"data_path": "action_result.data.*.task.created_uuid",
+					"data_path": "action_result.data.*.tasks.*.created",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Created",
+					"column_order": 7,
+					"description": "Date when the task was created"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.created_uuid",
 					"data_type": "string",
 					"example_values": [
 						"32329e78-c51f-4da4-bd56-6bfb35d84a9c"
 					],
 					"column_name": "Creator UUID",
+					"column_order": 8,
 					"description": "Unique ID of the user that created the task"
 				},
 				{
-					"data_path": "action_result.data.*.task.updated_uuid",
-					"data_type": "string",
-					"example_values": [
-						"32329e78-c51f-4da4-bd56-6bfb35d84a9c"
-					],
-					"column_name": "Updated UUID",
-					"description": "Unique ID of the user that updated the task"
-				},
-				{
-					"data_path": "action_result.data.*.task.created_email",
+					"data_path": "action_result.data.*.tasks.*.created_email",
 					"data_type": "string",
 					"example_values": [
 						"test@test.com"
 					],
 					"column_name": "Creator Email",
+					"column_order": 9,
 					"description": "Email address of the user that created the task"
 				},
 				{
-					"data_path": "action_result.data.*.task.updated_email",
+					"data_path": "action_result.data.*.tasks.*.updated",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Updated",
+					"column_order": 10,
+					"description": "Sensors this task is running on"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.updated_uuid",
+					"data_type": "string",
+					"example_values": [
+						"32329e78-c51f-4da4-bd56-6bfb35d84a9c"
+					],
+					"column_name": "Updated UUID",
+					"column_order": 11,
+					"description": "Unique ID of the user that updated the task"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.updated_email",
 					"data_type": "string",
 					"column_name": "Updated Email",
+					"column_order": 12,
 					"example_values": [
 						"test@test.com"
 					],
 					"description": "Email address of the user that updated the task"
 				},
 				{
-					"data_path": "action_result.data.*.task.created",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Created",
-					"description": "Date when the task was created"
-				},
-				{
-					"data_path": "action_result.data.*.task.updated",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Updated",
-					"description": "Sensors this task is running on"
-				},
-				{
-					"data_path": "action_result.data.*.task.requested_start_time",
+					"data_path": "action_result.data.*.tasks.*.requested_start_time",
 					"data_type": "string",
 					"example_values": [
 						"2019-01-30T00:00:00.000Z"
 					],
 					"column_name": "Requested Start Time",
+					"column_order": 13,
 					"description": "Requested date for the task start"
 				},
 				{
-					"data_path": "action_result.data.*.task.requested_end_time",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Requested End Time",
-					"description": "Requested date for the task to end"
-				},
-				{
-					"data_path": "action_result.data.*.task.actual_start_time",
+					"data_path": "action_result.data.*.tasks.*.actual_start_time",
 					"data_type": "string",
 					"example_values": [
 						"2019-01-30T00:00:00.000Z"
 					],
 					"column_name": "Start Time",
+					"column_order": 14,
 					"description": "Date when the task actually started"
 				},
 				{
-					"data_path": "action_result.data.*.task.actual_end_time",
+					"data_path": "action_result.data.*.tasks.*.requested_end_time",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Requested End Time",
+					"column_order": 15,
+					"description": "Requested date for the task to end"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.actual_end_time",
 					"data_type": "string",
 					"example_values": [
 						"2019-01-30T00:00:00.000Z"
 					],
 					"column_name": "End Time",
+					"column_order": 16,
 					"description": "Date when the task actually ended"
 				},
 				{
-					"data_path": "action_result.data.*.task.status",
-					"data_type": "string",
-					"example_values": [
-						"inactive"
-					],
-					"column_name": "Status",
-					"description": "Current status of the task"
-				},
-				{
-					"data_path": "action_result.data.*.task.files",
-					"data_type": "string",
-					"column_name": "Files",
-					"description": "Files captured for this task"
-				},
-				{
-					"data_path": "action_result.data.*.task.has_files",
+					"data_path": "action_result.data.*.tasks.*.has_files",
 					"data_type": "boolean",
 					"example_values": [
 						true,
                         false
 					],
 					"column_name": "Has Files",
+					"column_order": 17,
 					"description": "If this task has files (true/false)"
+				},
+				{
+					"data_path": "action_result.data.*.tasks.*.files",
+					"data_type": "string",
+					"column_name": "Files",
+					"column_order": 18,
+					"description": "Files captured for this task"
 				}
 			],
 			"render": {
 				"type": "table",
-				"width": 0,
+				"width": 19,
 				"title": "FortiNDR Create Task"
 			},
 			"versions": "EQ(*)"
@@ -1017,7 +1149,35 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.interval",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.start_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.end_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.account_uuid",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.account_code",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.sensor_id",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.event_type",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.group_by",
 					"data_type": "string"
 				},
 				{
@@ -1027,6 +1187,7 @@
 						"2019-01-30T00:00:00.000Z"
 					],
 					"column_name": "Timestamp",
+					"column_order": 0,
 					"description": "Timestamp of the grouped data"
 				},
 				{
@@ -1036,6 +1197,7 @@
 						1000
 					],
 					"column_name": "Event Count",
+					"column_order": 1,
 					"description": "Number of events"
 				},
 				{
@@ -1045,6 +1207,7 @@
 						"sen1"
 					],
 					"column_name": "Sensor ID",
+					"column_order": 2,
 					"description": "Sensor name (if grouped by sensor_id)"
 				},
 				{
@@ -1054,6 +1217,7 @@
 						"flow"
 					],
 					"column_name": "Event Type",
+					"column_order": 3,
 					"description": "Type of event (if grouped by event_type)"
 				},
 				{
@@ -1063,6 +1227,7 @@
 						"act"
 					],
 					"column_name": "Account Code",
+					"column_order": 4,
 					"description": "Account Code (if grouped by account_code)"
 				}
 			],
@@ -1156,17 +1321,28 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.interval",
 					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.packetstats.*.account_code",
-					"data_type": "string",
-					"example_values": [
-						"gig"
-					],
-					"column_name": "Account Code",
-					"description": "Account code the data was filtered by"
+					"data_path": "action_result.parameter.start_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.end_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.account_code",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.sensor_id",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.group_by",
+					"data_type": "string"
 				},
 				{
 					"data_path": "action_result.data.*.packetstats.*.timestamp",
@@ -1175,49 +1351,18 @@
 						"2019-01-30T00:00:00.000Z"
 					],
 					"column_name": "Timestamp",
+					"column_order": 0,
 					"description": "Timestamp of the grouped data"
 				},
 				{
-					"data_path": "action_result.data.*.packetstats.*.interface_name",
+					"data_path": "action_result.data.*.packetstats.*.account_code",
 					"data_type": "string",
-					"column_name": "Interface Name",
-					"description": "Interface the packet data was recorded from"
-				},
-				{
-					"data_path": "action_result.data.*.packetstats.*.rx_bits_per_second",
-					"data_type": "numeric",
 					"example_values": [
-						168359035095
+						"gig"
 					],
-					"column_name": "RX Bits Per Second",
-					"description": "Received throughput (bits per second)"
-				},
-				{
-					"data_path": "action_result.data.*.packetstats.*.rx_bytes",
-					"data_type": "numeric",
-					"example_values": [
-						"1044065401242303200"
-					],
-					"column_name": "RX Bytes",
-					"description": "Received data size (bytes)"
-				},
-				{
-					"data_path": "action_result.data.*.packetstats.*.rx_errors",
-					"data_type": "numeric",
-					"example_values": [
-						543523121859
-					],
-					"column_name": "RX Errors",
-					"description": "Number of received errors"
-				},
-				{
-					"data_path": "action_result.data.*.packetstats.*.rx_packets",
-					"data_type": "numeric",
-					"example_values": [
-						1511658249026538
-					],
-					"column_name": "RX Packets",
-					"description": "Number of received packets"
+					"column_name": "Account Code",
+					"column_order": 1,
+					"description": "Account code the data was filtered by"
 				},
 				{
 					"data_path": "action_result.data.*.packetstats.*.sensor_id",
@@ -1226,7 +1371,15 @@
 						"sen1"
 					],
 					"column_name": "Sensor ID",
+					"column_order": 2,
 					"description": "Sensor ID packet data was recorded from"
+				},
+				{
+					"data_path": "action_result.data.*.packetstats.*.interface_name",
+					"data_type": "string",
+					"column_name": "Interface Name",
+					"column_order": 3,
+					"description": "Interface the packet data was recorded from"
 				},
 				{
 					"data_path": "action_result.data.*.packetstats.*.tx_bytes",
@@ -1235,6 +1388,7 @@
 						1380372603073006
 					],
 					"column_name": "TX Bytes",
+					"column_order": 4,
 					"description": "Transmitted data size (bytes)"
 				},
 				{
@@ -1244,6 +1398,7 @@
 						0
 					],
 					"column_name": "TX Errors",
+					"column_order": 5,
 					"description": "Number of transmitted errors"
 				},
 				{
@@ -1253,7 +1408,48 @@
 						963173536282
 					],
 					"column_name": "TX Packets",
+					"column_order": 6,
 					"description": "Number of transmitted packets"
+				},
+				{
+					"data_path": "action_result.data.*.packetstats.*.rx_bytes",
+					"data_type": "numeric",
+					"example_values": [
+						"1044065401242303200"
+					],
+					"column_name": "RX Bytes",
+					"column_order": 7,
+					"description": "Received data size (bytes)"
+				},
+				{
+					"data_path": "action_result.data.*.packetstats.*.rx_errors",
+					"data_type": "numeric",
+					"example_values": [
+						543523121859
+					],
+					"column_name": "RX Errors",
+					"column_order": 8,
+					"description": "Number of received errors"
+				},
+				{
+					"data_path": "action_result.data.*.packetstats.*.rx_packets",
+					"data_type": "numeric",
+					"example_values": [
+						1511658249026538
+					],
+					"column_name": "RX Packets",
+					"column_order": 9,
+					"description": "Number of received packets"
+				},
+				{
+					"data_path": "action_result.data.*.packetstats.*.rx_bits_per_second",
+					"data_type": "numeric",
+					"example_values": [
+						168359035095
+					],
+					"column_name": "RX Bits Per Second",
+					"column_order": 10,
+					"description": "Received throughput (bits per second)"
 				}
 			],
 			"render": {
@@ -1360,44 +1556,36 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.account_code",
 					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.network_usage.*.account_code",
-					"data_type": "string",
-					"example_values": [
-						"gig"
-					],
-					"column_name": "Account Code",
-					"description": "The account code for the network usage"
+					"data_path": "action_result.parameter.interval",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.network_usage.*.percentile_bps",
-					"data_type": "numeric",
-					"example_values": [
-						6050493542
-					],
-					"column_name": "Percentile BPS",
-					"description": "The top percentile BPS value across sensors"
+					"data_path": "action_result.parameter.latest_each_month",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.network_usage.*.percentile",
-					"data_type": "numeric",
-					"example_values": [
-						95
-					],
-					"column_name": "Percentile",
-					"description": "Percentile of BPS records to calculate for percentile_bps"
+					"data_path": "action_result.parameter.sort_order",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.network_usage.*.interval",
-					"data_type": "string",
-					"example_values": [
-						"day"
-					],
-					"column_name": "Interval",
-					"description": "Time span the calculation was performed over (day, month_to_day)"
+					"data_path": "action_result.parameter.limit",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.offset",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.start_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.end_date",
+					"data_type": "string"
 				},
 				{
 					"data_path": "action_result.data.*.network_usage.*.timestamp",
@@ -1406,7 +1594,48 @@
 						"2019-01-30T00:00:00.000Z"
 					],
 					"column_name": "Timestamp",
+					"column_order": 0,
 					"description": "The date the calculation was performed until"
+				},
+				{
+					"data_path": "action_result.data.*.network_usage.*.account_code",
+					"data_type": "string",
+					"example_values": [
+						"gig"
+					],
+					"column_name": "Account Code",
+					"column_order": 1,
+					"description": "The account code for the network usage"
+				},
+				{
+					"data_path": "action_result.data.*.network_usage.*.interval",
+					"data_type": "string",
+					"example_values": [
+						"day"
+					],
+					"column_name": "Interval",
+					"column_order": 2,
+					"description": "Time span the calculation was performed over (day, month_to_day)"
+				},
+				{
+					"data_path": "action_result.data.*.network_usage.*.percentile",
+					"data_type": "numeric",
+					"example_values": [
+						95
+					],
+					"column_name": "Percentile",
+					"column_order": 3,
+					"description": "Percentile of BPS records to calculate for percentile_bps"
+				},
+				{
+					"data_path": "action_result.data.*.network_usage.*.percentile_bps",
+					"data_type": "numeric",
+					"example_values": [
+						6050493542
+					],
+					"column_name": "Percentile BPS",
+					"column_order": 4,
+					"description": "The top percentile BPS value across sensors"
 				}
 			],
 			"render": {
@@ -1479,7 +1708,15 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.entity",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.entity_type",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.account_uuid",
 					"data_type": "string"
 				},
 				{
@@ -1488,7 +1725,8 @@
 					"example_values": [
 						"8.8.8.8"
 					],
-					"column_name": "Entity"
+					"column_name": "Entity",
+					"column_order": 0
 				},
 				{
 					"data_path": "action_result.data.*.entity_summary.first_seen",
@@ -1496,7 +1734,8 @@
 					"example_values": [
 						"2019-01-30T00:00:00.000Z"
 					],
-					"column_name": "First Seen"
+					"column_name": "First Seen",
+					"column_order": 1
 				},
 				{
 					"data_path": "action_result.data.*.entity_summary.last_seen",
@@ -1504,7 +1743,8 @@
 					"example_values": [
 						"2019-01-30T00:00:00.000Z"
 					],
-					"column_name": "Last Seen"
+					"column_name": "Last Seen",
+					"column_order": 2
 				},
 				{
 					"data_path": "action_result.data.*.entity_summary.prevalence_count_internal",
@@ -1512,7 +1752,8 @@
 					"example_values": [
 						8
 					],
-					"column_name": "Prevalence Count"
+					"column_name": "Prevalence Count",
+					"column_order": 3
 				},
 				{
 					"data_path": "action_result.data.*.entity_summary.tags.*.text",
@@ -1520,7 +1761,8 @@
 					"example_values": [
 						"external"
 					],
-					"column_name": "Tag Text"
+					"column_name": "Tag Text",
+					"column_order": 4
 				},
 				{
 					"data_path": "action_result.data.*.entity_summary.tags.*.account_code",
@@ -1528,7 +1770,8 @@
 					"example_values": [
 						"act"
 					],
-					"column_name": "Tag Account Code"
+					"column_name": "Tag Account Code",
+					"column_order": 5
 				},
 				{
 					"data_path": "action_result.data.*.entity_summary.tags.*.user_uuid",
@@ -1536,7 +1779,8 @@
 					"example_values": [
 						"dc9ab97f-9cdf-46af-8ca2-e71e8e8243c8"
 					],
-					"column_name": "Tag User ID"
+					"column_name": "Tag User ID",
+					"column_order": 6
 				},
 				{
 					"data_path": "action_result.data.*.entity_summary.tags.*.create_date",
@@ -1544,7 +1788,8 @@
 					"example_values": [
 						"2019-01-30T00:00:00.000Z"
 					],
-					"column_name": "Tag Create Date"
+					"column_name": "Tag Create Date",
+					"column_order": 7
 				},
 				{
 					"data_path": "action_result.data.*.entity_summary.tags.*.entity",
@@ -1552,12 +1797,14 @@
 					"example_values": [
 						"8.8.8.8"
 					],
-					"column_name": "Tag Entity"
+					"column_name": "Tag Entity",
+					"column_order": 8
 				},
 				{
 					"data_path": "action_result.data.*.entity_summary.tags.*.public",
 					"data_type": "boolean",
-					"column_name": "Public Tag"
+					"column_name": "Public Tag",
+					"column_order": 9
 				}
 			],
 			"render": {
@@ -1658,64 +1905,36 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.entity",
 					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.entity_pdns.*.account_uuid",
-					"data_type": "string",
-					"example_values": [
-						"dc9ab97f-9cdf-46af-8ca2-e71e8e8243c8"
-					],
-					"column_name": "Account UUID"
+					"data_path": "action_result.parameter.record_type",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.entity_pdns.*.first_seen",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "First Seen"
+					"data_path": "action_result.parameter.source",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.entity_pdns.*.last_seen",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Last Seen"
+					"data_path": "action_result.parameter.resolve_external",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.entity_pdns.*.record_type",
-					"data_type": "string",
-					"example_values": [
-						"a"
-					],
-					"column_name": "Record Type"
+					"data_path": "action_result.parameter.start_date",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.entity_pdns.*.resolved",
-					"data_type": "string",
-					"example_values": [
-						"8.8.8.8"
-					],
-					"column_name": "Resolved"
+					"data_path": "action_result.parameter.end_date",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.entity_pdns.*.sensor_id",
-					"data_type": "string",
-					"example_values": [
-						"sen1"
-					],
-					"column_name": "Sensor ID"
+					"data_path": "action_result.parameter.account_uuid",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.entity_pdns.*.customer_id",
-					"data_type": "string",
-					"example_values": [
-						"cust"
-					],
-					"column_name": "Customer ID"
+					"data_path": "action_result.parameter.limit",
+					"data_type": "string"
 				},
 				{
 					"data_path": "action_result.data.*.entity_pdns.*.source",
@@ -1723,7 +1942,71 @@
 					"example_values": [
 						"icebrg_dns"
 					],
-					"column_name": "Source"
+					"column_name": "Source",
+					"column_order": 0
+				},
+				{
+					"data_path": "action_result.data.*.entity_pdns.*.account_uuid",
+					"data_type": "string",
+					"example_values": [
+						"dc9ab97f-9cdf-46af-8ca2-e71e8e8243c8"
+					],
+					"column_name": "Account UUID",
+					"column_order": 1
+				},
+				{
+					"data_path": "action_result.data.*.entity_pdns.*.sensor_id",
+					"data_type": "string",
+					"example_values": [
+						"sen1"
+					],
+					"column_name": "Sensor ID",
+					"column_order": 2
+				},
+				{
+					"data_path": "action_result.data.*.entity_pdns.*.customer_id",
+					"data_type": "string",
+					"example_values": [
+						"cust"
+					],
+					"column_name": "Customer ID",
+					"column_order": 3
+				},
+				{
+					"data_path": "action_result.data.*.entity_pdns.*.first_seen",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "First Seen",
+					"column_order": 4
+				},
+				{
+					"data_path": "action_result.data.*.entity_pdns.*.last_seen",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Last Seen",
+					"column_order": 5
+				},
+				{
+					"data_path": "action_result.data.*.entity_pdns.*.resolved",
+					"data_type": "string",
+					"example_values": [
+						"8.8.8.8"
+					],
+					"column_name": "Resolved",
+					"column_order": 6
+				},
+				{
+					"data_path": "action_result.data.*.entity_pdns.*.record_type",
+					"data_type": "string",
+					"example_values": [
+						"a"
+					],
+					"column_name": "Record Type",
+					"column_order": 7
 				}
 			],
 			"render": {
@@ -1802,7 +2085,19 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.entity",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.start_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.end_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.account_uuid",
 					"data_type": "string"
 				},
 				{
@@ -1811,47 +2106,8 @@
 					"example_values": [
 						"gig"
 					],
-					"column_name": "Account uuid"
-				},
-				{
-					"data_path": "action_result.data.*.entity_dhcp.*.hostnames",
-					"data_type": "string",
-					"example_values": [
-						"Somebody-iPhone"
-					],
-					"column_name": "Hostnames"
-				},
-				{
-					"data_path": "action_result.data.*.entity_dhcp.*.ip",
-					"data_type": "string",
-					"example_values": [
-						"8.8.8.8"
-					],
-					"column_name": "IP Address"
-				},
-				{
-					"data_path": "action_result.data.*.entity_dhcp.*.lease_start",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Lease Start"
-				},
-				{
-					"data_path": "action_result.data.*.entity_dhcp.*.lease_end",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Lease End"
-				},
-				{
-					"data_path": "action_result.data.*.entity_dhcp.*.mac",
-					"data_type": "string",
-					"example_values": [
-						"e3:84:2f:8e:50:e4"
-					],
-					"column_name": "MAC Address"
+					"column_name": "Account uuid",
+					"column_order": 0
 				},
 				{
 					"data_path": "action_result.data.*.entity_dhcp.*.sensor_id",
@@ -1859,7 +2115,53 @@
 					"example_values": [
 						"sen1"
 					],
-					"column_name": "Sensor ID"
+					"column_name": "Sensor ID",
+					"column_order": 1
+				},
+				{
+					"data_path": "action_result.data.*.entity_dhcp.*.ip",
+					"data_type": "string",
+					"example_values": [
+						"8.8.8.8"
+					],
+					"column_name": "IP Address",
+					"column_order": 2
+				},
+				{
+					"data_path": "action_result.data.*.entity_dhcp.*.hostnames",
+					"data_type": "string",
+					"example_values": [
+						"Somebody-iPhone"
+					],
+					"column_name": "Hostnames",
+					"column_order": 3
+				},
+				{
+					"data_path": "action_result.data.*.entity_dhcp.*.mac",
+					"data_type": "string",
+					"example_values": [
+						"e3:84:2f:8e:50:e4"
+					],
+					"column_name": "MAC Address",
+					"column_order": 4
+				},
+				{
+					"data_path": "action_result.data.*.entity_dhcp.*.lease_start",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Lease Start",
+					"column_order": 5
+				},
+				{
+					"data_path": "action_result.data.*.entity_dhcp.*.lease_end",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Lease End",
+					"column_order": 6
 				},
 				{
 					"data_path": "action_result.data.*.entity_dhcp.*.start_lease_as_long",
@@ -1867,7 +2169,8 @@
 					"example_values": [
 						1618939557975
 					],
-					"column_name": "Start Lease As Long"
+					"column_name": "Start Lease As Long",
+					"column_order": 7
 				}
 			],
 			"render": {
@@ -1930,7 +2233,7 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.hash",
 					"data_type": "string"
 				},
 				{
@@ -1939,31 +2242,8 @@
 					"example_values": [
 						"75ce20257379b1d8bd88f7bfb01c6a6e3a32221212c623fbf10de61e8c379ff8"
 					],
-					"column_name": "Entity"
-				},
-				{
-					"data_path": "action_result.data.*.entity_file.sha1",
-					"data_type": "string",
-					"example_values": [
-						"8965f4209f82bb13e15172bdf672912eebc2132d"
-					],
-					"column_name": "SHA1"
-				},
-				{
-					"data_path": "action_result.data.*.entity_file.sha256",
-					"data_type": "string",
-					"example_values": [
-						"75ce20257379b1d8bd88f7bfb01c6a6e3a32221212c623fbf10de61e8c379ff8"
-					],
-					"column_name": "SHA256"
-				},
-				{
-					"data_path": "action_result.data.*.entity_file.md5",
-					"data_type": "string",
-					"example_values": [
-						"95fcad6ceaefd749aa23fc5476863bb4"
-					],
-					"column_name": "MD5"
+					"column_name": "Entity",
+					"column_order": 0
 				},
 				{
 					"data_path": "action_result.data.*.entity_file.customer_id",
@@ -1971,7 +2251,8 @@
 					"example_values": [
 						"gig"
 					],
-					"column_name": "Customer ID"
+					"column_name": "Customer ID",
+					"column_order": 1
 				},
 				{
 					"data_path": "action_result.data.*.entity_file.names",
@@ -1979,7 +2260,8 @@
 					"example_values": [
 						"[\"TIAgentSetup.exe\"]"
 					],
-					"column_name": "File Names"
+					"column_name": "File Names",
+					"column_order": 2
 				},
 				{
 					"data_path": "action_result.data.*.entity_file.mime_type",
@@ -1987,23 +2269,8 @@
 					"example_values": [
 						"[\"application/x-dosexec\"]"
 					],
-					"column_name": "Mime Type"
-				},
-				{
-					"data_path": "action_result.data.*.entity_file.first_seen",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "First Seen"
-				},
-				{
-					"data_path": "action_result.data.*.entity_file.last_seen",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Last Seen"
+					"column_name": "Mime Type",
+					"column_order": 3
 				},
 				{
 					"data_path": "action_result.data.*.entity_file.bytes",
@@ -2011,12 +2278,59 @@
 					"example_values": [
 						0
 					],
-					"column_name": "Bytes"
+					"column_name": "Bytes",
+					"column_order": 4
+				},
+				{
+					"data_path": "action_result.data.*.entity_file.first_seen",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "First Seen",
+					"column_order": 5
+				},
+				{
+					"data_path": "action_result.data.*.entity_file.last_seen",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Last Seen",
+					"column_order": 6
+				},
+				{
+					"data_path": "action_result.data.*.entity_file.sha1",
+					"data_type": "string",
+					"example_values": [
+						"8965f4209f82bb13e15172bdf672912eebc2132d"
+					],
+					"column_name": "SHA1",
+					"column_order": 7
+				},
+				{
+					"data_path": "action_result.data.*.entity_file.sha256",
+					"data_type": "string",
+					"example_values": [
+						"75ce20257379b1d8bd88f7bfb01c6a6e3a32221212c623fbf10de61e8c379ff8"
+					],
+					"column_name": "SHA256",
+					"column_order": 8
+				},
+				{
+					"data_path": "action_result.data.*.entity_file.md5",
+					"data_type": "string",
+					"example_values": [
+						"95fcad6ceaefd749aa23fc5476863bb4"
+					],
+					"column_name": "MD5",
+					"column_order": 9
 				},
 				{
 					"data_path": "action_result.data.*.entity_file.pe",
 					"data_type": "string",
-					"column_name": "Portable Executable"
+					"column_name": "Portable Executable",
+					"column_order": 10
 				},
 				{
 					"data_path": "action_result.data.*.entity_file.prevalence_count_internal",
@@ -2024,7 +2338,8 @@
 					"example_values": [
 						0
 					],
-					"column_name": "Prevalence Count"
+					"column_name": "Prevalence Count",
+					"column_order": 11
 				}
 			],
 			"render": {
@@ -2198,25 +2513,116 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.rule_uuid",
 					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detections.*.muted_rule",
-					"data_type": "boolean",
-					"example_values": [
-						true,
-                        false
-					],
-					"column_name": "Muted Rule"
+					"data_path": "action_result.parameter.account_uuid",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detections.*.created",
+					"data_path": "action_result.parameter.status",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.device_ip",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.sensor_id",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.muted",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.muted_device",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.muted_rule",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.include",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.sort_by",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.sort_order",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.offset",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.limit",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.created_start_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.created_end_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.created_or_shared_start_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.created_or_shared_end_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.active_start_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.active_end_date",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.uuid",
 					"data_type": "string",
 					"example_values": [
-						"2019-01-30T00:00:00.000Z"
+						"cf576032-2f42-4b3e-90be-3c51e5128b03"
 					],
-					"column_name": "Created"
+					"column_name": "Detection ID",
+					"column_order": 0
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.rule_uuid",
+					"data_type": "string",
+					"example_values": [
+						"58c2e22d-8b64-43ac-89a2-6c82ce66935e"
+					],
+					"column_name": "Rule ID",
+					"column_order": 1
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.device_ip",
+					"data_type": "string",
+					"example_values": [
+						"10.70.43.58"
+					],
+					"column_name": "Device IP",
+					"column_order": 2
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.sensor_id",
+					"data_type": "string",
+					"example_values": [
+						"sen1"
+					],
+					"column_name": "Sensor ID",
+					"column_order": 3
 				},
 				{
 					"data_path": "action_result.data.*.detections.*.account_uuid",
@@ -2224,64 +2630,8 @@
 					"example_values": [
 						"1e5dbd92-9dca-4f36-bec5-c292172cbeaa"
 					],
-					"column_name": "Account"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.resolution_timestamp",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Resolution"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.first_seen",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "First Seen"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.last_seen",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Last Seen"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.muted",
-					"data_type": "boolean",
-					"example_values": [
-						true,
-                        false
-					],
-					"column_name": "Muted"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.resolution",
-					"data_type": "string",
-					"example_values": [
-						"auto_resolved"
-					],
-					"column_name": "Resolution Type"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.muted_user_uuid",
-					"data_type": "string",
-					"example_values": [
-						"d025f073-c01e-4ee9-a89b-72f972a75a16"
-					],
-					"column_name": "Muted By"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.resolution_user_uuid",
-					"data_type": "string",
-					"example_values": [
-						"b92cd6e0-dd24-4bee-838a-d0dfbeda621a"
-					],
-					"column_name": "Resolved By"
+					"column_name": "Account",
+					"column_order": 4
 				},
 				{
 					"data_path": "action_result.data.*.detections.*.status",
@@ -2290,49 +2640,17 @@
 						"active",
                         "resolved"
 					],
-					"column_name": "Status"
+					"column_name": "Status",
+					"column_order": 5
 				},
 				{
-					"data_path": "action_result.data.*.detections.*.resolution_comment",
-					"data_type": "string",
-					"column_name": "Resolution Comment"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.muted_comment",
-					"data_type": "string",
-					"column_name": "Muted Comment"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.sensor_id",
+					"data_path": "action_result.data.*.detections.*.created",
 					"data_type": "string",
 					"example_values": [
-						"sen1"
+						"2019-01-30T00:00:00.000Z"
 					],
-					"column_name": "Sensor ID"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.rule_uuid",
-					"data_type": "string",
-					"example_values": [
-						"58c2e22d-8b64-43ac-89a2-6c82ce66935e"
-					],
-					"column_name": "Rule ID"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.uuid",
-					"data_type": "string",
-					"example_values": [
-						"cf576032-2f42-4b3e-90be-3c51e5128b03"
-					],
-					"column_name": "Detection ID"
-				},
-				{
-					"data_path": "action_result.data.*.detections.*.muted_device_uuid",
-					"data_type": "string",
-					"example_values": [
-						"55f39b72-2622-4137-9051-bc2ff364f059"
-					],
-					"column_name": "Muted Device ID"
+					"column_name": "Created",
+					"column_order": 6
 				},
 				{
 					"data_path": "action_result.data.*.detections.*.updated",
@@ -2340,15 +2658,103 @@
 					"example_values": [
 						"2019-01-30T00:00:00.000Z"
 					],
-					"column_name": "Updated"
+					"column_name": "Updated",
+					"column_order": 7
 				},
 				{
-					"data_path": "action_result.data.*.detections.*.device_ip",
+					"data_path": "action_result.data.*.detections.*.resolution",
 					"data_type": "string",
 					"example_values": [
-						"10.70.43.58"
+						"auto_resolved"
 					],
-					"column_name": "Device IP"
+					"column_name": "Resolution Type",
+					"column_order": 8
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.resolution_timestamp",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Resolution",
+					"column_order": 9
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.resolution_user_uuid",
+					"data_type": "string",
+					"example_values": [
+						"b92cd6e0-dd24-4bee-838a-d0dfbeda621a"
+					],
+					"column_name": "Resolved By",
+					"column_order": 10
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.resolution_comment",
+					"data_type": "string",
+					"column_name": "Resolution Comment",
+					"column_order": 11
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.first_seen",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "First Seen",
+					"column_order": 12
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.last_seen",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Last Seen",
+					"column_order": 13
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.muted",
+					"data_type": "boolean",
+					"example_values": [
+						true,
+                        false
+					],
+					"column_name": "Muted",
+					"column_order": 14
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.muted_rule",
+					"data_type": "boolean",
+					"example_values": [
+						true,
+                        false
+					],
+					"column_name": "Muted Rule",
+					"column_order": 15
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.muted_device_uuid",
+					"data_type": "string",
+					"example_values": [
+						"55f39b72-2622-4137-9051-bc2ff364f059"
+					],
+					"column_name": "Muted Device ID",
+					"column_order": 16
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.muted_user_uuid",
+					"data_type": "string",
+					"example_values": [
+						"d025f073-c01e-4ee9-a89b-72f972a75a16"
+					],
+					"column_name": "Muted By",
+					"column_order": 17
+				},
+				{
+					"data_path": "action_result.data.*.detections.*.muted_comment",
+					"data_type": "string",
+					"column_name": "Muted Comment",
+					"column_order": 18
 				}
 			],
 			"render": {
@@ -2508,112 +2914,52 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.account_uuid",
 					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.enabled",
-					"data_type": "boolean",
-					"example_values": [
-						true,
-                        false
-					],
-					"column_name": "Enabled"
+					"data_path": "action_result.parameter.search",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.updated_user_uuid",
-					"data_type": "string",
-					"example_values": [
-						"55f39b72-2622-4137-9051-bc2ff364f059"
-					],
-					"column_name": "Updated User ID"
+					"data_path": "action_result.parameter.has_detections",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.rule_accounts",
-					"data_type": "string",
-					"column_name": "Rule Accounts"
+					"data_path": "action_result.parameter.severity",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.auto_resolution_minutes",
-					"data_type": "numeric",
-					"example_values": [
-						10080
-					],
-					"column_name": "Resolution Minutes"
+					"data_path": "action_result.parameter.confidence",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.created",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Created"
+					"data_path": "action_result.parameter.category",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.account_uuid",
-					"data_type": "string",
-					"example_values": [
-						"55f39b72-2622-4137-9051-bc2ff364f059"
-					],
-					"column_name": "Account"
+					"data_path": "action_result.parameter.rule_account_muted",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.confidence",
-					"data_type": "string",
-					"example_values": [
-						"high",
-                        "moderate",
-                        "low"
-					],
-					"column_name": "Confidence"
+					"data_path": "action_result.parameter.enabled",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.name",
-					"data_type": "string",
-					"example_values": [
-						"AR T1595"
-					],
-					"column_name": "Name"
+					"data_path": "action_result.parameter.sort_by",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.created_user_uuid",
-					"data_type": "string",
-					"example_values": [
-						"55f39b72-2622-4137-9051-bc2ff364f059"
-					],
-					"column_name": "Created User ID"
+					"data_path": "action_result.parameter.sort_order",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.query_signature",
-					"data_type": "string",
-					"example_values": [
-						"ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns'"
-					],
-					"column_name": "Signature"
+					"data_path": "action_result.parameter.offset",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.shared_account_uuids",
-					"data_type": "string",
-					"example_values": [
-						"55f39b72-2622-4137-9051-bc2ff364f059"
-					],
-					"column_name": "Shared Accounts"
-				},
-				{
-					"data_path": "action_result.data.*.detection_rules.*.run_account_uuids",
-					"data_type": "string",
-					"example_values": [
-						"[\"55f39b72-2622-4137-9051-bc2ff364f059\"]"
-					],
-					"column_name": "Run Accounts"
-				},
-				{
-					"data_path": "action_result.data.*.detection_rules.*.updated",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Updated"
+					"data_path": "action_result.parameter.limit",
+					"data_type": "string"
 				},
 				{
 					"data_path": "action_result.data.*.detection_rules.*.uuid",
@@ -2621,12 +2967,41 @@
 					"example_values": [
 						"55f39b72-2622-4137-9051-bc2ff364f059"
 					],
-					"column_name": "ID"
+					"column_name": "ID",
+					"column_order": 0
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.account_uuid",
+					"data_type": "string",
+					"example_values": [
+						"55f39b72-2622-4137-9051-bc2ff364f059"
+					],
+					"column_name": "Account",
+					"column_order": 1
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.name",
+					"data_type": "string",
+					"example_values": [
+						"AR T1595"
+					],
+					"column_name": "Name",
+					"column_order": 2
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.category",
+					"data_type": "string",
+					"example_values": [
+						"Attack:Infection Vector"
+					],
+					"column_name": "Category",
+					"column_order": 3
 				},
 				{
 					"data_path": "action_result.data.*.detection_rules.*.description",
 					"data_type": "string",
-					"column_name": "Description"
+					"column_name": "Description",
+					"column_order": 4
 				},
 				{
 					"data_path": "action_result.data.*.detection_rules.*.severity",
@@ -2636,20 +3011,166 @@
                         "moderate",
                         "low"
 					],
-					"column_name": "Severity"
+					"column_name": "Severity",
+					"column_order": 5
 				},
 				{
-					"data_path": "action_result.data.*.detection_rules.*.category",
+					"data_path": "action_result.data.*.detection_rules.*.confidence",
 					"data_type": "string",
 					"example_values": [
-						"Attack:Infection Vector"
+						"high",
+                        "moderate",
+                        "low"
 					],
-					"column_name": "Category"
+					"column_name": "Confidence",
+					"column_order": 6
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.auto_resolution_minutes",
+					"data_type": "numeric",
+					"example_values": [
+						10080
+					],
+					"column_name": "Resolution Minutes",
+					"column_order": 7
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.enabled",
+					"data_type": "boolean",
+					"example_values": [
+						true,
+                        false
+					],
+					"column_name": "Enabled",
+					"column_order": 8
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.query_signature",
+					"data_type": "string",
+					"example_values": [
+						"ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns'"
+					],
+					"column_name": "Signature",
+					"column_order": 9
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.created",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Created",
+					"column_order": 10
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.created_user_uuid",
+					"data_type": "string",
+					"example_values": [
+						"55f39b72-2622-4137-9051-bc2ff364f059"
+					],
+					"column_name": "Created User ID",
+					"column_order": 11
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.updated",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Updated",
+					"column_order": 12
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.updated_user_uuid",
+					"data_type": "string",
+					"example_values": [
+						"55f39b72-2622-4137-9051-bc2ff364f059"
+					],
+					"column_name": "Updated User ID",
+					"column_order": 13
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.shared_account_uuids",
+					"data_type": "string",
+					"example_values": [
+						"55f39b72-2622-4137-9051-bc2ff364f059"
+					],
+					"column_name": "Shared Accounts",
+					"column_order": 14
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.run_account_uuids",
+					"data_type": "string",
+					"example_values": [
+						"[\"55f39b72-2622-4137-9051-bc2ff364f059\"]"
+					],
+					"column_name": "Run Accounts",
+					"column_order": 15
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.rule_accounts",
+					"data_type": "string",
+					"column_name": "Rule Accounts",
+					"column_order": 16
+				},
+				{
+					"data_path": "action_result.data.*.rule.critical_updated",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Critical Updated",
+					"column_order": 17
+				},
+				{
+					"data_path": "action_result.data.*.rule.primary_attack_id",
+					"data_type": "string",
+					"column_name": "Primary Attack ID",
+					"column_order": 18
+				},
+				{
+					"data_path": "action_result.data.*.rule.secondary_attack_id",
+					"data_type": "string",
+					"column_name": "Secondary Attack ID",
+					"column_order": 19
+				},
+				{
+					"data_path": "action_result.data.*.rule.specificity",
+					"data_type": "string",
+					"column_name": "Specificity",
+					"column_order": 20
+				},
+				{
+					"data_path": "action_result.data.*.rule.device_ip_fields",
+					"data_type": "string",
+					"example_values": [
+						"DEFAULT"
+					],
+					"column_name": "Device IP Fields",
+					"column_order": 21
+				},
+				{
+					"data_path": "action_result.data.*.rule.indicator_fields",
+					"data_type": "string",
+					"example_values": [
+						"src.ip"
+					],
+					"column_name": "Indicator Fields",
+					"column_order": 22
+				},
+				{
+					"data_path": "action_result.data.*.rule.source_excludes",
+					"data_type": "string",
+					"example_values": [
+						"Zscaler"
+					],
+					"column_name": "Source Excludes",
+					"column_order": 23
 				}
 			],
 			"render": {
 				"type": "table",
-				"width": 18,
+				"width": 24,
 				"title": "FortiNDR Get Detections Rules"
 			},
 			"versions": "EQ(*)"
@@ -2724,7 +3245,15 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.detection_uuid",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.resolution",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.resolution_comment",
 					"data_type": "string"
 				},
 				{
@@ -2808,85 +3337,20 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.rule_uuid",
 					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.rule_events.*.src_ip",
-					"data_type": "string",
-					"example_values": [
-						"8.8.8.8"
-					],
-					"column_name": "Src IP"
+					"data_path": "action_result.parameter.account_uuid",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.rule_events.*.dst_ip",
-					"data_type": "string",
-					"example_values": [
-						"9.9.9.9"
-					],
-					"column_name": "Dest IP"
+					"data_path": "action_result.parameter.offset",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.rule_events.*.src_port",
-					"data_type": "numeric",
-					"example_values": [
-						53
-					],
-					"column_name": "Src Port"
-				},
-				{
-					"data_path": "action_result.data.*.rule_events.*.dst_port",
-					"data_type": "numeric",
-					"example_values": [
-						32
-					],
-					"column_name": "Dst Port"
-				},
-				{
-					"data_path": "action_result.data.*.rule_events.*.host_domain",
-					"data_type": "string",
-					"column_name": "Host Domain"
-				},
-				{
-					"data_path": "action_result.data.*.rule_events.*.flow_id",
-					"data_type": "string",
-					"example_values": [
-						"Cpv6xc2a3gA6fA8WE"
-					],
-					"column_name": "Flow ID"
-				},
-				{
-					"data_path": "action_result.data.*.rule_events.*.event_type",
-					"data_type": "string",
-					"example_values": [
-						"dns"
-					],
-					"column_name": "Event Type"
-				},
-				{
-					"data_path": "action_result.data.*.rule_events.*.sensor_id",
-					"data_type": "string",
-					"example_values": [
-						"sen1"
-					],
-					"column_name": "Sensor ID"
-				},
-				{
-					"data_path": "action_result.data.*.rule_events.*.timestamp",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Timestamp"
-				},
-				{
-					"data_path": "action_result.data.*.rule_events.*.customer_id",
-					"data_type": "string",
-					"example_values": [
-						"gig"
-					],
-					"column_name": "Customer ID"
+					"data_path": "action_result.parameter.limit",
+					"data_type": "string"
 				},
 				{
 					"data_path": "action_result.data.*.rule_events.*.uuid",
@@ -2894,7 +3358,95 @@
 					"example_values": [
 						"a7015381-0484-11ee-a43f-067ff9e63f5b"
 					],
-					"column_name": "Event ID"
+					"column_name": "Event ID",
+					"column_order": 0
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.event_type",
+					"data_type": "string",
+					"example_values": [
+						"dns"
+					],
+					"column_name": "Event Type",
+					"column_order": 1
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.sensor_id",
+					"data_type": "string",
+					"example_values": [
+						"sen1"
+					],
+					"column_name": "Sensor ID",
+					"column_order": 2
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.customer_id",
+					"data_type": "string",
+					"example_values": [
+						"gig"
+					],
+					"column_name": "Customer ID",
+					"column_order": 3
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.timestamp",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Timestamp",
+					"column_order": 4
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.host_domain",
+					"data_type": "string",
+					"column_name": "Host Domain",
+					"column_order": 5
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.src_ip",
+					"data_type": "string",
+					"example_values": [
+						"8.8.8.8"
+					],
+					"column_name": "Src IP",
+					"column_order": 6
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.src_port",
+					"data_type": "numeric",
+					"example_values": [
+						53
+					],
+					"column_name": "Src Port",
+					"column_order": 7
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.dst_ip",
+					"data_type": "string",
+					"example_values": [
+						"9.9.9.9"
+					],
+					"column_name": "Dest IP",
+					"column_order": 8
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.dst_port",
+					"data_type": "numeric",
+					"example_values": [
+						32
+					],
+					"column_name": "Dst Port",
+					"column_order": 9
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.flow_id",
+					"data_type": "string",
+					"example_values": [
+						"Cpv6xc2a3gA6fA8WE"
+					],
+					"column_name": "Flow ID",
+					"column_order": 10
 				}
 			],
 			"render": {
@@ -2968,93 +3520,16 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.detection_uuid",
 					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_events.*.src_ip",
-					"data_type": "string",
-					"example_values": [
-						"8.8.8.8"
-					],
-					"column_name": "Src IP"
+					"data_path": "action_result.parameter.offset",
+					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.detection_events.*.dst_ip",
-					"data_type": "string",
-					"example_values": [
-						"9.9.9.9"
-					],
-					"column_name": "Dest IP"
-				},
-				{
-					"data_path": "action_result.data.*.detection_events.*.src_port",
-					"data_type": "numeric",
-					"example_values": [
-						53
-					],
-					"column_name": "Src Port"
-				},
-				{
-					"data_path": "action_result.data.*.detection_events.*.dst_port",
-					"data_type": "numeric",
-					"example_values": [
-						32
-					],
-					"column_name": "Dst Port"
-				},
-				{
-					"data_path": "action_result.data.*.detection_events.*.host_domain",
-					"data_type": "string",
-					"column_name": "Host Domain"
-				},
-				{
-					"data_path": "action_result.data.*.detection_events.*.flow_id",
-					"data_type": "string",
-					"example_values": [
-						"Cpv6xc2a3gA6fA8WE"
-					],
-					"column_name": "Flow ID"
-				},
-				{
-					"data_path": "action_result.data.*.detection_events.*.event_type",
-					"data_type": "string",
-					"example_values": [
-						"dns"
-					],
-					"column_name": "Event Type"
-				},
-				{
-					"data_path": "action_result.data.*.detection_events.*.sensor_id",
-					"data_type": "string",
-					"example_values": [
-						"sen1"
-					],
-					"column_name": "Sensor ID"
-				},
-				{
-					"data_path": "action_result.data.*.detection_events.*.timestamp",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Timestamp"
-				},
-				{
-					"data_path": "action_result.data.*.detection_events.*.customer_id",
-					"data_type": "string",
-					"example_values": [
-						"gig"
-					],
-					"column_name": "Customer ID"
-				},
-				{
-					"data_path": "action_result.data.*.detection_events.*.uuid",
-					"data_type": "string",
-					"example_values": [
-						"a7015381-0484-11ee-a43f-067ff9e63f5b"
-					],
-					"column_name": "Event ID"
+					"data_path": "action_result.parameter.limit",
+					"data_type": "string"
 				},
 				{
 					"data_path": "action_result.data.*.detection_events.*.detection_uuid",
@@ -3062,7 +3537,8 @@
 					"example_values": [
 						"a7015381-0484-11ee-a43f-067ff9e63f5b"
 					],
-					"column_name": "Detection ID"
+					"column_name": "Detection ID",
+					"column_order": 0
 				},
 				{
 					"data_path": "action_result.data.*.detection_events.*.rule_uuid",
@@ -3070,7 +3546,104 @@
 					"example_values": [
 						"a7015381-0484-11ee-a43f-067ff9e63f5b"
 					],
-					"column_name": "Rule ID"
+					"column_name": "Rule ID",
+					"column_order": 1
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.uuid",
+					"data_type": "string",
+					"example_values": [
+						"a7015381-0484-11ee-a43f-067ff9e63f5b"
+					],
+					"column_name": "Event ID",
+					"column_order": 2
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.event_type",
+					"data_type": "string",
+					"example_values": [
+						"dns"
+					],
+					"column_name": "Event Type",
+					"column_order": 3
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.sensor_id",
+					"data_type": "string",
+					"example_values": [
+						"sen1"
+					],
+					"column_name": "Sensor ID",
+					"column_order": 4
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.customer_id",
+					"data_type": "string",
+					"example_values": [
+						"gig"
+					],
+					"column_name": "Customer ID",
+					"column_order": 5
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.timestamp",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Timestamp",
+					"column_order": 6
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.host_domain",
+					"data_type": "string",
+					"column_name": "Host Domain",
+					"column_order": 7
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.src_ip",
+					"data_type": "string",
+					"example_values": [
+						"8.8.8.8"
+					],
+					"column_name": "Src IP",
+					"column_order": 8
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.src_port",
+					"data_type": "numeric",
+					"example_values": [
+						53
+					],
+					"column_name": "Src Port",
+					"column_order": 9
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.dst_ip",
+					"data_type": "string",
+					"example_values": [
+						"9.9.9.9"
+					],
+					"column_name": "Dest IP",
+					"column_order": 10
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.dst_port",
+					"data_type": "numeric",
+					"example_values": [
+						32
+					],
+					"column_name": "Dst Port",
+					"column_order": 11
+				},
+				{
+					"data_path": "action_result.data.*.rule_events.*.flow_id",
+					"data_type": "string",
+					"example_values": [
+						"Cpv6xc2a3gA6fA8WE"
+					],
+					"column_name": "Flow ID",
+					"column_order": 12
 				}
 			],
 			"render": {
@@ -3235,138 +3808,212 @@
 					]
 				},
 				{
-					"data_path": "action_result.parameter",
+					"data_path": "action_result.parameter.account_uuid",
 					"data_type": "string"
 				},
 				{
-					"data_path": "action_result.data.*.rule.uuid",
+					"data_path": "action_result.parameter.name",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.category",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.query_signature",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.description",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.severity",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.confidence",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.primary_attack_id",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.secondary_attack_id",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.specificity",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.device_ip_fields",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.indicator_fields",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.run_account_uuids",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.parameter.auto_resolution_minutes",
+					"data_type": "string"
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.uuid",
 					"data_type": "string",
 					"example_values": [
 						"55f39b72-2622-4137-9051-bc2ff364f059"
 					],
-					"column_name": "ID"
+					"column_name": "ID",
+					"column_order": 0
 				},
 				{
-					"data_path": "action_result.data.*.rule.account_uuid",
+					"data_path": "action_result.data.*.detection_rules.*.account_uuid",
 					"data_type": "string",
 					"example_values": [
 						"55f39b72-2622-4137-9051-bc2ff364f059"
 					],
-					"column_name": "Account"
+					"column_name": "Account",
+					"column_order": 1
 				},
 				{
-					"data_path": "action_result.data.*.rule.shared_account_uuids",
-					"data_type": "string",
-					"example_values": [
-						"55f39b72-2622-4137-9051-bc2ff364f059"
-					],
-					"column_name": "Shared Accounts"
-				},
-				{
-					"data_path": "action_result.data.*.rule.run_account_uuids",
-					"data_type": "string",
-					"example_values": [
-						"[\"55f39b72-2622-4137-9051-bc2ff364f059\"]"
-					],
-					"column_name": "Run Accounts"
-				},
-				{
-					"data_path": "action_result.data.*.rule.name",
+					"data_path": "action_result.data.*.detection_rules.*.name",
 					"data_type": "string",
 					"example_values": [
 						"AR T1595"
 					],
-					"column_name": "Name"
+					"column_name": "Name",
+					"column_order": 2
 				},
 				{
-					"data_path": "action_result.data.*.rule.category",
+					"data_path": "action_result.data.*.detection_rules.*.category",
 					"data_type": "string",
 					"example_values": [
 						"Attack:Infection Vector"
 					],
-					"column_name": "Category"
+					"column_name": "Category",
+					"column_order": 3
 				},
 				{
-					"data_path": "action_result.data.*.rule.query_signature",
+					"data_path": "action_result.data.*.detection_rules.*.description",
 					"data_type": "string",
-					"example_values": [
-						"ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns'"
-					],
-					"column_name": "Signature"
+					"column_name": "Description",
+					"column_order": 4
 				},
 				{
-					"data_path": "action_result.data.*.rule.description",
-					"data_type": "string",
-					"column_name": "Description"
-				},
-				{
-					"data_path": "action_result.data.*.rule.severity",
+					"data_path": "action_result.data.*.detection_rules.*.severity",
 					"data_type": "string",
 					"example_values": [
 						"high",
                         "moderate",
                         "low"
 					],
-					"column_name": "Severity"
+					"column_name": "Severity",
+					"column_order": 5
 				},
 				{
-					"data_path": "action_result.data.*.rule.confidence",
+					"data_path": "action_result.data.*.detection_rules.*.confidence",
 					"data_type": "string",
 					"example_values": [
 						"high",
                         "moderate",
                         "low"
 					],
-					"column_name": "Confidence"
+					"column_name": "Confidence",
+					"column_order": 6
 				},
 				{
-					"data_path": "action_result.data.*.rule.auto_resolution_minutes",
+					"data_path": "action_result.data.*.detection_rules.*.auto_resolution_minutes",
 					"data_type": "numeric",
 					"example_values": [
 						10080
 					],
-					"column_name": "Resolution Minutes"
+					"column_name": "Resolution Minutes",
+					"column_order": 7
 				},
 				{
-					"data_path": "action_result.data.*.rule.enabled",
+					"data_path": "action_result.data.*.detection_rules.*.enabled",
 					"data_type": "boolean",
 					"example_values": [
 						true,
                         false
 					],
-					"column_name": "Enabled"
+					"column_name": "Enabled",
+					"column_order": 8
 				},
 				{
-					"data_path": "action_result.data.*.rule.created_user_uuid",
+					"data_path": "action_result.data.*.detection_rules.*.query_signature",
 					"data_type": "string",
 					"example_values": [
-						"55f39b72-2622-4137-9051-bc2ff364f059"
+						"ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns'"
 					],
-					"column_name": "Created User ID"
+					"column_name": "Signature",
+					"column_order": 9
 				},
 				{
-					"data_path": "action_result.data.*.rule.created",
-					"data_type": "string",
-					"example_values": [
-						"2019-01-30T00:00:00.000Z"
-					],
-					"column_name": "Created"
-				},
-				{
-					"data_path": "action_result.data.*.rule.updated_user_uuid",
-					"data_type": "string",
-					"example_values": [
-						"55f39b72-2622-4137-9051-bc2ff364f059"
-					],
-					"column_name": "Updated User ID"
-				},
-				{
-					"data_path": "action_result.data.*.rule.updated",
+					"data_path": "action_result.data.*.detection_rules.*.created",
 					"data_type": "string",
 					"example_values": [
 						"2019-01-30T00:00:00.000Z"
 					],
-					"column_name": "Updated"
+					"column_name": "Created",
+					"column_order": 10
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.created_user_uuid",
+					"data_type": "string",
+					"example_values": [
+						"55f39b72-2622-4137-9051-bc2ff364f059"
+					],
+					"column_name": "Created User ID",
+					"column_order": 11
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.updated",
+					"data_type": "string",
+					"example_values": [
+						"2019-01-30T00:00:00.000Z"
+					],
+					"column_name": "Updated",
+					"column_order": 12
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.updated_user_uuid",
+					"data_type": "string",
+					"example_values": [
+						"55f39b72-2622-4137-9051-bc2ff364f059"
+					],
+					"column_name": "Updated User ID",
+					"column_order": 13
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.shared_account_uuids",
+					"data_type": "string",
+					"example_values": [
+						"55f39b72-2622-4137-9051-bc2ff364f059"
+					],
+					"column_name": "Shared Accounts",
+					"column_order": 14
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.run_account_uuids",
+					"data_type": "string",
+					"example_values": [
+						"[\"55f39b72-2622-4137-9051-bc2ff364f059\"]"
+					],
+					"column_name": "Run Accounts",
+					"column_order": 15
+				},
+				{
+					"data_path": "action_result.data.*.detection_rules.*.rule_accounts",
+					"data_type": "string",
+					"column_name": "Rule Accounts",
+					"column_order": 16
 				},
 				{
 					"data_path": "action_result.data.*.rule.critical_updated",
@@ -3374,27 +4021,26 @@
 					"example_values": [
 						"2019-01-30T00:00:00.000Z"
 					],
-					"column_name": "Critical Updated"
+					"column_name": "Critical Updated",
+					"column_order": 17
 				},
 				{
 					"data_path": "action_result.data.*.rule.primary_attack_id",
 					"data_type": "string",
-					"column_name": "Primary Attack ID"
+					"column_name": "Primary Attack ID",
+					"column_order": 18
 				},
 				{
 					"data_path": "action_result.data.*.rule.secondary_attack_id",
 					"data_type": "string",
-					"column_name": "Secondary Attack ID"
+					"column_name": "Secondary Attack ID",
+					"column_order": 19
 				},
 				{
 					"data_path": "action_result.data.*.rule.specificity",
 					"data_type": "string",
-					"column_name": "Specificity"
-				},
-				{
-					"data_path": "action_result.data.*.rule.rule_accounts",
-					"data_type": "string",
-					"column_name": "Rule Accounts"
+					"column_name": "Specificity",
+					"column_order": 20
 				},
 				{
 					"data_path": "action_result.data.*.rule.device_ip_fields",
@@ -3402,7 +4048,8 @@
 					"example_values": [
 						"DEFAULT"
 					],
-					"column_name": "Device IP Fields"
+					"column_name": "Device IP Fields",
+					"column_order": 21
 				},
 				{
 					"data_path": "action_result.data.*.rule.indicator_fields",
@@ -3410,7 +4057,8 @@
 					"example_values": [
 						"src.ip"
 					],
-					"column_name": "Indicator Fields"
+					"column_name": "Indicator Fields",
+					"column_order": 22
 				},
 				{
 					"data_path": "action_result.data.*.rule.source_excludes",
@@ -3418,12 +4066,13 @@
 					"example_values": [
 						"Zscaler"
 					],
-					"column_name": "Source Excludes"
+					"column_name": "Source Excludes",
+					"column_order": 23
 				}
 			],
 			"render": {
 				"type": "table",
-				"width": 0,
+				"width": 24,
 				"title": "FortiNDR Create Detection Rule"
 			},
 			"versions": "EQ(*)"
