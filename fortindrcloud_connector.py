@@ -539,7 +539,7 @@ class FortiNDRCloudConnector(BaseConnector):
         config = self.get_config()
 
         self.api_key = config["api_key"]
-        base_url: str = config["api_base_url"]
+        base_url: str = "https://<API>.icebrg.io"
         if self._validate_base_url(base_url=base_url):
             self._base_url_str = base_url.replace("<API>", "{0}")
         else:
