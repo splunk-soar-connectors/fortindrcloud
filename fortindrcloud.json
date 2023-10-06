@@ -447,8 +447,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Date",
-                    "column_order": 1,
-                    "description": "Date when the device was first seen"
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.devices.*.external",
@@ -458,8 +457,7 @@
                         false
                     ],
                     "column_name": "External",
-                    "column_order": 2,
-                    "description": "If external traffic has been observed for this device"
+                    "column_order": 2
                 },
                 {
                     "data_path": "action_result.data.*.devices.*.internal",
@@ -469,8 +467,7 @@
                         false
                     ],
                     "column_name": "Internal",
-                    "column_order": 3,
-                    "description": "If internal traffic has been observed for this device"
+                    "column_order": 3
                 }
             ],
             "render": {
@@ -542,8 +539,7 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Task UUID",
-                    "column_order": 0,
-                    "description": "Unique ID of the task"
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.name",
@@ -552,15 +548,13 @@
                         "Meh-Ike phone 10001"
                     ],
                     "column_name": "Name",
-                    "column_order": 1,
-                    "description": "Name of the task"
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.description",
                     "data_type": "string",
                     "column_name": "Description",
-                    "column_order": 2,
-                    "description": "Description of the task"
+                    "column_order": 2
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.status",
@@ -569,8 +563,7 @@
                         "inactive"
                     ],
                     "column_name": "Status",
-                    "column_order": 3,
-                    "description": "Current status of the task"
+                    "column_order": 3
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.account_code",
@@ -579,8 +572,7 @@
                         "gig"
                     ],
                     "column_name": "Account Code",
-                    "column_order": 4,
-                    "description": "ID code of the customer account"
+                    "column_order": 4
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.sensor_ids",
@@ -589,8 +581,7 @@
                         "[\"sen1\"]"
                     ],
                     "column_name": "Sensor IDs",
-                    "column_order": 5,
-                    "description": "Sensors this task is running on"
+                    "column_order": 5
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.bpf",
@@ -599,8 +590,7 @@
                         "src host x.x.x.x and dst port 10001"
                     ],
                     "column_name": "BPF",
-                    "column_order": 6,
-                    "description": "Berkeley Packet Filter for the task"
+                    "column_order": 6
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.created",
@@ -609,8 +599,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Created",
-                    "column_order": 7,
-                    "description": "Date when the task was created"
+                    "column_order": 7
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.created_uuid",
@@ -619,8 +608,7 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Creator UUID",
-                    "column_order": 8,
-                    "description": "Unique ID of the user that created the task"
+                    "column_order": 8
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.created_email",
@@ -629,8 +617,7 @@
                         "test@test.com"
                     ],
                     "column_name": "Creator Email",
-                    "column_order": 9,
-                    "description": "Email address of the user that created the task"
+                    "column_order": 9
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.updated",
@@ -639,8 +626,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Updated",
-                    "column_order": 10,
-                    "description": "Sensors this task is running on"
+                    "column_order": 10
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.updated_uuid",
@@ -649,8 +635,7 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Updated UUID",
-                    "column_order": 11,
-                    "description": "Unique ID of the user that updated the task"
+                    "column_order": 11
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.updated_email",
@@ -659,8 +644,7 @@
                     "column_order": 12,
                     "example_values": [
                         "test@test.com"
-                    ],
-                    "description": "Email address of the user that updated the task"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.requested_start_time",
@@ -669,8 +653,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Requested Start Time",
-                    "column_order": 13,
-                    "description": "Requested date for the task start"
+                    "column_order": 13
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.actual_start_time",
@@ -679,8 +662,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Start Time",
-                    "column_order": 14,
-                    "description": "Date when the task actually started"
+                    "column_order": 14
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.requested_end_time",
@@ -689,8 +671,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Requested End Time",
-                    "column_order": 15,
-                    "description": "Requested date for the task to end"
+                    "column_order": 15
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.actual_end_time",
@@ -699,8 +680,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "End Time",
-                    "column_order": 16,
-                    "description": "Date when the task actually ended"
+                    "column_order": 16
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.has_files",
@@ -710,15 +690,13 @@
                         false
                     ],
                     "column_name": "Has Files",
-                    "column_order": 17,
-                    "description": "If this task has files (true/false)"
+                    "column_order": 17
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.files",
                     "data_type": "string",
                     "column_name": "Files",
-                    "column_order": 18,
-                    "description": "Files captured for this task"
+                    "column_order": 18
                 }
             ],
             "render": {
@@ -824,6 +802,10 @@
                     "data_path": "action_result.parameter.account_uuid",
                     "data_type": "string"
                 },
+				{
+					"data_path": "action_result.parameter.description",
+					"data_type": "string"
+				},
                 {
                     "data_path": "action_result.parameter.bpf",
                     "data_type": "string"
@@ -847,8 +829,7 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Task UUID",
-                    "column_order": 0,
-                    "description": "Unique ID of the task"
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.name",
@@ -857,15 +838,13 @@
                         "Meh-Ike phone 10001"
                     ],
                     "column_name": "Name",
-                    "column_order": 1,
-                    "description": "Name of the task"
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.description",
                     "data_type": "string",
                     "column_name": "Description",
-                    "column_order": 2,
-                    "description": "Description of the task"
+                    "column_order": 2
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.status",
@@ -874,8 +853,7 @@
                         "inactive"
                     ],
                     "column_name": "Status",
-                    "column_order": 3,
-                    "description": "Current status of the task"
+                    "column_order": 3
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.account_code",
@@ -884,8 +862,7 @@
                         "gig"
                     ],
                     "column_name": "Account Code",
-                    "column_order": 4,
-                    "description": "ID code of the customer account"
+                    "column_order": 4
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.sensor_ids",
@@ -894,8 +871,7 @@
                         "[\"sen1\"]"
                     ],
                     "column_name": "Sensor IDs",
-                    "column_order": 5,
-                    "description": "Sensors this task is running on"
+                    "column_order": 5
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.bpf",
@@ -904,8 +880,7 @@
                         "src host x.x.x.x and dst port 10001"
                     ],
                     "column_name": "BPF",
-                    "column_order": 6,
-                    "description": "Berkeley Packet Filter for the task"
+                    "column_order": 6
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.created",
@@ -914,8 +889,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Created",
-                    "column_order": 7,
-                    "description": "Date when the task was created"
+                    "column_order": 7
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.created_uuid",
@@ -924,8 +898,7 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Creator UUID",
-                    "column_order": 8,
-                    "description": "Unique ID of the user that created the task"
+                    "column_order": 8
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.created_email",
@@ -934,8 +907,7 @@
                         "test@test.com"
                     ],
                     "column_name": "Creator Email",
-                    "column_order": 9,
-                    "description": "Email address of the user that created the task"
+                    "column_order": 9
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.updated",
@@ -944,8 +916,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Updated",
-                    "column_order": 10,
-                    "description": "Sensors this task is running on"
+                    "column_order": 10
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.updated_uuid",
@@ -954,8 +925,7 @@
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
                     ],
                     "column_name": "Updated UUID",
-                    "column_order": 11,
-                    "description": "Unique ID of the user that updated the task"
+                    "column_order": 11
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.updated_email",
@@ -964,8 +934,7 @@
                     "column_order": 12,
                     "example_values": [
                         "test@test.com"
-                    ],
-                    "description": "Email address of the user that updated the task"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.requested_start_time",
@@ -974,8 +943,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Requested Start Time",
-                    "column_order": 13,
-                    "description": "Requested date for the task start"
+                    "column_order": 13
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.actual_start_time",
@@ -984,8 +952,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Start Time",
-                    "column_order": 14,
-                    "description": "Date when the task actually started"
+                    "column_order": 14
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.requested_end_time",
@@ -994,8 +961,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Requested End Time",
-                    "column_order": 15,
-                    "description": "Requested date for the task to end"
+                    "column_order": 15
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.actual_end_time",
@@ -1004,8 +970,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "End Time",
-                    "column_order": 16,
-                    "description": "Date when the task actually ended"
+                    "column_order": 16
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.has_files",
@@ -1015,15 +980,13 @@
                         false
                     ],
                     "column_name": "Has Files",
-                    "column_order": 17,
-                    "description": "If this task has files (true/false)"
+                    "column_order": 17
                 },
                 {
                     "data_path": "action_result.data.*.tasks.*.files",
                     "data_type": "string",
                     "column_name": "Files",
-                    "column_order": 18,
-                    "description": "Files captured for this task"
+                    "column_order": 18
                 }
             ],
             "render": {
@@ -1168,8 +1131,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Timestamp",
-                    "column_order": 0,
-                    "description": "Timestamp of the grouped data"
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_events.*.event_count",
@@ -1178,8 +1140,7 @@
                         1000
                     ],
                     "column_name": "Event Count",
-                    "column_order": 1,
-                    "description": "Number of events"
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_events.*.sensor_id",
@@ -1188,8 +1149,7 @@
                         "sen1"
                     ],
                     "column_name": "Sensor ID",
-                    "column_order": 2,
-                    "description": "Sensor name (if grouped by sensor_id)"
+                    "column_order": 2
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_events.*.event_type",
@@ -1198,8 +1158,7 @@
                         "flow"
                     ],
                     "column_name": "Event Type",
-                    "column_order": 3,
-                    "description": "Type of event (if grouped by event_type)"
+                    "column_order": 3
                 },
                 {
                     "data_path": "action_result.data.*.telemetry_events.*.account_code",
@@ -1208,8 +1167,7 @@
                         "act"
                     ],
                     "column_name": "Account Code",
-                    "column_order": 4,
-                    "description": "Account Code (if grouped by account_code)"
+                    "column_order": 4
                 }
             ],
             "render": {
@@ -1332,8 +1290,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Timestamp",
-                    "column_order": 0,
-                    "description": "Timestamp of the grouped data"
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.data.*.packetstats.*.account_code",
@@ -1342,8 +1299,7 @@
                         "gig"
                     ],
                     "column_name": "Account Code",
-                    "column_order": 1,
-                    "description": "Account code the data was filtered by"
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.packetstats.*.sensor_id",
@@ -1352,15 +1308,13 @@
                         "sen1"
                     ],
                     "column_name": "Sensor ID",
-                    "column_order": 2,
-                    "description": "Sensor ID packet data was recorded from"
+                    "column_order": 2
                 },
                 {
                     "data_path": "action_result.data.*.packetstats.*.interface_name",
                     "data_type": "string",
                     "column_name": "Interface Name",
-                    "column_order": 3,
-                    "description": "Interface the packet data was recorded from"
+                    "column_order": 3
                 },
                 {
                     "data_path": "action_result.data.*.packetstats.*.tx_bytes",
@@ -1369,8 +1323,7 @@
                         1380372603073006
                     ],
                     "column_name": "TX Bytes",
-                    "column_order": 4,
-                    "description": "Transmitted data size (bytes)"
+                    "column_order": 4
                 },
                 {
                     "data_path": "action_result.data.*.packetstats.*.tx_errors",
@@ -1379,8 +1332,7 @@
                         0
                     ],
                     "column_name": "TX Errors",
-                    "column_order": 5,
-                    "description": "Number of transmitted errors"
+                    "column_order": 5
                 },
                 {
                     "data_path": "action_result.data.*.packetstats.*.tx_packets",
@@ -1389,8 +1341,7 @@
                         963173536282
                     ],
                     "column_name": "TX Packets",
-                    "column_order": 6,
-                    "description": "Number of transmitted packets"
+                    "column_order": 6
                 },
                 {
                     "data_path": "action_result.data.*.packetstats.*.rx_bytes",
@@ -1399,8 +1350,7 @@
                         "1044065401242303200"
                     ],
                     "column_name": "RX Bytes",
-                    "column_order": 7,
-                    "description": "Received data size (bytes)"
+                    "column_order": 7
                 },
                 {
                     "data_path": "action_result.data.*.packetstats.*.rx_errors",
@@ -1409,8 +1359,7 @@
                         543523121859
                     ],
                     "column_name": "RX Errors",
-                    "column_order": 8,
-                    "description": "Number of received errors"
+                    "column_order": 8
                 },
                 {
                     "data_path": "action_result.data.*.packetstats.*.rx_packets",
@@ -1419,8 +1368,7 @@
                         1511658249026538
                     ],
                     "column_name": "RX Packets",
-                    "column_order": 9,
-                    "description": "Number of received packets"
+                    "column_order": 9
                 },
                 {
                     "data_path": "action_result.data.*.packetstats.*.rx_bits_per_second",
@@ -1429,8 +1377,7 @@
                         168359035095
                     ],
                     "column_name": "RX Bits Per Second",
-                    "column_order": 10,
-                    "description": "Received throughput (bits per second)"
+                    "column_order": 10
                 }
             ],
             "render": {
@@ -1575,8 +1522,7 @@
                         "2019-01-30T00:00:00.000Z"
                     ],
                     "column_name": "Timestamp",
-                    "column_order": 0,
-                    "description": "The date the calculation was performed until"
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.data.*.network_usage.*.account_code",
@@ -1585,8 +1531,7 @@
                         "gig"
                     ],
                     "column_name": "Account Code",
-                    "column_order": 1,
-                    "description": "The account code for the network usage"
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.network_usage.*.interval",
@@ -1595,8 +1540,7 @@
                         "day"
                     ],
                     "column_name": "Interval",
-                    "column_order": 2,
-                    "description": "Time span the calculation was performed over (day, month_to_day)"
+                    "column_order": 2
                 },
                 {
                     "data_path": "action_result.data.*.network_usage.*.percentile",
@@ -1605,8 +1549,7 @@
                         95
                     ],
                     "column_name": "Percentile",
-                    "column_order": 3,
-                    "description": "Percentile of BPS records to calculate for percentile_bps"
+                    "column_order": 3
                 },
                 {
                     "data_path": "action_result.data.*.network_usage.*.percentile_bps",
@@ -1615,8 +1558,7 @@
                         6050493542
                     ],
                     "column_name": "Percentile BPS",
-                    "column_order": 4,
-                    "description": "The top percentile BPS value across sensors"
+                    "column_order": 4
                 }
             ],
             "render": {
@@ -3807,6 +3749,10 @@
                     "data_path": "action_result.parameter.query_signature",
                     "data_type": "string"
                 },
+				{
+					"data_path": "action_result.parameter.description",
+					"data_type": "string"
+				},
                 {
                     "data_path": "action_result.parameter.severity",
                     "data_type": "string"
