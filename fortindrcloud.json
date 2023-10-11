@@ -16,7 +16,7 @@
         }
     ],
     "license": "Copyright (c) 2018-2023 Fortinet Inc.",
-    "app_version": "1.0.0",
+    "app_version": "1.0.1",
     "utctime_updated": "2023-05-12T16:47:48.154912Z",
     "package_name": "phantom_fortindrcloud",
     "main_module": "fortindrcloud_connector.py",
@@ -802,10 +802,10 @@
                     "data_path": "action_result.parameter.account_uuid",
                     "data_type": "string"
                 },
-				{
-					"data_path": "action_result.parameter.description",
-					"data_type": "string"
-				},
+                {
+                    "data_path": "action_result.parameter.description",
+                    "data_type": "string"
+                },
                 {
                     "data_path": "action_result.parameter.bpf",
                     "data_type": "string"
@@ -3749,10 +3749,10 @@
                     "data_path": "action_result.parameter.query_signature",
                     "data_type": "string"
                 },
-				{
-					"data_path": "action_result.parameter.description",
-					"data_type": "string"
-				},
+                {
+                    "data_path": "action_result.parameter.description",
+                    "data_type": "string"
+                },
                 {
                     "data_path": "action_result.parameter.severity",
                     "data_type": "string"
