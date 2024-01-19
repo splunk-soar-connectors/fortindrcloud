@@ -441,6 +441,62 @@ class FortiNDRCloudConnector(BaseConnector):
 
         return container
 
+    def _create_artifact(self, cid, detection):
+        # Create a container and add necessary fields from the detection
+        device_ip = ""
+        sensor_id = ""
+        rule_severity = ""
+        rule_confidence = ""
+        created = ""
+        first_seen = ""
+        last_seen = ""
+        status = ""
+        uuid = ""
+
+        if "device_ip" in detection:
+            device_ip = detection["device_ip"]
+        if "sensor_id" in sensor_id:
+            sensor_id = detection["sensor_id"]
+        if "rule_severity" in detection:
+            rule_severity = self._map_severity(detection["rule_severity"])
+        if "rule_confidence" in detection:
+            rule_confidence = self._map_confidence(
+                detection["rule_confidence"])
+        if "created" in detection:
+            created = detection["created"]
+        if "first_seen" in detection:
+            first_seen = detection["first_seen"]
+        if "last_seen" in detection:
+            last_seen = detection["last_seen"]
+        if "status" in detection:
+            status = detection["status"]
+        if "uuid" in detection:
+            uuid = detection["uuid"]
+
+        artifact = {}
+        artifact["container_id"] = cid
+        
+        artifact["name"] = uuid       
+        artifact["label"] = "FNC_Detection"
+        artifact["create_time"] = created
+        artifact["start_time"] = first_seen
+        artifact["end_time"] = last_seen
+        artifact["severity"] = self._map_severity(rule_severity)
+        
+        artifact["cef"] = {
+            "fnc_first_seen": first_seen,
+            "fnc_last_seen": last_seen,
+            "fnc_severity": rule_severity,
+            "fnc_confidence": rule_confidence,
+            "fnc_status": status,
+            "fnc_detection_id": uuid,
+            "fnc_device_ip": device_ip,
+            "fnc_sensor_id": sensor_id,
+            "fnc_detection": json.dumps(detection),
+        }
+
+        return artifact
+
     def _split_multivalue_args(self, args, multiple_values: List = []):
         """Update the arguments contained in the multiple_values list
         from a comma separated string into a list of string.
@@ -854,11 +910,19 @@ class FortiNDRCloudConnector(BaseConnector):
         count = 0
         for detection in detections:
             container = self._create_container(detection)
-            ret_val, message, container_id = self.save_container(container)
+            ret_val, message, cid = self.save_container(container)
             if phantom.is_fail(ret_val):
-                em = f"Unable to publish container: {container_id}({message})"
+                em = f"Unable to publish container: {cid}({message})"
+                self.save_progress(em)
                 self.debug_print(em)
 
+            artifact = self._create_artifact(cid, detection)
+            ret_val, message, aid = self.save_artifacts([artifact])
+            if phantom.is_fail(ret_val):
+                em = f"Unable to publish artifact: {aid}({message})"
+                self.save_progress(em)
+                self.debug_print(em)
+                
             count += 1
 
         if count == 0:
