@@ -20,7 +20,7 @@
     "utctime_updated": "2023-05-12T16:47:48.154912Z",
     "package_name": "phantom_fortindrcloud",
     "main_module": "fortindrcloud_connector.py",
-    "min_phantom_version": "6.0.2",
+    "min_phantom_version": "6.1.1",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "api_key": {
