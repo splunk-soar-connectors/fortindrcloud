@@ -60,7 +60,7 @@ class API_Info:
         elif api == "Detections":
             return DetectionAPI(base_url=self._base_url)
 
-    def get_request_info(self, request: str, arg: dict[str, Any] = {}):
+    def get_request_info(self, request: str, arg: dict[str, Any] = None):
         return self._api.get_request_info(request, arg)
 
     def get_baseurl(self) -> str:
@@ -87,7 +87,7 @@ class SensorAPI:
         """
         return self._url
 
-    def get_request_info(self, request: str, arg: dict[str, Any] = {}):
+    def get_request_info(self, request: str, arg: dict[str, Any] = None):
         if request == "getSensors":
             return self._getSensors()
         elif request == "getDevices":
@@ -121,8 +121,9 @@ class SensorAPI:
             method="get",
         )
 
-    def _getTasks(self, arg: dict[str, Any] = {}) -> Dict[str, Any]:
+    def _getTasks(self, arg: dict[str, Any] = None) -> Dict[str, Any]:
         """ """
+        arg = {} if not arg else arg
 
         taskid = arg.pop("task_id") if "task_id" in arg else ""
         endpoint = "v1/pcaptasks"
@@ -420,7 +421,7 @@ class FortiNDRCloudConnector(BaseConnector):
             uuid = detection["uuid"]
 
         self.debug_print(f"Creating Container for detection {uuid}.")
-        
+
         container = {}
         container["name"] = "Fortinet FortiNDR Cloud - "
         container["name"] += rule_name
@@ -474,19 +475,19 @@ class FortiNDRCloudConnector(BaseConnector):
             status = detection["status"]
         if "uuid" in detection:
             uuid = detection["uuid"]
-        
+
         self.debug_print(f"Creating Artifact for detection {uuid} to be added in container {cid}.")
-        
+
         artifact = {}
         artifact["container_id"] = cid
-        
-        artifact["name"] = uuid       
+
+        artifact["name"] = uuid
         artifact["label"] = "FNC_Detection"
         artifact["create_time"] = created
         artifact["start_time"] = first_seen
         artifact["end_time"] = last_seen
         artifact["severity"] = self._map_severity(rule_severity)
-        
+
         artifact["cef"] = {
             "fnc_first_seen": first_seen,
             "fnc_last_seen": last_seen,
@@ -558,13 +559,13 @@ class FortiNDRCloudConnector(BaseConnector):
 
         first_poll_str = config.get("first_poll", DEFAULT_FIRST_POLL)
         start_date = None
-        
+
         try:
             start_date = self._get_start_date(first_poll_str)
         except Exception as e:
             self.error_print(f"Unable to retrieve the start date. [{str(e)}]")
             raise e
-            
+
         request_params["created_or_shared_start_date"] = datetime.strftime(
             start_date, DATE_FORMAT
         )
@@ -660,7 +661,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
     def _process_json_response(self, r):
         self.debug_print("Processing response as JSON.")
-        
+
         # Try a json parse
         try:
             resp_json = r.json()
@@ -743,7 +744,7 @@ class FortiNDRCloudConnector(BaseConnector):
         summary.update()
         return summary
 
-    def prepare_request(self, api: str, request: str, arg: dict[str, Any] = {}):
+    def prepare_request(self, api: str, request: str, arg: dict[str, Any] = None):
         # Get the API and the request endpoint info
         api_info = API_Info(
             api=api,
@@ -751,12 +752,12 @@ class FortiNDRCloudConnector(BaseConnector):
             api_key=self.api_key,
             use_prod=self.use_production,
         )
-        
+
         self.debug_print(
             "Preparing request to {0} API to handle {1}.".format(
                 api_info.api_name, request
             )
-        )        
+        )
         request_info = api_info.get_request_info(request=request, arg=arg)
 
         return api_info, request_info
@@ -776,7 +777,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         # Make rest call
         self._base_url = request_info.base_url
-                
+
         return self._make_rest_call(
             endpoint=request_info.endpoint,
             method=request_info.method,
@@ -861,7 +862,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.save_progress("Testing connectivity to FortiNDR.")
         self.debug_print("Testing connectivity to FortiNDR Cloud's services.")
-        
+
         api_info, request_info = self.prepare_request(
             api="Sensors", request="getSensors"
         )
@@ -872,7 +873,7 @@ class FortiNDRCloudConnector(BaseConnector):
         try:
             endpoint = request_info.base_url + request_info.endpoint
             self.save_progress(f"Sending request to: {endpoint}")
-                
+
             _, request_summary = self.send_request(
                 api_info=api_info, request_info=request_info, param=None
             )
@@ -938,7 +939,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         cf = 0
         af = 0
-        c = 0        
+        c = 0
         for detection in detections:
             c = c + 1
             self.debug_print(f"creating container [{c} of {len(detections)}]")
@@ -956,13 +957,13 @@ class FortiNDRCloudConnector(BaseConnector):
                     em = f"Unable to publish artifact: {aid}({message})"
                     self.save_progress(em)
                     self.error_print(em)
-                    af = af + 1                
-        tf = cf + af                    
+                    af = af + 1
+        tf = cf + af
         if tf > 0:
             em = f"{tf} of {len(detections)} containers failed to be correctly published."
             if af > 0:
                 em += f" {af} of them, where published without artifacts. The rest were not published at all."
-            self.error_print(em)   
+            self.error_print(em)
         self.debug_print(f"[{c} of {len(detections)}] containers successfully published.")
         self._state["last_poll"] = end_date_str
 
@@ -1480,22 +1481,21 @@ class FortiNDRCloudConnector(BaseConnector):
         the maximum allowed in a page.
         """
 
-        offset = param.get("offset",0)
-        request_summary = {"requests": []}        
+        offset = param.get("offset", 0)
+        request_summary = {"requests": []}
         result = {}
-        #while not result:
         # Get the next piece of detections and add them to the result
         self.debug_print(f'Retrieving Detections with offset = {offset}.')
         api_info, request_info = self.prepare_request(
             api="Detections", request="getDetections"
         )
-        
+
         response, rs = self.send_request(
             api_info=api_info, request_info=request_info, param=param
         )
-        
+
         request_summary["requests"].extend(rs["requests"])
-    
+
         # filter out training detections
         detections = list(
             filter(
@@ -1504,7 +1504,7 @@ class FortiNDRCloudConnector(BaseConnector):
                 response["detections"],
             )
         )
-        
+
         rules = {}
         if detections:
             # Include rules if they need to be included
@@ -1513,26 +1513,26 @@ class FortiNDRCloudConnector(BaseConnector):
                 e = 0
                 for rule in response['rules']:
                     if not rule['uuid'] in rules:
-                        rules[rule['uuid']] = rule                       
-                        a += 1    
-                    else: 
+                        rules[rule['uuid']] = rule
+                        a += 1
+                    else:
                         e += 1
-                
+
                 self.debug_print(f"{len(response['rules'])} rules retrieved, {a} rules were added to the result and {e} rules were already included.")
                 if a + e != len(response['rules']):
                     self.error_print(f"{len(response['rules'])-(a+e)} rules failed to be retrieved." )
         result = {
             'detections': detections,
             'rules': rules,
-        }   
-        
-        self.debug_print(f"{len(detections)} detections retrieved.")                       
+        }
+
+        self.debug_print(f"{len(detections)} detections retrieved.")
         return result, request_summary
 
     def _get_detections(self, param):
         # Add an action result object to self (BaseConnector)
         # to represent the action for this param
-        inc_polling = param.pop("on_poll", False)        
+        inc_polling = param.pop("on_poll", False)
         limit = param.pop("limit", DEFAULT_LIMIT)
 
         if limit <= 0:
@@ -1552,12 +1552,12 @@ class FortiNDRCloudConnector(BaseConnector):
         offset = 0
         next_piece, request_summary = self._get_detections_inc(
             result=result, param=param)
-           
-        if inc_polling:     
+
+        if inc_polling:
             while next_piece and next_piece['detections']:
                 result['detections'].extend(next_piece['detections'])
                 result['rules'] = dict(next_piece['rules'], **result['rules'])
-                
+
                 offset += MAX_DETECTIONS
                 param.update({"offset": offset})
                 next_piece, rs = self._get_detections_inc(
@@ -1565,17 +1565,17 @@ class FortiNDRCloudConnector(BaseConnector):
                 request_summary["requests"].extend(rs["requests"])
         else:
             result = next_piece
-                    
+
         result['total_count'] = len(result['detections'])
-        
+
         # Include the rules if they need to be included
         if "include" in param and "rules" in param["include"]:
             result = self._add_detection_rules(result)
-                
+
         self.debug_print(f"{result['total_count']} detections successfully retrieved.")
-            
+
         return result, request_summary
-   
+
     def _handle_fnc_get_detections(self, param):
         self.print_debug("Handling Get Detections Request.")
         # Add an action result object to self (BaseConnector)
