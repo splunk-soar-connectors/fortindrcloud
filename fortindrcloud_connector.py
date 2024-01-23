@@ -1453,7 +1453,7 @@ class FortiNDRCloudConnector(BaseConnector):
         """Create a new detection rule."""
         # Create a dictionary with the rules using its uuid as key
         t = result.get("total_count")
-        self.debug_print(f"Adding rule information to the detections")
+        self.debug_print("Adding rule information to the detections")
 
         rules = result.get("rules")
 
@@ -1518,7 +1518,9 @@ class FortiNDRCloudConnector(BaseConnector):
                     else:
                         e += 1
 
-                self.debug_print(f"{len(response['rules'])} rules retrieved, {a} rules were added to the result and {e} rules were already included.")
+                self.debug_print(
+                    f"{len(response['rules'])} rules retrieved, {a} rules were added to the result and {e} rules were already included."
+                )
                 if a + e != len(response['rules']):
                     self.error_print(f"{len(response['rules'])-(a+e)} rules failed to be retrieved." )
         result = {
