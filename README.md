@@ -2,7 +2,7 @@
 # FortiNDRCloud
 
 Publisher: Fortinet Inc.  
-Connector Version: 1.0.2  
+Connector Version: 1.0.3  
 Product Vendor: Fortinet Inc.  
 Product Name: FortiNDR Cloud  
 Product Version Supported (regex): ".\*"  
