@@ -13,7 +13,7 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-USER_AGENT = "SplunkSOAR_FortiNDR.v1.0.1"
+USER_AGENT = "SplunkSOAR_FortiNDR.v1.0.2"
 
 TRAINING_ACC = "f6f6f836-8bcd-4f5d-bd61-68d303c4f634"
 MAX_DETECTIONS = 10000
