@@ -60,7 +60,7 @@ class API_Info:
         elif api == "Detections":
             return DetectionAPI(base_url=self._base_url)
 
-    def get_request_info(self, request: str, arg: dict[str, Any] = None):
+    def get_request_info(self, request: str, arg: dict[str, Any] = {}):
         return self._api.get_request_info(request, arg)
 
     def get_baseurl(self) -> str:
@@ -87,7 +87,7 @@ class SensorAPI:
         """
         return self._url
 
-    def get_request_info(self, request: str, arg: dict[str, Any] = None):
+    def get_request_info(self, request: str, arg: dict[str, Any] = {}):
         if request == "getSensors":
             return self._getSensors()
         elif request == "getDevices":
@@ -121,10 +121,8 @@ class SensorAPI:
             method="get",
         )
 
-    def _getTasks(self, arg: dict[str, Any] = None) -> Dict[str, Any]:
+    def _getTasks(self, arg: dict[str, Any] = {}) -> Dict[str, Any]:
         """ """
-        arg = {} if not arg else arg
-
         taskid = arg.pop("task_id") if "task_id" in arg else ""
         endpoint = "v1/pcaptasks"
         if taskid:
@@ -744,7 +742,7 @@ class FortiNDRCloudConnector(BaseConnector):
         summary.update()
         return summary
 
-    def prepare_request(self, api: str, request: str, arg: dict[str, Any] = None):
+    def prepare_request(self, api: str, request: str, arg: dict[str, Any] = {}):
         # Get the API and the request endpoint info
         api_info = API_Info(
             api=api,
