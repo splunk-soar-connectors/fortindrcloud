@@ -6,7 +6,7 @@ Connector Version: 1.0.2
 Product Vendor: Fortinet Inc.  
 Product Name: FortiNDR Cloud  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 6.0.2  
+Minimum Product Version: 6.1.1  
 
 This app allows the use of the information provided by the FortiNDR Cloud Service to perform containment and investigative actions on Splunk SOAR
 

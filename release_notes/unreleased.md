@@ -1,2 +1,1 @@
 **Unreleased**
-* Adding detection's details as artifacts rather than container's custom fields
