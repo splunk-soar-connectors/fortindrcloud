@@ -30,8 +30,12 @@
             "description": "API Token to connect to FortiNDR Cloud RESTful APIs",
             "order": 0
         },
-        "ph": {
-                        "data_type": "ph",
+        "domain": {
+            "name": "domain",
+            "data_type": "string",
+            "required": false,
+            "default": "icebrg.io",
+            "description": "Domain to where direct any API request.",
             "order": 1
         },
         "first_poll": {
