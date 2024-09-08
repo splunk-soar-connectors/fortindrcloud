@@ -168,8 +168,14 @@ class FortiNDRCloudConnector(BaseConnector):
             status = detection["status"]
         if "uuid" in detection:
             uuid = detection["uuid"]
+        if "rule_primary_attack_id" in detection:
+            rule_primary_attack_id = detection["rule_primary_attack_id"]
+        if "rule_secondary_attack_id" in detection:
+            rule_secondary_attack_id = detection["rule_secondary_attack_id"]
+        if "rule_url" in detection:
+            rule_url = detection["rule_url"]
 
-        self.debug_print(f"Creating Container for detection {uuid}.")
+        # self.logger.debug(f"Creating Container for detection {uuid}.")
 
         container = {}
         container["name"] = "Fortinet FortiNDR Cloud - "
@@ -188,6 +194,9 @@ class FortiNDRCloudConnector(BaseConnector):
             "fnc_status": status,
             "fnc_detection_id": uuid,
             "fnc_detection": json.dumps(detection),
+            "fnc_rule_primary_attack_id": rule_primary_attack_id,
+            "fnc_rule_secondary_attack_id": rule_secondary_attack_id,
+            "fnc_rule_url": rule_url,
         }
         # container['run_automation'] = True
 
@@ -214,6 +223,12 @@ class FortiNDRCloudConnector(BaseConnector):
         if "rule_confidence" in detection:
             rule_confidence = self._map_confidence(
                 detection["rule_confidence"])
+        if "rule_primary_attack_id" in detection:
+            rule_primary_attack_id = detection["rule_primary_attack_id"]
+        if "rule_secondary_attack_id" in detection:
+            rule_secondary_attack_id = detection["rule_secondary_attack_id"]
+        if "rule_url" in detection:
+            rule_url = detection["rule_url"]
         if "created" in detection:
             created = detection["created"]
         if "first_seen" in detection:
@@ -225,7 +240,8 @@ class FortiNDRCloudConnector(BaseConnector):
         if "uuid" in detection:
             uuid = detection["uuid"]
 
-        self.debug_print(f"Creating Artifact for detection {uuid} to be added in container {cid}.")
+        # self.logger.debug(
+        #     f"Creating Artifact for detection {uuid} to be added in container {cid}.")
 
         artifact = {}
         artifact["container_id"] = cid
@@ -246,6 +262,9 @@ class FortiNDRCloudConnector(BaseConnector):
             "fnc_detection_id": uuid,
             "fnc_device_ip": device_ip,
             "fnc_sensor_id": sensor_id,
+            "fnc_rule_primary_attack_id": rule_primary_attack_id,
+            "fnc_rule_secondary_attack_id": rule_secondary_attack_id,
+            "fnc_rule_url": rule_url,
             "fnc_detection": json.dumps(detection),
         }
 
