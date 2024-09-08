@@ -68,42 +68,46 @@ class FncSplunkSOARLogger(FncClientLogger):
 
 
 class FortiNDRCloudConnector(BaseConnector):
+
     def __init__(self):
+        self.logger = FncSplunkSOARLogger(connector=self)
+
         super(FortiNDRCloudConnector, self).__init__()
         self._state = None
         self._python_version = None
-
-        self._base_url_str = "https://{0}.icebrg.io"
-        self._base_url = None
-        self.api_key = None
-        self.use_production = None
+        self.client = None
 
     def initialize(self):
-        self.debug_print("Initializing FortiNDR Cloud Connector")
+        self.logger.debug("Initializing FortiNDR Cloud Connector")
 
         try:
             self._python_version = int(sys.version_info[0])
         except Exception:
             m = "Error occurred while getting the Phantom server's"
             m += " Python major version."
-            self.error_print(f"FortiNDR Cloud Connector's initialization failed [{m}].")
+            self.logger.error(
+                f"FortiNDR Cloud Connector's initialization failed [{m}].")
             return self.set_status(phantom.APP_ERROR, m)
 
         self._state = self.load_state()
         config = self.get_config()
 
-        self.api_key = config["api_key"]
-        base_url: str = "https://<API>.icebrg.io"
-        if self._validate_base_url(base_url=base_url):
-            self._base_url_str = base_url.replace("<API>", "{0}")
-        else:
-            m = "The base url to access the APIs is invalid. Verify "
-            m += "it is in the format: [https://<API>-<Region>.<Domain>/]."
-            self.error_print(f"FortiNDR Cloud Connector's initialization failed [ Invalid url ({base_url}) ].")
-            return self.set_status(phantom.APP_ERROR, m)
+        try:
+            api_key = config["api_key"]
+            domain = config["domain"]
+            self.client = FncClient.get_api_client(
+                name=INTEGRATION_NAME,
+                api_token=api_key,
+                domain=domain,
+                logger=self.logger
+            )
+        except FncClientError as e:
+            self.logger.error(
+                f"FortiNDR Cloud Connector's initialization failed [ {e} ].")
+            return self.set_status(phantom.APP_ERROR, str(e))
 
         self.save_progress("FortiNDR Cloud Connector successfully initialized")
-        self.debug_print("FortiNDR Cloud Connector successfully initialized")
+        self.logger.info("FortiNDR Cloud Connector successfully initialized")
         return phantom.APP_SUCCESS
 
     def finalize(self):
@@ -256,15 +260,15 @@ class FortiNDRCloudConnector(BaseConnector):
         :rtype str
         """
         for arg in multiple_values:
-            values: List[Any] = []
             if arg in args:
+                self.logger.error(f"SPLITTING ARGUMENT {arg}= {args[arg]}")
                 value = args[arg].split(",")
                 value = [v.strip() for v in value if v.strip()]
-                values.extend(value)
-            else:
-                values.append(args[arg].strip())
+                self.logger.error(f"SPLITTED VALUE {value}")
+                args[arg] = value
 
-            args[arg] = tuple(values)
+            self.logger.error(f"FINAL ARGUMENTS {args}")
+
         return args
 
     # This function flattens all the nested dictionary elements into simple
@@ -339,10 +343,9 @@ class FortiNDRCloudConnector(BaseConnector):
         exception,
         summary,
         action_result,
-        api_info: API_Info,
-        request_info: Request_Info,
+        request
     ):
-        self.debug_print("Validating request.")
+        self.logger.info("Validating request.")
         # Check if the request failed
         if request_summary and hasattr(action_result, "add_debug_data"):
             action_result.add_debug_data(request_summary)
@@ -351,12 +354,11 @@ class FortiNDRCloudConnector(BaseConnector):
             action_result.update_summary(summary)
 
         if exception is not None:
-            em = f"The call to the {api_info.api_name} API, "
-            em += f"to handle {request_info.request} request failed "
+            em = f"The {request} request failed "
             em += f"with message: {str(exception)}."
 
             self.save_progress(em)
-            self.error_print(em)
+            self.logger.error(em)
 
             return RetVal(
                 action_result.set_status(
@@ -364,8 +366,8 @@ class FortiNDRCloudConnector(BaseConnector):
             )
 
         # Return success
-        m = f"{request_info.request} request was successfully completed."
-        self.debug_print(m)
+        m = f"The {request} request was successfully completed."
+        self.logger.info(m)
 
         # Add response to the action result and update the status
 
@@ -373,7 +375,7 @@ class FortiNDRCloudConnector(BaseConnector):
             action_result.add_data(response)
 
         return action_result.set_status(
-            phantom.APP_SUCCESS, f"{request_info.request} request successfully handled."
+            phantom.APP_SUCCESS, f"{request} request successfully handled."
         )
 
     def _send_to_splunk(self, detections: list):
