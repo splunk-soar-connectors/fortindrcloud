@@ -487,80 +487,108 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_on_poll(self, param):
-        self.debug_print("Starting to retrieve Detections.")
+        self.logger.info("Starting to retrieve Detections.")
         # Add an action result object to self (BaseConnector) to represent
         # the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        request_params = self._get_poll_detections_request_params()
+        params = self._get_poll_detections_request_params()
 
-        start_date_str = request_params["created_or_shared_start_date"]
-        start_date = datetime.strptime(start_date_str, DATE_FORMAT)
+        last_detection = self._state.get("last_poll", None)
+        if last_detection:
+            self.logger.info(f"Last checkpoint was: {last_detection}.")
 
-        end_date_str = request_params["created_or_shared_end_date"]
-        end_date = datetime.strptime(end_date_str, DATE_FORMAT)
+        history = {}
+        last_history = self._state.get('last_history', None)
+        if last_history:
+            self.logger.info(f"Last history was: {last_history}.")
+            history = json.loads(last_history)
 
-        if start_date >= end_date:
-            m = "The start date is to close. The pooling delay cannot "
-            m += "be applied. No container was created."
-            self.debug_print(m)
-            return action_result.set_status(phantom.APP_SUCCESS, m)
-
-        m = "Retrieving Detections between "
-        m += f"{start_date_str} and {end_date_str}."
-        self.save_progress(m)
-        self.debug_print(m)
-
-        param.update(request_params)
-        request_params.update({"on_poll": True})
-
-        response = None
+        rcs = 0
+        rhs = 0
         try:
-            response, request_summary = self._get_detections(
-                param=request_params)
-            if request_summary and hasattr(action_result, "add_debug_data"):
-                action_result.add_debug_data(request_summary)
-        except Exception as e:
+            # We restore the context using the persisted values of the
+            # last_detection(checkpoint) and the history if they exist
+            # Otherwise, we initialize them by calling the get splitted
+            # context method.
+
+            context: ApiContext = None
+            h_context: ApiContext = None
+
+            if last_detection:
+                self.logger.info("Restoring the Context")
+                context = ApiContext()
+                context.update_checkpoint(checkpoint=last_detection)
+                h_context = ApiContext()
+                h_context.update_history(history=history)
+            else:
+                self.logger.info("Initializing the Context")
+                h_context, context = self.client.get_splitted_context(
+                    params)
+
+            # Pull current detections
+            self.logger.info("Polling current detections.")
+            for response in self.client.continuous_polling(
+                context=context, args=params
+            ):
+                detections = response.get('detections', [])
+                detections = list(
+                    filter(lambda d: (d['account_uuid']
+                           != TRAINING_ACC), detections)
+                )
+
+                rs = 'SUCCESS'
+                rcr = len(detections)
+                if detections:
+                    rcs = self._send_to_splunk(detections=detections)
+            context.clear_args()
+
+            # Pull next piece of the history data
+            self.logger.info("Polling historical data.")
+
+            params.update({'limit': HISTORY_LIMIT})
+            for response in self.client.poll_history(
+                context=h_context, args=params
+            ):
+                detections = response.get('detections', [])
+                detections = list(
+                    filter(lambda d: (d['account_uuid']
+                           != TRAINING_ACC), detections)
+                )
+
+                rs = 'SUCCESS'
+                rhr = len(detections)
+                if detections:
+                    rhs = self._send_to_splunk(detections=detections)
+
+            h_context.clear_args()
+
+            # checkpoint for the first Detection iteration
+            last_poll = context.get_checkpoint()
+            history = h_context.get_history()
+
+            self.logger.debug("Updating last poll checkpoint.")
+            self._state["last_poll"] = last_poll
+
+            last_history = json.dumps(history)
+            self.logger.debug("Updating last history checkpoint.")
+            self._state["last_history"] = last_history
+
+            self.logger.info("Last poll checkpoint set at {0}".format(
+                last_poll))
+            self.logger.info("Last history checkpoint set at {0}".format(
+                last_history))
+
+            self.logger.info("Completed processing Detections")
+        except FncClientError as e:
+            self.logger.error(
+                "Exception occurred while processing Detections")
+            self.logger.error(f"[{str(e)}]")
             self.error_print(f"Unable to retrieve detections. [{str(e)}]")
             return RetVal(action_result.set_status(phantom.APP_ERROR, str(e)), None)
 
-        detections = []
-        if response and "detections" in response:
-            detections = response["detections"]
-            self.debug_print(f"{len(detections)} containers will be created.")
-
-        cf = 0
-        af = 0
-        c = 0
-        for detection in detections:
-            c = c + 1
-            self.debug_print(f"creating container [{c} of {len(detections)}]")
-            container = self._create_container(detection)
-            ret_val, message, cid = self.save_container(container)
-            if phantom.is_fail(ret_val):
-                em = f"Unable to publish container for detection: {cid}({message})"
-                self.save_progress(em)
-                self.error_print(em)
-                cf = cf + 1
-            else:
-                artifact = self._create_artifact(cid, detection)
-                ret_val, message, aid = self.save_artifacts([artifact])
-                if phantom.is_fail(ret_val):
-                    em = f"Unable to publish artifact: {aid}({message})"
-                    self.save_progress(em)
-                    self.error_print(em)
-                    af = af + 1
-        tf = cf + af
-        if tf > 0:
-            em = f"{tf} of {len(detections)} containers failed to be correctly published."
-            if af > 0:
-                em += f" {af} of them, where published without artifacts. The rest were not published at all."
-            self.error_print(em)
-        self.debug_print(f"[{c} of {len(detections)}] containers successfully published.")
-        self._state["last_poll"] = end_date_str
-
         return action_result.set_status(
-            phantom.APP_SUCCESS, f"Created {c} containers"
+            phantom.APP_SUCCESS, f"Created {rcs + rhs} containers"
         )
 
     #  Actions for Sensors API
