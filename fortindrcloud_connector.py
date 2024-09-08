@@ -15,19 +15,18 @@
 
 import collections
 import json
-import re
 import sys
-from datetime import datetime, timedelta
-from typing import Any, Dict, List
+from typing import Dict, List
 
 import phantom.app as phantom
 import requests
-from bs4 import BeautifulSoup
-from dateparser import parse as parse_date
+from fnc import FncClient, FncClientError
+from fnc.api import ApiContext, EndpointKey, FncApiClient
+from fnc.logger import FncClientLogger
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
-from fortindrcloud_consts import *
+from fortindrcloud_consts import HISTORY_LIMIT, INTEGRATION_NAME, TRAINING_ACC
 
 # Usage of the consts file is recommended
 
@@ -433,40 +432,58 @@ class FortiNDRCloudConnector(BaseConnector):
         return c
 
     def _handle_test_connectivity(self, param):
+        request = "Test Connectivity"
+
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         self.save_progress("Testing connectivity to FortiNDR.")
-        self.debug_print("Testing connectivity to FortiNDR Cloud's services.")
+        self.logger.info("Testing connectivity to FortiNDR Cloud's services.")
 
-        api_info, request_info = self.prepare_request(
-            api="Sensors", request="getSensors"
-        )
-        request_info.request = "Test Connectivity"
-
+        response = None
         exception = None
-        request_summary = None
-        try:
-            endpoint = request_info.base_url + request_info.endpoint
-            self.save_progress(f"Sending request to: {endpoint}")
+        request_summary = {
+            'status': '',
+            'error': '',
+            'info': ''
+        }
 
-            _, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=None
-            )
-            self.save_progress("Request successfully completed.")
-        except Exception as e:
-            self.error_print(f"Test connectivity failed. [{str(e)}]")
+        try:
+            if self.client:
+                self.save_progress(
+                    f"Sending request to: {EndpointKey.GET_SENSORS.value} endpoint.")
+                _ = self.client.call_endpoint(
+                    endpoint=EndpointKey.GET_SENSORS, args=param)
+                self.save_progress("Request successfully completed.")
+                request_summary.update({'status': 'SUCCESS'})
+                request_summary.update(
+                    {'info': 'Connection to the FortiNDR Cloud services successfully stablish.'})
+            else:
+                self.logger.error(
+                    f"{request} request failed. [FncApiClient was not properly created.]")
+                request_summary.update({'status': 'FAILURE'})
+                request_summary.update(
+                    {'error': 'FncApiClient was not properly created'})
+                exception = Exception("FncApiClient was not properly created")
+        except FncClientError as e:
+            self.logger.error(f"{request} request failed. [{str(e)}]")
+            request_summary.update({'status': 'FAILURE'})
+            request_summary.update({'error': str(e)})
             exception = e
 
-        summary = self._prepare_summary(None, request_info=request_info)
+        result = {"sensors": response}
+
+        summary = {
+            "response_count": 1,
+            "request": request,
+        }
 
         return self.validate_request(
-            response=None,
+            response=result,
             request_summary=request_summary,
             exception=exception,
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=request,
         )
 
     def _handle_on_poll(self, param):
