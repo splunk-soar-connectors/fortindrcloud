@@ -78,21 +78,6 @@ class FortiNDRCloudConnector(BaseConnector):
         self.api_key = None
         self.use_production = None
 
-    def _get_start_date(self, first_poll_str) -> datetime:
-        start_date: datetime = None
-        last_poll = self._state.get("last_poll", None)
-
-        if last_poll:
-            start_date = datetime.strptime(last_poll, DATE_FORMAT)
-        else:
-            if not first_poll_str or not first_poll_str.strip():
-                first_poll_str = DEFAULT_FIRST_POLL
-
-            start_date = parse_date(first_poll_str)
-            assert start_date is not None, f"could not parse {first_poll_str}"
-
-        return start_date
-
     def _map_severity(self, severity) -> int:
         if severity == "high":
             return "high"
@@ -265,15 +250,6 @@ class FortiNDRCloudConnector(BaseConnector):
                 items.append((new_key, v))
         return dict(items)
 
-    def _validate_base_url(self, base_url: str):
-        self.debug_print("Validating url.")
-        exp = r"https://<API>[-]?(?:([A-Za-z-]+[A-Za-z])\.|\.)"
-        exp += r"((?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])\.)+[a-z0-9]"
-        exp += r"(?:[a-z0-9-]{0,61}[a-z0-9]))[/]?$"
-        reg_ex = re.compile(exp)
-        result = reg_ex.fullmatch(base_url)
-        return result is not None
-
     def _get_poll_detections_request_params(self) -> Dict:
         self.debug_print("Retrieving params for Detections polling.")
         request_params = {
@@ -356,164 +332,6 @@ class FortiNDRCloudConnector(BaseConnector):
         self.save_state(self._state)
         return phantom.APP_SUCCESS
 
-    def _process_empty_response(self, r):
-        self.debug_print("Processing empty response.")
-        if 200 <= r.status_code < 399:
-            return {}
-            # return RetVal(phantom.APP_SUCCESS, {})
-
-        m = f"Request failed with empty response. Status Code {r.status_code}"
-        self.error_print(m)
-        raise Exception(m)
-
-    def _process_html_response(self, response):
-        # An html response, treat it like an error
-        status_code = response.status_code
-        self.error("Unexpected response received. Response should be JSON but it was in HTML format")
-        try:
-            soup = BeautifulSoup(response.text, "html.parser")
-            error_text = soup.text
-            split_lines = error_text.split("\n")
-            split_lines = [x.strip() for x in split_lines if x.strip()]
-            error_text = "\n".join(split_lines)
-        except Exception as e:
-            error_text = "Unable to parse HTML response. Error: {0}".format(str(e))
-            self.error(error_text)
-
-        message = "Status Code: {0}. Data from server:\n{1}\n".format(
-            status_code, error_text
-        )
-
-        message = message.replace("{", "{{").replace("}", "}}")
-        raise Exception(message)
-
-    def _process_json_response(self, r):
-        self.debug_print("Processing response as JSON.")
-
-        # Try a json parse
-        try:
-            resp_json = r.json()
-        except Exception as e:
-            m = "Unable to parse JSON response. Error: {0}".format(str(e))
-            self.error_print(m)
-            raise Exception(m)
-
-        # Please specify the status codes here
-        if 200 <= r.status_code < 399:
-            return resp_json
-
-        # You should process the error returned in the json
-        message = "Error from server. "
-        message += "Status Code: {0} Data from server: {1}".format(
-            r.status_code, r.text.replace("{", "{{").replace("}", "}}")
-        )
-
-        raise Exception(message)
-
-    def _process_response(self, r):
-        # store the r_text in debug data, it will get dumped in
-        # the logs if the action fails
-        self.debug_print("Processing response.")
-        response_summary = {
-            "requests": [
-                {
-                    "r_status_code": r.status_code,
-                    "r_text": r.text,
-                    "r_headers": r.headers,
-                }
-            ]
-        }
-
-        # Process each 'Content-Type' of response separately
-
-        exception = None
-        response = None
-        try:
-            # Process a json response
-
-            if "json" in r.headers.get("Content-Type", ""):
-                response = self._process_json_response(r)
-
-            # Process an HTML response, Do this no matter what the api talks.
-            # There is a high chance of a PROXY in between phantom and
-            # the rest of world, in case of errors, PROXY's return HTML,
-            # this function parses the error and adds it to the action_result.
-            if "html" in r.headers.get("Content-Type", ""):
-                response = self._process_html_response(r)
-
-            # it's not content-type that is to be parsed, handle an
-            # empty response
-            if not r.text:
-                response = self._process_empty_response(r)
-        except Exception as e:
-            exception = e
-
-        if response is not None:
-            self.debug_print("Response successfully processed.")
-            return response, response_summary
-
-        if exception is None:
-            # everything else is actually an error at this point
-            message = "Can't process response from server. "
-            message += "Status Code: {0} Data from server: {1}".format(
-                r.status_code, r.text.replace("{", "{{").replace("}", "}}")
-            )
-            exception = Exception(message)
-
-        self.error_print(f"Response processing failed. [{str(exception)}]")
-        raise exception
-
-    def _prepare_summary(self, response: List, request_info: Request_Info):
-        self.debug_print("Preparing summary.")
-        summary = {
-            "response_count": len(response) if response is not None else 1,
-            "request": request_info.request,
-        }
-        summary.update()
-        return summary
-
-    def prepare_request(self, api: str, request: str, arg: dict[str, Any] = {}):
-        # Get the API and the request endpoint info
-        api_info = API_Info(
-            api=api,
-            base_url=self._base_url_str,
-            api_key=self.api_key,
-            use_prod=self.use_production,
-        )
-
-        self.debug_print(
-            "Preparing request to {0} API to handle {1}.".format(
-                api_info.api_name, request
-            )
-        )
-        request_info = api_info.get_request_info(request=request, arg=arg)
-
-        return api_info, request_info
-
-    def send_request(
-        self,
-        api_info: API_Info,
-        request_info: Request_Info,
-        param: dict[str, Any] = None,
-        data=None,
-    ):
-        self.debug_print(
-            "Connecting to {0} API to handle {1} request".format(
-                api_info.api_name, request_info.request
-            )
-        )
-
-        # Make rest call
-        self._base_url = request_info.base_url
-
-        return self._make_rest_call(
-            endpoint=request_info.endpoint,
-            method=request_info.method,
-            headers=api_info.get_headers(),
-            params=param,
-            data=data,
-        )
-
     def validate_request(
         self,
         response,
@@ -557,33 +375,6 @@ class FortiNDRCloudConnector(BaseConnector):
         return action_result.set_status(
             phantom.APP_SUCCESS, f"{request_info.request} request successfully handled."
         )
-
-    def _make_rest_call(self, endpoint, method="get", **kwargs):
-        # **kwargs can be any additional parameters that requests accepts
-
-        config = self.get_config()
-
-        try:
-            request_func = getattr(requests, method)
-        except AttributeError:
-            em = "Invalid method: {0}".format(method)
-            self.error_print(f"REST request failed. [{em}]")
-            raise Exception(em)
-
-        # Create a URL to connect to
-        url = self._base_url + endpoint
-
-        self.debug_print(f"Sending request to: {self._base_url}")
-
-        try:
-            r = request_func(
-                url, verify=config.get("verify_server_cert", True), timeout=70, **kwargs
-            )
-        except Exception as e:
-            em = "Error Connecting to server. Details: {0}".format(str(e))
-            self.debug_print(em)
-            raise Exception(em)
-        return self._process_response(r)
 
     def _handle_test_connectivity(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
