@@ -376,6 +376,41 @@ class FortiNDRCloudConnector(BaseConnector):
             phantom.APP_SUCCESS, f"{request_info.request} request successfully handled."
         )
 
+    def _send_to_splunk(self, detections: list):
+        c = 0
+        if detections and len(detections) > 0:
+            self.logger.debug(f"{len(detections)} containers will be created.")
+
+            cf = 0
+            af = 0
+            for d in detections:
+                c = c + 1
+                # logger.debug(f"creating container [{c} of {len(detections)}]")
+                container = self._create_container(d)
+                ret_val, message, cid = self.save_container(container)
+                if phantom.is_fail(ret_val):
+                    em = f"Unable to publish container for detection [{d['uuid']}]: ({message})"
+                    self.save_progress(em)
+                    self.logger.error(em)
+                    cf = cf + 1
+                else:
+                    artifact = self._create_artifact(cid, d)
+                    ret_val, message, aid = self.save_artifacts([artifact])
+                    if phantom.is_fail(ret_val):
+                        em = f"Unable to publish artifact for detection [{d['uuid']}]: ({message})"
+                        self.save_progress(em)
+                        self.logger.error(em)
+                        af = af + 1
+            tf = cf + af
+            if tf > 0:
+                em = f"{tf} of {len(detections)} containers failed to be correctly published."
+                if af > 0:
+                    em += f" {af} of them, where published without artifacts. The rest were not published at all."
+                self.logger.error(em)
+            self.logger.debug(
+                f"[{c} of {len(detections)}] containers successfully published.")
+        return c
+
     def _handle_test_connectivity(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
