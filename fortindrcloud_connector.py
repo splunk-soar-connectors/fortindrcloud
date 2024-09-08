@@ -67,6 +67,7 @@ class FncSplunkSOARLogger(FncClientLogger):
 
 
 class FortiNDRCloudConnector(BaseConnector):
+    client: FncApiClient = None
 
     def __init__(self):
         self.logger = FncSplunkSOARLogger(connector=self)
@@ -305,53 +306,25 @@ class FortiNDRCloudConnector(BaseConnector):
         return dict(items)
 
     def _get_poll_detections_request_params(self) -> Dict:
-        self.debug_print("Retrieving params for Detections polling.")
-        request_params = {
-            "include": "rules,indicators",
-            "sort_by": "device_ip",
-            "sort_order": "asc",
-            "limit": MAX_DETECTIONS,
-        }
+        self.logger.info("Retrieving params for Detections polling.")
 
         config = self.get_config()
+        request_params = {
+            'include_signature': True,
+            'include_description': True,
 
-        first_poll_str = config.get("first_poll", DEFAULT_FIRST_POLL)
-        start_date = None
+            'start_date': config.get("first_poll", ""),
+            'polling_delay': config.get("polling_delay", ""),
+            'account_uuid': config.get("account_uuid", ""),
 
-        try:
-            start_date = self._get_start_date(first_poll_str)
-        except Exception as e:
-            self.error_print(f"Unable to retrieve the start date. [{str(e)}]")
-            raise e
+            'status': config.get("status", ""),
+            'pull_muted_rules': config.get("muted_rule", False),
+            'pull_muted_devices': config.get("muted_device", False),
+            'pull_muted_detections': config.get("muted", False),
+            'filter_training_detections': True
+        }
 
-        request_params["created_or_shared_start_date"] = datetime.strftime(
-            start_date, DATE_FORMAT
-        )
-
-        now = datetime.utcnow()
-        polling_delay = config.get("polling_delay", DEFAULT_POLLING_DELAY)
-        end_date = now - timedelta(minutes=polling_delay)
-        request_params["created_or_shared_end_date"] = datetime.strftime(
-            end_date, DATE_FORMAT
-        )
-
-        muted = config.get("muted", False)
-        if not muted:
-            request_params["muted"] = False
-
-        muted_device = config.get("muted_device", False)
-        if not muted_device:
-            request_params["muted_device"] = False
-
-        muted_rule = config.get("muted_rule", False)
-        if not muted_rule:
-            request_params["muted_rule"] = False
-
-        account_uuid = config.get("account_uuid", "")
-        if account_uuid:
-            request_params["account_uuid"] = account_uuid
-
-        self.debug_print(f"Detections will be polled using the following arguments: {request_params}")
+        self.logger.debug('Arguments retrieved.')
         return request_params
 
     def validate_request(
@@ -591,122 +564,121 @@ class FortiNDRCloudConnector(BaseConnector):
             phantom.APP_SUCCESS, f"Created {rcs + rhs} containers"
         )
 
+    def _handle_fnc_endpoint(self, endpoint: EndpointKey, param: dict):
+        self.logger.info(f"Handling {endpoint.value} Request.")
+
+        # Add an action result object to self (BaseConnector) to represent
+        # the action for this param
+        param.pop("context", None)
+
+        response = None
+        exception = None
+        request_summary = {
+            'status': '',
+            'error': '',
+            'info': ''
+        }
+
+        try:
+            response = self.client.call_endpoint(
+                endpoint=endpoint, args=param)
+
+            self.logger.info(f"{endpoint.value} successfully completed.")
+            request_summary.update({'status': 'SUCCESS'})
+            request_summary.update(
+                {'info': f'{len(response)} items retrieved.'})
+        except FncClientError as e:
+            self.logger.error(f"{endpoint.value} Request Failed. [{str(e)}]")
+            request_summary.update({'status': 'FAILURE'})
+            request_summary.update({'error': str(e)})
+            exception = e
+
+        return {
+            'response': response,
+            'request_summary': request_summary,
+            'exception': exception
+        }
+
     #  Actions for Sensors API
 
     def _handle_fnc_get_sensors(self, param):
         # Add an action result object to self (BaseConnector) to represent
         # the action for this param
-        self.print_debug("Handling Get Sensors Request.")
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
+        endpoint = EndpointKey.GET_SENSORS
+        key = 'sensors'
 
-        if "include" in param:
-            param = self._split_multivalue_args(param, ["include"])
-
-        api_info, request_info = self.prepare_request(
-            api="Sensors", request="getSensors"
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
-
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Sensors Request Failed. [{str(e)}]")
-            exception = e
-
         sensors = []
-        if response and "sensors" in response:
-            sensors = response["sensors"]
+        response = result['response']
 
-        result = {"sensors": sensors}
+        if response and key in response:
+            sensors = response.pop(key)
 
-        summary = self._prepare_summary(
-            response=sensors, request_info=request_info)
+        summary = {
+            "response_count": len(sensors),
+            "request": endpoint.value,
+        }
 
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'sensors': sensors},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_get_devices(self, param):
-        self.print_debug("Handling Get Devices Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
-
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
+        endpoint = EndpointKey.GET_DEVICES
+        key = "devices"
 
-        api_info, request_info = self.prepare_request(
-            api="Sensors", request="getDevices"
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
-
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Devices Request Failed. [{str(e)}]")
-            exception = e
-
         devices = []
-        if response and "devices" in response:
-            devices = response["devices"]["device_list"]
+        response = result['response']
+        if response and key in response:
+            devices = response.pop(key)
 
-        result = {"devices": devices}
-
-        summary = self._prepare_summary(
-            response=devices, request_info=request_info)
+        summary = {
+            "response_count": len(devices),
+            "request": endpoint.value,
+        }
 
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'devices': devices['device_list']},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_get_tasks(self, param):
-        self.print_debug("Handling Get Tasks Request.")
-        # Add an action result object to self (BaseConnector) to represent
-        # the action for this param
-
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        param.pop("context", None)
+        endpoint: EndpointKey = EndpointKey.GET_TASKS
+        key = 'pcaptasks'
         taskid = param.pop("task_uuid", "")
-        key = "pcap_task" if taskid else "pcaptasks"
 
-        api_info, request_info = self.prepare_request(
-            api="Sensors", request="getTasks", arg={"task_id": taskid}
+        if taskid:
+            endpoint = EndpointKey.GET_TASK
+            key = 'pcap_task'
+            param.update({'task_id': taskid})
+
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
-
-        response = None
-        exception = None
-        request_summary = None
-
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Tasks Request Failed. [{str(e)}]")
-            exception = e
+        response = result['response']
 
         tasks = []
         if response and key in response:
@@ -715,18 +687,18 @@ class FortiNDRCloudConnector(BaseConnector):
         if taskid:
             tasks = [tasks]
 
-        result = {"tasks": tasks}
-        summary = self._prepare_summary(
-            response=tasks, request_info=request_info)
+        summary = {
+            "response_count": len(tasks),
+            "request": endpoint.value,
+        }
 
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'tasks': tasks},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_create_task(self, param):
@@ -764,463 +736,273 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_telemetry_events(self, param):
-        self.print_debug("Handling Get Telemetry Events Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
+        endpoint = EndpointKey.GET_TELEMETRY_EVENTS
+        key = "data"
+        header_key = 'columns'
 
-        api_info, request_info = self.prepare_request(
-            api="Sensors", request="getTelemetryEvents"
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
+        telemetry = []
+        response = result['response']
+        if response and key in response:
+            data = response.pop(key)
+            headers = response.pop(header_key)
+            telemetry = [dict(zip(headers, values)) for values in data]
 
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Telemetry Events Request Failed. [{str(e)}]")
-            exception = e
+        summary = {
+            "response_count": len(telemetry),
+            "request": endpoint.value,
+        }
 
-        events = []
-        if response and "data" in response:
-            events = response.pop("data")
-
-        result = {"telemetry_events": events}
-        summary = self._prepare_summary(
-            response=events, request_info=request_info)
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={"telemetry_events": telemetry},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_get_telemetry_network(self, param):
-        self.print_debug("Handling Get Telemetry Network Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
+        endpoint = EndpointKey.GET_TELEMETRY_NETWORK
+        key = "network_usage"
 
         latest_each_month = param.pop("latest_each_month", False)
         if latest_each_month:
             param.update({"latest_each_month": True})
 
-        api_info, request_info = self.prepare_request(
-            api="Sensors", request="getTelemetryNetwork"
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
+        telemetry = []
+        response = result['response']
+        if response and key in response:
+            telemetry = response.pop(key)
 
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Telemetry Network Request Failed. [{str(e)}]")
-            exception = e
+        summary = {
+            "response_count": len(telemetry),
+            "request": endpoint.value,
+        }
 
-        usage = []
-        if response and "network_usage" in response:
-            usage = response.pop("network_usage")
-
-        result = {"network_usage": usage}
-        summary = self._prepare_summary(
-            response=usage, request_info=request_info)
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={"network_usage": telemetry},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_get_telemetry_packetstats(self, param):
-        self.print_debug("Handling Get Telemetry Packets Stat Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
+        endpoint = EndpointKey.GET_TELEMETRY_PACKETSTATS
+        key = "data"
 
-        api_info, request_info = self.prepare_request(
-            api="Sensors", request="getTelemetryPacketStats"
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
+        telemetry = []
+        response = result['response']
+        if response and key in response:
+            telemetry = response.pop(key)
 
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Telemetry Packets Stat Request Failed. [{str(e)}]")
-            exception = e
+        summary = {
+            "response_count": len(telemetry),
+            "request": endpoint.value,
+        }
 
-        self.debug_print("Request response: {0} .".format(response))
-
-        packetstats = []
-        if response and "data" in response:
-            packetstats = response.pop("data")
-
-        result = {"packetstats": packetstats}
-        summary = self._prepare_summary(
-            response=packetstats, request_info=request_info)
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={"packetstats": telemetry},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     #  Actions for Entity API
 
     def _handle_fnc_get_entity_summary(self, param):
-        self.print_debug("Handling Get Entity Summary Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
-        entity = param.pop("entity", "")
+        endpoint = EndpointKey.GET_ENTITY_SUMMARY
+        key = "summary"
 
-        api_info, request_info = self.prepare_request(
-            api="Entity", request="getEntitySummary", arg={"entity": entity}
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
-
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Entity Summary Request Failed. [{str(e)}]")
-            exception = e
-
         entity_summary = {}
-        if response and "summary" in response:
-            entity_summary = response["summary"]
+        response = result['response']
+        if response and key in response:
+            entity_summary = response.pop(key)
 
-        result = {"entity_summary": entity_summary}
+        summary = {
+            "response_count": 1 if entity_summary else 0,
+            "request": endpoint.value,
+        }
 
-        summary = self._prepare_summary(
-            response=None, request_info=request_info)
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'entity_summary': entity_summary},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_get_entity_pdns(self, param):
-        self.print_debug("Handling Get Entity PDNS Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
-        entity = param.pop("entity", "")
+        endpoint = EndpointKey.GET_ENTITY_PDNS
+        key = "passivedns"
 
-        api_info, request_info = self.prepare_request(
-            api="Entity", request="getEntityPDNS", arg={"entity": entity}
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
+        entity_pdns = []
+        response = result['response']
+        if response and key in response:
+            entity_pdns = response.pop(key)
 
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Entity PDNS Request Failed. [{str(e)}]")
-            exception = e
+        summary = {
+            "response_count": len(entity_pdns),
+            "request": endpoint.value,
+        }
 
-        pdns = []
-        if response and "passivedns" in response:
-            pdns = response["passivedns"]
-        result = {"entity_pdns": pdns}
-        summary = self._prepare_summary(
-            response=pdns, request_info=request_info)
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'entity_pdns': entity_pdns},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_get_entity_dhcp(self, param):
-        self.print_debug("Handling Get Entity DHCP Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
-        entity = param.pop("entity", "")
+        endpoint = EndpointKey.GET_ENTITY_DHCP
+        key = "dhcp"
 
-        api_info, request_info = self.prepare_request(
-            api="Entity", request="getEntityDHCP", arg={"entity": entity}
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
+        entity_dhcp = []
+        response = result['response']
+        if response and key in response:
+            entity_dhcp = response.pop(key)
 
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Entity DHCP Request Failed. [{str(e)}]")
-            exception = e
+        summary = {
+            "response_count": len(entity_dhcp),
+            "request": endpoint.value,
+        }
 
-        dhcp = []
-        if response and "dhcp" in response:
-            dhcp = response["dhcp"]
-        result = {"entity_dhcp": dhcp}
-        summary = self._prepare_summary(
-            response=dhcp, request_info=request_info)
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'entity_dhcp': entity_dhcp},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
+        )
+
+    def _handle_fnc_get_entity_vs(self, param):
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        endpoint = EndpointKey.GET_ENTITY_VIRUS_TOTAL
+        key = "vt_response"
+
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
+        )
+
+        entity_vs = []
+        response = result['response']
+        if response and key in response:
+            entity_vs = response.pop(key)
+
+        summary = {
+            "response_count": len(entity_vs),
+            "request": endpoint.value,
+        }
+
+        return self.validate_request(
+            response={'entity_vs': entity_vs},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
+            summary=summary,
+            action_result=action_result,
+            request=endpoint.value,
         )
 
     def _handle_fnc_get_entity_file(self, param):
-        self.print_debug("Handling Get Entity File Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
-        hash = param.pop("hash", "")
+        endpoint = EndpointKey.GET_ENTITY_FILE
+        key = "file"
 
-        api_info, request_info = self.prepare_request(
-            api="Entity", request="getEntityFile", arg={"hash": hash}
+        hash = param.pop("hash", "")
+        param.update({'entity': hash})
+
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
-
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Entity File Request Failed. [{str(e)}]")
-            exception = e
-
         entity_file = {}
-        if response and "file" in response:
-            entity_file = response["file"]
-        result = {"entity_file": entity_file}
-        summary = self._prepare_summary(
-            response=None, request_info=request_info)
+        response = result['response']
+        if response and key in response:
+            entity_file = response.pop(key)
+
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'entity_file': entity_file},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     #  Actions for Detections API
 
-    def _add_detection_rules(self, result):
-        """Create a new detection rule."""
-        # Create a dictionary with the rules using its uuid as key
-        t = result.get("total_count")
-        self.debug_print("Adding rule information to the detections")
-
-        rules = result.get("rules")
-
-        # Find the detection's rule in the dictionary and update the detection
-        c = 0
-        for detection in result.get("detections"):
-            c += 1
-            self.debug_print(f"processing [{c} of {t}] detections")
-
-            rule = rules.get(detection["rule_uuid"], None)
-            if rule:
-                detection.update({"rule_name": rule["name"]})
-                detection.update({"rule_description": rule["description"]})
-                detection.update({"rule_severity": rule["severity"]})
-                detection.update({"rule_confidence": rule["confidence"]})
-                detection.update({"rule_category": rule["category"]})
-                # detection.update({'rule_signature': rule['query_signature']})
-            else:
-                self.error_print(f"Rule {detection['rule_uuid']} was not retrieved.")
-
-        return result
-
-    def _get_detections_inc(self, result, param):
-        """Get the remaining detections if there are more than
-        the maximum allowed in a page.
-        """
-
-        offset = param.get("offset", 0)
-        request_summary = {"requests": []}
-        result = {}
-        # Get the next piece of detections and add them to the result
-        self.debug_print(f'Retrieving Detections with offset = {offset}.')
-        api_info, request_info = self.prepare_request(
-            api="Detections", request="getDetections"
-        )
-
-        response, rs = self.send_request(
-            api_info=api_info, request_info=request_info, param=param
-        )
-
-        request_summary["requests"].extend(rs["requests"])
-
-        # filter out training detections
-        detections = list(
-            filter(
-                lambda detection: (
-                    detection["account_uuid"] != TRAINING_ACC),
-                response["detections"],
-            )
-        )
-
-        rules = {}
-        if detections:
-            # Include rules if they need to be included
-            if "include" in param and "rules" in param["include"]:
-                a = 0
-                e = 0
-                for rule in response['rules']:
-                    if not rule['uuid'] in rules:
-                        rules[rule['uuid']] = rule
-                        a += 1
-                    else:
-                        e += 1
-
-                self.debug_print(
-                    f"{len(response['rules'])} rules retrieved, {a} rules were added to the result and {e} rules were already included."
-                )
-                if a + e != len(response['rules']):
-                    self.error_print(f"{len(response['rules'])-(a+e)} rules failed to be retrieved.")
-        result = {
-            'detections': detections,
-            'rules': rules,
-        }
-
-        self.debug_print(f"{len(detections)} detections retrieved.")
-        return result, request_summary
-
-    def _get_detections(self, param):
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
-        inc_polling = param.pop("on_poll", False)
-        limit = param.pop("limit", DEFAULT_LIMIT)
-
-        if limit <= 0:
-            limit = DEFAULT_LIMIT
-        if inc_polling or limit > MAX_DETECTIONS:
-            limit = MAX_DETECTIONS
-        param.update({"limit": limit})
-
-        if "include" in param:
-            param = self._split_multivalue_args(param, ["include"])
-
-        result = {
-            'total_count': -1,
-            'detections': [],
-            'rules': {}
-        }
-        offset = 0
-        next_piece, request_summary = self._get_detections_inc(
-            result=result, param=param)
-
-        if inc_polling:
-            while next_piece and next_piece['detections']:
-                result['detections'].extend(next_piece['detections'])
-                result['rules'] = dict(next_piece['rules'], **result['rules'])
-
-                offset += MAX_DETECTIONS
-                param.update({"offset": offset})
-                next_piece, rs = self._get_detections_inc(
-                    result=result, param=param)
-                request_summary["requests"].extend(rs["requests"])
-        else:
-            result = next_piece
-
-        result['total_count'] = len(result['detections'])
-
-        # Include the rules if they need to be included
-        if "include" in param and "rules" in param["include"]:
-            result = self._add_detection_rules(result)
-
-        self.debug_print(f"{result['total_count']} detections successfully retrieved.")
-
-        return result, request_summary
-
     def _handle_fnc_get_detections(self, param):
-        self.print_debug("Handling Get Detections Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
+        endpoint = EndpointKey.GET_DETECTIONS
+        key = "detections"
 
-        api_info, request_info = self.prepare_request(
-            api="Detections", request="getDetections"
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
-
-        response = None
-        exception = None
-        request_summary = None
-
-        try:
-            response, request_summary = self._get_detections(param=param)
-        except Exception as e:
-            self.error_debug(f"Get Detections Request Failed. [{str(e)}]")
-            exception = e
 
         detections = []
-        if response and "detections" in response:
-            detections = response["detections"]
-        result = {"detections": detections}
+        response = result['response']
+        if response and key in response:
+            detections = response.pop(key)
 
-        summary = self._prepare_summary(
-            response=detections, request_info=request_info)
+        summary = {
+            "response_count": len(detections),
+            "request": endpoint.value,
+        }
 
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'detections': detections},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_get_detection_rules(self, param):
@@ -1253,80 +1035,60 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_resolve_detection(self, param):
-        self.print_debug("Handling Resolve Detection Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
-        detection = param.pop("detection_uuid", "")
+        endpoint = EndpointKey.RESOLVE_DETECTION
 
-        api_info, request_info = self.prepare_request(
-            api="Detections", request="resolveDetection", arg={"detection": detection}
+        detection = param.pop("detection_uuid", "")
+        param.update({'detection_id': detection})
+
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
+        summary = {
+            "response_count": 0,
+            "request": endpoint.value,
+        }
 
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, data=json.dumps(
-                    param)
-            )
-        except Exception as e:
-            self.error_debug(f"Resolve Detection Request Failed. [{str(e)}]")
-            exception = e
-
-        summary = self._prepare_summary(
-            response=None, request_info=request_info)
         return self.validate_request(
-            response=response,
-            request_summary=request_summary,
-            exception=exception,
+            response=result['response'],
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_get_rule_events(self, param):
-        self.print_debug("Handling Get Rule Events Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
-        rule = param.pop("rule_uuid", "")
+        endpoint = EndpointKey.GET_RULE_EVENTS
+        key = "events"
 
-        api_info, request_info = self.prepare_request(
-            api="Detections", request="getDetectionRuleEvents", arg={"rule": rule}
+        rule = param.pop("rule_uuid", "")
+        param.update({"rule_id": rule})
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
-
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Rule Events Request Failed. [{str(e)}]")
-            exception = e
-
         events = []
-        if response and "events" in response:
-            events = response["events"]
-        result = {"rule_events": events}
-        summary = self._prepare_summary(
-            response=events, request_info=request_info)
+        response = result['response']
+        if response and key in response:
+            events = response.pop(key)
+
+        summary = {
+            "response_count": len(events),
+            "request": endpoint.value,
+        }
+
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'rule_events': events},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_get_detection_events(self, param):
@@ -1468,7 +1230,8 @@ def main():
     argparser.add_argument("input_test_json", help="Input Test JSON file")
     argparser.add_argument("-u", "--username", help="username", required=False)
     argparser.add_argument("-p", "--password", help="password", required=False)
-    argparser.add_argument('-v', '--verify', action='store_true', help='verify', required=False, default=False)
+    argparser.add_argument('-v', '--verify', action='store_true',
+                           help='verify', required=False, default=False)
 
     args = argparser.parse_args()
     session_id = None
