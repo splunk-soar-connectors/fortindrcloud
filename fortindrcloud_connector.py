@@ -730,51 +730,37 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_create_task(self, param):
-        self.print_debug("Handling Create Task Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
-
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
-
-        api_info, request_info = self.prepare_request(
-            api="Sensors", request="createTask"
-        )
-
-        response = None
-        exception = None
-        request_summary = None
+        endpoint = EndpointKey.CREATE_TASK
+        key = "pcaptask"
 
         if "sensor_ids" in param:
             param = self._split_multivalue_args(param, ["sensor_ids"])
         else:
             param.update({"sensor_ids": []})
 
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, data=json.dumps(
-                    param)
-            )
-        except Exception as e:
-            self.error_debug(f"Create Task Request Failed. [{str(e)}]")
-            exception = e
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
+        )
 
-        tasks = []
-        result = {}
-        if response and "pcaptask" in response:
-            tasks = [response.pop("pcaptask")]
-            result.update({"task": tasks[0]})
+        task = {}
+        response = result['response']
+        if response and key in response:
+            task = response.pop(key)
 
-        summary = self._prepare_summary(
-            response=tasks, request_info=request_info)
+        summary = {
+            "response_count": 1 if task else 0,
+            "request": endpoint.value,
+        }
+
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'task': task},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_get_telemetry_events(self, param):
