@@ -78,6 +78,38 @@ class FortiNDRCloudConnector(BaseConnector):
         self.api_key = None
         self.use_production = None
 
+    def initialize(self):
+        self.debug_print("Initializing FortiNDR Cloud Connector")
+
+        try:
+            self._python_version = int(sys.version_info[0])
+        except Exception:
+            m = "Error occurred while getting the Phantom server's"
+            m += " Python major version."
+            self.error_print(f"FortiNDR Cloud Connector's initialization failed [{m}].")
+            return self.set_status(phantom.APP_ERROR, m)
+
+        self._state = self.load_state()
+        config = self.get_config()
+
+        self.api_key = config["api_key"]
+        base_url: str = "https://<API>.icebrg.io"
+        if self._validate_base_url(base_url=base_url):
+            self._base_url_str = base_url.replace("<API>", "{0}")
+        else:
+            m = "The base url to access the APIs is invalid. Verify "
+            m += "it is in the format: [https://<API>-<Region>.<Domain>/]."
+            self.error_print(f"FortiNDR Cloud Connector's initialization failed [ Invalid url ({base_url}) ].")
+            return self.set_status(phantom.APP_ERROR, m)
+
+        self.save_progress("FortiNDR Cloud Connector successfully initialized")
+        self.debug_print("FortiNDR Cloud Connector successfully initialized")
+        return phantom.APP_SUCCESS
+
+    def finalize(self):
+        self.save_state(self._state)
+        return phantom.APP_SUCCESS
+
     def _map_severity(self, severity) -> int:
         if severity == "high":
             return "high"
@@ -299,38 +331,6 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print(f"Detections will be polled using the following arguments: {request_params}")
         return request_params
-
-    def initialize(self):
-        self.debug_print("Initializing FortiNDR Cloud Connector")
-
-        try:
-            self._python_version = int(sys.version_info[0])
-        except Exception:
-            m = "Error occurred while getting the Phantom server's"
-            m += " Python major version."
-            self.error_print(f"FortiNDR Cloud Connector's initialization failed [{m}].")
-            return self.set_status(phantom.APP_ERROR, m)
-
-        self._state = self.load_state()
-        config = self.get_config()
-
-        self.api_key = config["api_key"]
-        base_url: str = "https://<API>.icebrg.io"
-        if self._validate_base_url(base_url=base_url):
-            self._base_url_str = base_url.replace("<API>", "{0}")
-        else:
-            m = "The base url to access the APIs is invalid. Verify "
-            m += "it is in the format: [https://<API>-<Region>.<Domain>/]."
-            self.error_print(f"FortiNDR Cloud Connector's initialization failed [ Invalid url ({base_url}) ].")
-            return self.set_status(phantom.APP_ERROR, m)
-
-        self.save_progress("FortiNDR Cloud Connector successfully initialized")
-        self.debug_print("FortiNDR Cloud Connector successfully initialized")
-        return phantom.APP_SUCCESS
-
-    def finalize(self):
-        self.save_state(self._state)
-        return phantom.APP_SUCCESS
 
     def validate_request(
         self,
