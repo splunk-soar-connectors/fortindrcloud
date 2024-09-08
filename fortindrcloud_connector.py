@@ -37,6 +37,36 @@ class RetVal(tuple):
         return tuple.__new__(RetVal, (val1, val2))
 
 
+class FncSplunkSOARLogger(FncClientLogger):
+    def __init__(self, connector):
+        self.connector = connector
+
+    def set_helper(self, connector):
+        self.connector = connector
+
+    def get_level(self):
+        return "DEBUG"
+
+    def set_level(self, level):
+        if level.upper() != 'DEBUG':
+            self.debug("Only debug level is supported.")
+
+    def critical(self, log: str):
+        self.connector.error_print(log)
+
+    def error(self, log: str):
+        self.connector.error_print(log)
+
+    def warning(self, log: str):
+        self.connector.error_print(log)
+
+    def info(self, log: str):
+        self.connector.debug_print(log)
+
+    def debug(self, log: str):
+        self.connector.debug_print(log)
+
+
 class FortiNDRCloudConnector(BaseConnector):
     def __init__(self):
         super(FortiNDRCloudConnector, self).__init__()
