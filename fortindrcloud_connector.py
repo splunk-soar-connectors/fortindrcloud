@@ -1341,32 +1341,20 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_detection_events(self, param):
-        self.print_debug("Handling Get Detection Events Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
+        endpoint = EndpointKey.GET_DETECTION_EVENTS
+        key = "events"
 
-        api_info, request_info = self.prepare_request(
-            api="Detections", request="getDetectionEvents"
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
-
-        response = None
-        exception = None
-        request_summary = None
-
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Detection Events Request Failed. [{str(e)}]")
-            exception = e
 
         detection_events = []
         events = []
-        if response and "events" in response:
-            events = response.pop("events")
+        response = result['response']
+        if response and key in response:
+            events = response.pop(key)
         detection = param["detection_uuid"]
 
         for e in events:
@@ -1377,20 +1365,18 @@ class FortiNDRCloudConnector(BaseConnector):
             event.update({"raw_event": json.dumps(e)})
             detection_events.append(event)
 
-        result = {"detection_events": detection_events}
-
-        summary = self._prepare_summary(
-            response=detection_events, request_info=request_info
-        )
+        summary = {
+            "response_count": len(detection_events),
+            "request": endpoint.value,
+        }
 
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'detection_events': detection_events},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_create_detection_rule(self, param):

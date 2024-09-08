@@ -3480,7 +3480,7 @@
                     "column_order": 1
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.uuid",
+                    "data_path": "action_result.data.*.detection_events.*.uuid",
                     "data_type": "string",
                     "example_values": [
                         "a7015381-0484-11ee-a43f-067ff9e63f5b"
@@ -3489,7 +3489,7 @@
                     "column_order": 2
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.event_type",
+                    "data_path": "action_result.data.*.detection_events.*.event_type",
                     "data_type": "string",
                     "example_values": [
                         "dns"
@@ -3498,7 +3498,7 @@
                     "column_order": 3
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.sensor_id",
+                    "data_path": "action_result.data.*.detection_events.*.sensor_id",
                     "data_type": "string",
                     "example_values": [
                         "sen1"
@@ -3507,7 +3507,7 @@
                     "column_order": 4
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.customer_id",
+                    "data_path": "action_result.data.*.detection_events.*.customer_id",
                     "data_type": "string",
                     "example_values": [
                         "gig"
@@ -3516,7 +3516,7 @@
                     "column_order": 5
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.timestamp",
+                    "data_path": "action_result.data.*.detection_events.*.timestamp",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -3525,13 +3525,13 @@
                     "column_order": 6
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.host_domain",
+                    "data_path": "action_result.data.*.ruldetection_eventse_events.*.host_domain",
                     "data_type": "string",
                     "column_name": "Host Domain",
                     "column_order": 7
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.src_ip",
+                    "data_path": "action_result.data.*.detection_events.*.src_ip",
                     "data_type": "string",
                     "example_values": [
                         "8.8.8.8"
@@ -3540,7 +3540,7 @@
                     "column_order": 8
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.src_port",
+                    "data_path": "action_result.data.*.detection_events.*.src_port",
                     "data_type": "numeric",
                     "example_values": [
                         53
@@ -3549,7 +3549,7 @@
                     "column_order": 9
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.dst_ip",
+                    "data_path": "action_result.data.*.detection_events.*.dst_ip",
                     "data_type": "string",
                     "example_values": [
                         "9.9.9.9"
@@ -3558,7 +3558,7 @@
                     "column_order": 10
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.dst_port",
+                    "data_path": "action_result.data.*.detection_events.*.dst_port",
                     "data_type": "numeric",
                     "example_values": [
                         32
@@ -3567,7 +3567,7 @@
                     "column_order": 11
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.flow_id",
+                    "data_path": "action_result.data.*.detection_events.*.flow_id",
                     "data_type": "string",
                     "example_values": [
                         "Cpv6xc2a3gA6fA8WE"
