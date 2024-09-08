@@ -3794,7 +3794,7 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.uuid",
+                    "data_path": "action_result.data.*.rule.uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3803,7 +3803,7 @@
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.account_uuid",
+                    "data_path": "action_result.data.*.rule.account_uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3812,7 +3812,7 @@
                     "column_order": 1
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.name",
+                    "data_path": "action_result.data.*.rule.name",
                     "data_type": "string",
                     "example_values": [
                         "AR T1595"
@@ -3821,7 +3821,7 @@
                     "column_order": 2
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.category",
+                    "data_path": "action_result.data.*.rule.category",
                     "data_type": "string",
                     "example_values": [
                         "Attack:Infection Vector"
@@ -3830,13 +3830,13 @@
                     "column_order": 3
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.description",
+                    "data_path": "action_result.data.*.rule.description",
                     "data_type": "string",
                     "column_name": "Description",
                     "column_order": 4
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.severity",
+                    "data_path": "action_result.data.*.rule.severity",
                     "data_type": "string",
                     "example_values": [
                         "high",
@@ -3847,7 +3847,7 @@
                     "column_order": 5
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.confidence",
+                    "data_path": "action_result.data.*.rule.confidence",
                     "data_type": "string",
                     "example_values": [
                         "high",
@@ -3858,7 +3858,7 @@
                     "column_order": 6
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.auto_resolution_minutes",
+                    "data_path": "action_result.data.*.rule.auto_resolution_minutes",
                     "data_type": "numeric",
                     "example_values": [
                         10080
@@ -3867,7 +3867,7 @@
                     "column_order": 7
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.enabled",
+                    "data_path": "action_result.data.*.rule.enabled",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -3877,7 +3877,7 @@
                     "column_order": 8
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.query_signature",
+                    "data_path": "action_result.data.*.rule.query_signature",
                     "data_type": "string",
                     "example_values": [
                         "ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns'"
@@ -3886,7 +3886,7 @@
                     "column_order": 9
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.created",
+                    "data_path": "action_result.data.*.rule.created",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -3895,7 +3895,7 @@
                     "column_order": 10
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.created_user_uuid",
+                    "data_path": "action_result.data.*.rule.created_user_uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3904,7 +3904,7 @@
                     "column_order": 11
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.updated",
+                    "data_path": "action_result.data.*.rule.updated",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -3913,7 +3913,7 @@
                     "column_order": 12
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.updated_user_uuid",
+                    "data_path": "action_result.data.*.rule.updated_user_uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3922,7 +3922,7 @@
                     "column_order": 13
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.shared_account_uuids",
+                    "data_path": "action_result.data.*.rule.shared_account_uuids",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3931,7 +3931,7 @@
                     "column_order": 14
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.run_account_uuids",
+                    "data_path": "action_result.data.*.rule.run_account_uuids",
                     "data_type": "string",
                     "example_values": [
                         "[\"55f39b72-2622-4137-9051-bc2ff364f059\"]"
@@ -3940,7 +3940,7 @@
                     "column_order": 15
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.rule_accounts",
+                    "data_path": "action_result.data.*.rule.rule_accounts",
                     "data_type": "string",
                     "column_name": "Rule Accounts",
                     "column_order": 16

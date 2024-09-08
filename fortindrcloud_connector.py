@@ -1380,20 +1380,9 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_create_detection_rule(self, param):
-        self.print_debug("Handling Create Detection Rules Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
-
         action_result = self.add_action_result(ActionResult(dict(param)))
-        param.pop("context", None)
-
-        api_info, request_info = self.prepare_request(
-            api="Detections", request="createDetectionRule"
-        )
-
-        response = None
-        exception = None
-        request_summary = None
+        endpoint = EndpointKey.CREATE_RULE
+        key = "rule"
 
         if "run_account_uuids" in param:
             param = self._split_multivalue_args(param, ["run_account_uuids"])
@@ -1406,31 +1395,29 @@ class FortiNDRCloudConnector(BaseConnector):
         if "indicator_fields" in param:
             param = self._split_multivalue_args(param, ["indicator_fields"])
 
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, data=json.dumps(
-                    param)
-            )
-        except Exception as e:
-            self.error_debug(f"Create Detection Rules Request Failed. [{str(e)}]")
-            exception = e
+        self.logger.error(rf"PARAMS: {param}")
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
+        )
 
-        rules = []
-        result = {}
-        if response and "rule" in response:
-            rules = [response.pop("rule")]
-            result.update({"rule": rules[0]})
+        rule = {}
+        response = result['response']
+        if response and key in response:
+            rule = response.pop(key)
 
-        summary = self._prepare_summary(
-            response=rules, request_info=request_info)
+        summary = {
+            "response_count": 1 if rule else 0,
+            "request": endpoint.value,
+        }
+
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'rule': rule},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def handle_action(self, param):
