@@ -1224,43 +1224,32 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_detection_rules(self, param):
-        self.print_debug("Handling Get Detection Rules Request.")
-        # Add an action result object to self (BaseConnector)
-        # to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
+        endpoint = EndpointKey.GET_RULES
+        key = "rules"
 
-        param.pop("context", None)
-
-        api_info, request_info = self.prepare_request(
-            api="Detections", request="getDetectionRules"
+        result = self._handle_fnc_endpoint(
+            endpoint=endpoint,
+            param=param
         )
 
-        response = None
-        exception = None
-        request_summary = None
-
-        try:
-            response, request_summary = self.send_request(
-                api_info=api_info, request_info=request_info, param=param
-            )
-        except Exception as e:
-            self.error_debug(f"Get Detection Rules Request Failed. [{str(e)}]")
-            exception = e
-
         rules = []
-        if response and "rules" in response:
-            rules = response["rules"]
-        result = {"detection_rules": rules}
-        summary = self._prepare_summary(
-            response=rules, request_info=request_info)
+        response = result['response']
+        if response and key in response:
+            rules = response.pop(key)
+
+        summary = {
+            "response_count": len(rules),
+            "request": endpoint.value,
+        }
+
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
+            response={'rules': rules},
+            request_summary=result['request_summary'],
+            exception=result['exception'],
             summary=summary,
             action_result=action_result,
-            api_info=api_info,
-            request_info=request_info,
+            request=endpoint.value,
         )
 
     def _handle_fnc_resolve_detection(self, param):
