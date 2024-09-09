@@ -510,8 +510,6 @@ class FortiNDRCloudConnector(BaseConnector):
                            != TRAINING_ACC), detections)
                 )
 
-                rs = 'SUCCESS'
-                rcr = len(detections)
                 if detections:
                     rcs = self._send_to_splunk(detections=detections)
             context.clear_args()
@@ -529,8 +527,6 @@ class FortiNDRCloudConnector(BaseConnector):
                            != TRAINING_ACC), detections)
                 )
 
-                rs = 'SUCCESS'
-                rhr = len(detections)
                 if detections:
                     rhs = self._send_to_splunk(detections=detections)
 
@@ -538,7 +534,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
             # checkpoint for the first Detection iteration
             last_poll = context.get_checkpoint()
-            history = h_context.get_history()
+            history = h_context.get_remaining_history()
 
             self.logger.debug("Updating last poll checkpoint.")
             self._state["last_poll"] = last_poll
