@@ -386,7 +386,7 @@ class FortiNDRCloudConnector(BaseConnector):
                 container = self._create_container(d)
                 ret_val, message, cid = self.save_container(container)
                 if phantom.is_fail(ret_val):
-                    em = f"Unable to publish container for detection [{d["uuid"]}]: ({message})"
+                    em = f'Unable to publish container for detection [{d["uuid"]}]: ({message})'
                     self.save_progress(em)
                     self.logger.error(em)
                     cf = cf + 1
