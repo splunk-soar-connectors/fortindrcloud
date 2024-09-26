@@ -454,6 +454,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": request,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response=result,
             request_summary=request_summary,
@@ -602,6 +603,7 @@ class FortiNDRCloudConnector(BaseConnector):
     #  Actions for Sensors API
 
     def _handle_fnc_get_sensors(self, param):
+        self.debug_print("Handling get_sensors command.")
         # Add an action result object to self (BaseConnector) to represent
         # the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -624,6 +626,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'sensors': sensors},
             request_summary=result['request_summary'],
@@ -634,6 +637,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_devices(self, param):
+        self.debug_print("Handling get_devices command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_DEVICES
         key = "devices"
@@ -653,6 +657,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'devices': devices['device_list']},
             request_summary=result['request_summary'],
@@ -663,6 +668,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_tasks(self, param):
+        self.debug_print("Handling get_tasks command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         endpoint: EndpointKey = EndpointKey.GET_TASKS
@@ -692,6 +698,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'tasks': tasks},
             request_summary=result['request_summary'],
@@ -702,6 +709,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_create_task(self, param):
+        self.debug_print("Handling create_task command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.CREATE_TASK
         key = "pcaptask"
@@ -726,6 +734,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'task': task},
             request_summary=result['request_summary'],
@@ -736,6 +745,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_telemetry_events(self, param):
+        self.debug_print("Handling get_telemetry_events command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_TELEMETRY_EVENTS
         key = "data"
@@ -758,6 +768,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={"telemetry_events": telemetry},
             request_summary=result['request_summary'],
@@ -768,6 +779,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_telemetry_network(self, param):
+        self.debug_print("Handling get_telemetry_network command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_TELEMETRY_NETWORK
         key = "network_usage"
@@ -791,6 +803,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={"network_usage": telemetry},
             request_summary=result['request_summary'],
@@ -801,6 +814,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_telemetry_packetstats(self, param):
+        self.debug_print("Handling get_telemetry_packetstats command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_TELEMETRY_PACKETSTATS
         key = "data"
@@ -820,6 +834,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={"packetstats": telemetry},
             request_summary=result['request_summary'],
@@ -832,6 +847,7 @@ class FortiNDRCloudConnector(BaseConnector):
     #  Actions for Entity API
 
     def _handle_fnc_get_entity_summary(self, param):
+        self.debug_print("Handling get_entity_summary command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_ENTITY_SUMMARY
         key = "summary"
@@ -851,6 +867,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'entity_summary': entity_summary},
             request_summary=result['request_summary'],
@@ -861,6 +878,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_entity_pdns(self, param):
+        self.debug_print("Handling get_entity_pdns command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_ENTITY_PDNS
         key = "passivedns"
@@ -880,6 +898,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'entity_pdns': entity_pdns},
             request_summary=result['request_summary'],
@@ -890,6 +909,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_entity_dhcp(self, param):
+        self.debug_print("Handling get_entity_dhcp command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_ENTITY_DHCP
         key = "dhcp"
@@ -909,6 +929,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'entity_dhcp': entity_dhcp},
             request_summary=result['request_summary'],
@@ -919,6 +940,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_entity_vs(self, param):
+        self.debug_print("Handling get_entity_vs command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_ENTITY_VIRUS_TOTAL
         key = "vt_response"
@@ -938,6 +960,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'entity_vs': entity_vs},
             request_summary=result['request_summary'],
@@ -948,6 +971,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_entity_file(self, param):
+        self.debug_print("Handling get_entity_file command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_ENTITY_FILE
         key = "file"
@@ -970,6 +994,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'entity_file': entity_file},
             request_summary=result['request_summary'],
@@ -982,6 +1007,7 @@ class FortiNDRCloudConnector(BaseConnector):
     #  Actions for Detections API
 
     def _handle_fnc_get_detections(self, param):
+        self.debug_print("Handling get_detections command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_DETECTIONS
         key = "detections"
@@ -1001,6 +1027,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'detections': detections},
             request_summary=result['request_summary'],
@@ -1011,6 +1038,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_detection_rules(self, param):
+        self.debug_print("Handling get_detection_rules command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_RULES
         key = "rules"
@@ -1030,6 +1058,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'rules': rules},
             request_summary=result['request_summary'],
@@ -1040,6 +1069,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_resolve_detection(self, param):
+        self.debug_print("Handling resolve_detections command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.RESOLVE_DETECTION
 
@@ -1056,6 +1086,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response=result['response'],
             request_summary=result['request_summary'],
@@ -1066,6 +1097,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_rule_events(self, param):
+        self.debug_print("Handling get_rule_events command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_RULE_EVENTS
         key = "events"
@@ -1087,6 +1119,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'rule_events': events},
             request_summary=result['request_summary'],
@@ -1097,6 +1130,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_get_detection_events(self, param):
+        self.debug_print("Handling get_detection_events command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_DETECTION_EVENTS
         key = "events"
@@ -1126,6 +1160,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'detection_events': detection_events},
             request_summary=result['request_summary'],
@@ -1136,6 +1171,7 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def _handle_fnc_create_detection_rule(self, param):
+        self.debug_print("Handling create_detection_rule command.")
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.CREATE_RULE
         key = "rule"
@@ -1151,7 +1187,6 @@ class FortiNDRCloudConnector(BaseConnector):
         if "indicator_fields" in param:
             param = self._split_multivalue_args(param, ["indicator_fields"])
 
-        self.logger.error(rf"PARAMS: {param}")
         result = self._handle_fnc_endpoint(
             endpoint=endpoint,
             param=param
@@ -1167,6 +1202,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "request": endpoint.value,
         }
 
+        self.debug_print("Validating result.")
         return self.validate_request(
             response={'rule': rule},
             request_summary=result['request_summary'],
