@@ -431,7 +431,7 @@ class FortiNDRCloudConnector(BaseConnector):
                 _ = self.client.call_endpoint(
                     endpoint=EndpointKey.GET_SENSORS, args=param)
                 self.save_progress("Request successfully completed.")
-                request_summary.update("status": "SUCCESS"})
+                request_summary.update({"status": "SUCCESS"})
                 request_summary.update(
                     {"info": "Connection to the FortiNDR Cloud services successfully stablish."})
             else:
@@ -440,68 +440,68 @@ class FortiNDRCloudConnector(BaseConnector):
                 request_summary.update({"status": "FAILURE"})
                 request_summary.update(
                     {"error": "FncApiClient was not properly created"})
-                exception= Exception("FncApiClient was not properly created")
+                exception = Exception("FncApiClient was not properly created")
         except FncClientError as e:
             self.logger.error(f"{request} request failed. [{str(e)}]")
             request_summary.update({"status": "FAILURE"})
             request_summary.update({"error": str(e)})
-            exception= e
+            exception = e
 
-        result= {"sensors": response}
+        result = {"sensors": response}
 
-        summary= {
+        summary = {
             "response_count": 1,
             "request": request,
         }
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response = result,
-            request_summary = request_summary,
-            exception = exception,
-            summary = summary,
-            action_result = action_result,
-            request = request,
+            response=result,
+            request_summary=request_summary,
+            exception=exception,
+            summary=summary,
+            action_result=action_result,
+            request=request,
         )
 
     def _handle_on_poll(self, param):
         self.logger.info("Starting to retrieve Detections.")
         # Add an action result object to self (BaseConnector) to represent
         # the action for this param
-        action_result= self.add_action_result(ActionResult(dict(param)))
+        action_result = self.add_action_result(ActionResult(dict(param)))
 
-        params= self._get_poll_detections_request_params()
+        params = self._get_poll_detections_request_params()
 
-        last_detection= self._state.get("last_poll", None)
+        last_detection = self._state.get("last_poll", None)
         if last_detection:
             self.logger.info(f"Last checkpoint was: {last_detection}.")
 
-        history= {}
-        last_history= self._state.get("last_history", None)
+        history = {}
+        last_history = self._state.get("last_history", None)
         if last_history:
             self.logger.info(f"Last history was: {last_history}.")
-            history= json.loads(last_history)
+            history = json.loads(last_history)
 
-        rcs= 0
-        rhs= 0
+        rcs = 0
+        rhs = 0
         try:
             # We restore the context using the persisted values of the
             # last_detection(checkpoint) and the history if they exist
             # Otherwise, we initialize them by calling the get splitted
             # context method.
 
-            context: ApiContext= None
-            h_context: ApiContext= None
+            context: ApiContext = None
+            h_context: ApiContext = None
 
             if last_detection:
                 self.logger.info("Restoring the Context")
-                context= ApiContext()
+                context = ApiContext()
                 context.update_checkpoint(checkpoint=last_detection)
-                h_context= ApiContext()
+                h_context = ApiContext()
                 h_context.update_history(history=history)
             else:
                 self.logger.info("Initializing the Context")
-                h_context, context= self.client.get_splitted_context(
+                h_context, context = self.client.get_splitted_context(
                     params)
 
             # Pull current detections
