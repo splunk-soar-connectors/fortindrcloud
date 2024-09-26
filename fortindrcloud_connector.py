@@ -47,7 +47,7 @@ class FncSplunkSOARLogger(FncClientLogger):
         return "DEBUG"
 
     def set_level(self, level):
-        if level.upper() != 'DEBUG':
+        if level.upper() != "DEBUG":
             self.debug("Only debug level is supported.")
 
     def critical(self, log: str):
@@ -93,8 +93,8 @@ class FortiNDRCloudConnector(BaseConnector):
         config = self.get_config()
 
         try:
-            api_key = config.get("api_key", '')
-            domain = config.get("domain", '')
+            api_key = config.get("api_key", "")
+            domain = config.get("domain", "")
             self.client = FncClient.get_api_client(
                 name=INTEGRATION_NAME,
                 api_token=api_key,
@@ -314,21 +314,21 @@ class FortiNDRCloudConnector(BaseConnector):
 
         config = self.get_config()
         request_params = {
-            'include_signature': True,
-            'include_description': True,
+            "include_signature": True,
+            "include_description": True,
 
-            'start_date': config.get("first_poll", ""),
-            'polling_delay': config.get("polling_delay", ""),
-            'account_uuid': config.get("account_uuid", ""),
+            "start_date": config.get("first_poll", ""),
+            "polling_delay": config.get("polling_delay", ""),
+            "account_uuid": config.get("account_uuid", ""),
 
-            'status': config.get("status", ""),
-            'pull_muted_rules': config.get("muted_rule", False),
-            'pull_muted_devices': config.get("muted_device", False),
-            'pull_muted_detections': config.get("muted", False),
-            'filter_training_detections': True
+            "status": config.get("status", ""),
+            "pull_muted_rules": config.get("muted_rule", False),
+            "pull_muted_devices": config.get("muted_device", False),
+            "pull_muted_detections": config.get("muted", False),
+            "filter_training_detections": True
         }
 
-        self.logger.debug('Arguments retrieved.')
+        self.logger.debug("Arguments retrieved.")
         return request_params
 
     def validate_request(
@@ -419,9 +419,9 @@ class FortiNDRCloudConnector(BaseConnector):
         response = None
         exception = None
         request_summary = {
-            'status': '',
-            'error': '',
-            'info': ''
+            "status": "",
+            "error": "",
+            "info": ""
         }
 
         try:
@@ -431,77 +431,77 @@ class FortiNDRCloudConnector(BaseConnector):
                 _ = self.client.call_endpoint(
                     endpoint=EndpointKey.GET_SENSORS, args=param)
                 self.save_progress("Request successfully completed.")
-                request_summary.update({'status': 'SUCCESS'})
+                request_summary.update("status": "SUCCESS"})
                 request_summary.update(
-                    {'info': 'Connection to the FortiNDR Cloud services successfully stablish.'})
+                    {"info": "Connection to the FortiNDR Cloud services successfully stablish."})
             else:
                 self.logger.error(
                     f"{request} request failed. [FncApiClient was not properly created.]")
-                request_summary.update({'status': 'FAILURE'})
+                request_summary.update({"status": "FAILURE"})
                 request_summary.update(
-                    {'error': 'FncApiClient was not properly created'})
-                exception = Exception("FncApiClient was not properly created")
+                    {"error": "FncApiClient was not properly created"})
+                exception= Exception("FncApiClient was not properly created")
         except FncClientError as e:
             self.logger.error(f"{request} request failed. [{str(e)}]")
-            request_summary.update({'status': 'FAILURE'})
-            request_summary.update({'error': str(e)})
-            exception = e
+            request_summary.update({"status": "FAILURE"})
+            request_summary.update({"error": str(e)})
+            exception= e
 
-        result = {"sensors": response}
+        result= {"sensors": response}
 
-        summary = {
+        summary= {
             "response_count": 1,
             "request": request,
         }
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
-            summary=summary,
-            action_result=action_result,
-            request=request,
+            response = result,
+            request_summary = request_summary,
+            exception = exception,
+            summary = summary,
+            action_result = action_result,
+            request = request,
         )
 
     def _handle_on_poll(self, param):
         self.logger.info("Starting to retrieve Detections.")
         # Add an action result object to self (BaseConnector) to represent
         # the action for this param
-        action_result = self.add_action_result(ActionResult(dict(param)))
+        action_result= self.add_action_result(ActionResult(dict(param)))
 
-        params = self._get_poll_detections_request_params()
+        params= self._get_poll_detections_request_params()
 
-        last_detection = self._state.get("last_poll", None)
+        last_detection= self._state.get("last_poll", None)
         if last_detection:
             self.logger.info(f"Last checkpoint was: {last_detection}.")
 
-        history = {}
-        last_history = self._state.get('last_history', None)
+        history= {}
+        last_history= self._state.get("last_history", None)
         if last_history:
             self.logger.info(f"Last history was: {last_history}.")
-            history = json.loads(last_history)
+            history= json.loads(last_history)
 
-        rcs = 0
-        rhs = 0
+        rcs= 0
+        rhs= 0
         try:
             # We restore the context using the persisted values of the
             # last_detection(checkpoint) and the history if they exist
             # Otherwise, we initialize them by calling the get splitted
             # context method.
 
-            context: ApiContext = None
-            h_context: ApiContext = None
+            context: ApiContext= None
+            h_context: ApiContext= None
 
             if last_detection:
                 self.logger.info("Restoring the Context")
-                context = ApiContext()
+                context= ApiContext()
                 context.update_checkpoint(checkpoint=last_detection)
-                h_context = ApiContext()
+                h_context= ApiContext()
                 h_context.update_history(history=history)
             else:
                 self.logger.info("Initializing the Context")
-                h_context, context = self.client.get_splitted_context(
+                h_context, context= self.client.get_splitted_context(
                     params)
 
             # Pull current detections
@@ -509,7 +509,7 @@ class FortiNDRCloudConnector(BaseConnector):
             for response in self.client.continuous_polling(
                 context=context, args=params
             ):
-                detections = response.get('detections', [])
+                detections = response.get("detections", [])
                 detections = list(
                     filter(lambda d: (d["account_uuid"] != TRAINING_ACC), detections)
                 )
@@ -521,11 +521,11 @@ class FortiNDRCloudConnector(BaseConnector):
             # Pull next piece of the history data
             self.logger.info("Polling historical data.")
 
-            params.update({'limit': HISTORY_LIMIT})
+            params.update({"limit": HISTORY_LIMIT})
             for response in self.client.poll_history(
                 context=h_context, args=params
             ):
-                detections = response.get('detections', [])
+                detections = response.get("detections", [])
                 detections = list(
                     filter(lambda d: (d["account_uuid"] != TRAINING_ACC), detections)
                 )
@@ -573,9 +573,9 @@ class FortiNDRCloudConnector(BaseConnector):
         response = None
         exception = None
         request_summary = {
-            'status': '',
-            'error': '',
-            'info': ''
+            "status": "",
+            "error": "",
+            "info": ""
         }
 
         try:
@@ -583,19 +583,19 @@ class FortiNDRCloudConnector(BaseConnector):
                 endpoint=endpoint, args=param)
 
             self.logger.info(f"{endpoint.value} successfully completed.")
-            request_summary.update({'status': 'SUCCESS'})
+            request_summary.update({"status": "SUCCESS"})
             request_summary.update(
-                {'info': f'{len(response)} items retrieved.'})
+                {"info": f"{len(response)} items retrieved."})
         except FncClientError as e:
             self.logger.error(f"{endpoint.value} Request Failed. [{str(e)}]")
-            request_summary.update({'status': 'FAILURE'})
-            request_summary.update({'error': str(e)})
+            request_summary.update({"status": "FAILURE"})
+            request_summary.update({"error": str(e)})
             exception = e
 
         return {
-            'response': response,
-            'request_summary': request_summary,
-            'exception': exception
+            "response": response,
+            "request_summary": request_summary,
+            "exception": exception
         }
 
     #  Actions for Sensors API
@@ -606,7 +606,7 @@ class FortiNDRCloudConnector(BaseConnector):
         # the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_SENSORS
-        key = 'sensors'
+        key = "sensors"
 
         result = self._handle_fnc_endpoint(
             endpoint=endpoint,
@@ -626,7 +626,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'sensors': sensors},
+            response={"sensors": sensors},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -657,7 +657,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'devices': devices["device_list"]},
+            response={"devices": devices["device_list"]},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -670,13 +670,13 @@ class FortiNDRCloudConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         endpoint: EndpointKey = EndpointKey.GET_TASKS
-        key = 'pcaptasks'
+        key = "pcaptasks"
         taskid = param.pop("task_uuid", "")
 
         if taskid:
             endpoint = EndpointKey.GET_TASK
-            key = 'pcap_task'
-            param.update({'task_id': taskid})
+            key = "pcap_task"
+            param.update({"task_id": taskid})
 
         result = self._handle_fnc_endpoint(
             endpoint=endpoint,
@@ -698,7 +698,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'tasks': tasks},
+            response={"tasks": tasks},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -734,7 +734,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'task': task},
+            response={"task": task},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -747,7 +747,7 @@ class FortiNDRCloudConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         endpoint = EndpointKey.GET_TELEMETRY_EVENTS
         key = "data"
-        header_key = 'columns'
+        header_key = "columns"
 
         result = self._handle_fnc_endpoint(
             endpoint=endpoint,
@@ -867,7 +867,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'entity_summary': entity_summary},
+            response={"entity_summary": entity_summary},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -898,7 +898,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'entity_pdns': entity_pdns},
+            response={"entity_pdns": entity_pdns},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -929,7 +929,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'entity_dhcp': entity_dhcp},
+            response={"entity_dhcp": entity_dhcp},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -960,7 +960,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'entity_vs': entity_vs},
+            response={"entity_vs": entity_vs},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -975,7 +975,7 @@ class FortiNDRCloudConnector(BaseConnector):
         key = "file"
 
         hash = param.pop("hash", "")
-        param.update({'entity': hash})
+        param.update({"entity": hash})
 
         result = self._handle_fnc_endpoint(
             endpoint=endpoint,
@@ -994,7 +994,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'entity_file': entity_file},
+            response={"entity_file": entity_file},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -1027,7 +1027,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'detections': detections},
+            response={"detections": detections},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -1058,7 +1058,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'rules': rules},
+            response={"rules": rules},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -1072,7 +1072,7 @@ class FortiNDRCloudConnector(BaseConnector):
         endpoint = EndpointKey.RESOLVE_DETECTION
 
         detection = param.pop("detection_uuid", "")
-        param.update({'detection_id': detection})
+        param.update({"detection_id": detection})
 
         result = self._handle_fnc_endpoint(
             endpoint=endpoint,
@@ -1119,7 +1119,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'rule_events': events},
+            response={"rule_events": events},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -1143,7 +1143,7 @@ class FortiNDRCloudConnector(BaseConnector):
         response = result["response"]
         if response and key in response:
             events = response.pop(key)
-        detection = param.get("detection_uuid", '')
+        detection = param.get("detection_uuid", "")
 
         for e in events:
             event = self._flatten_nested_dict(d=e["event"], sep="_")
@@ -1160,7 +1160,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'detection_events': detection_events},
+            response={"detection_events": detection_events},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -1202,7 +1202,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response={'rule': rule},
+            response={"rule": rule},
             request_summary=result["request_summary"],
             exception=result["exception"],
             summary=summary,
@@ -1269,7 +1269,7 @@ def main():
     argparser.add_argument("input_test_json", help="Input Test JSON file")
     argparser.add_argument("-u", "--username", help="username", required=False)
     argparser.add_argument("-p", "--password", help="password", required=False)
-    argparser.add_argument('-v', '--verify', action='store_true', help='verify', required=False, default=False)
+    argparser.add_argument("-v", "--verify", action="store_true", help="verify", required=False, default=False)
 
     args = argparser.parse_args()
     session_id = None
