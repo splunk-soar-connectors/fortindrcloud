@@ -608,10 +608,7 @@ class FortiNDRCloudConnector(BaseConnector):
         endpoint = EndpointKey.GET_SENSORS
         key = "sensors"
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         sensors = []
         response = result["response"]
@@ -640,10 +637,7 @@ class FortiNDRCloudConnector(BaseConnector):
         endpoint = EndpointKey.GET_DEVICES
         key = "devices"
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         devices = []
         response = result["response"]
@@ -678,10 +672,7 @@ class FortiNDRCloudConnector(BaseConnector):
             key = "pcap_task"
             param.update({"task_id": taskid})
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
         response = result["response"]
 
         tasks = []
@@ -717,10 +708,7 @@ class FortiNDRCloudConnector(BaseConnector):
         else:
             param.update({"sensor_ids": []})
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         task = {}
         response = result["response"]
@@ -749,10 +737,7 @@ class FortiNDRCloudConnector(BaseConnector):
         key = "data"
         header_key = "columns"
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         telemetry = []
         response = result["response"]
@@ -786,10 +771,7 @@ class FortiNDRCloudConnector(BaseConnector):
         if latest_each_month:
             param.update({"latest_each_month": True})
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         telemetry = []
         response = result["response"]
@@ -817,10 +799,7 @@ class FortiNDRCloudConnector(BaseConnector):
         endpoint = EndpointKey.GET_TELEMETRY_PACKETSTATS
         key = "data"
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         telemetry = []
         response = result["response"]
@@ -850,10 +829,7 @@ class FortiNDRCloudConnector(BaseConnector):
         endpoint = EndpointKey.GET_ENTITY_SUMMARY
         key = "summary"
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         entity_summary = {}
         response = result["response"]
@@ -881,10 +857,7 @@ class FortiNDRCloudConnector(BaseConnector):
         endpoint = EndpointKey.GET_ENTITY_PDNS
         key = "passivedns"
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         entity_pdns = []
         response = result["response"]
@@ -912,10 +885,7 @@ class FortiNDRCloudConnector(BaseConnector):
         endpoint = EndpointKey.GET_ENTITY_DHCP
         key = "dhcp"
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         entity_dhcp = []
         response = result["response"]
@@ -943,10 +913,7 @@ class FortiNDRCloudConnector(BaseConnector):
         endpoint = EndpointKey.GET_ENTITY_VIRUS_TOTAL
         key = "vt_response"
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         entity_vs = []
         response = result["response"]
@@ -977,10 +944,7 @@ class FortiNDRCloudConnector(BaseConnector):
         hash = param.pop("hash", "")
         param.update({"entity": hash})
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         entity_file = {}
         response = result["response"]
@@ -1010,10 +974,7 @@ class FortiNDRCloudConnector(BaseConnector):
         endpoint = EndpointKey.GET_DETECTIONS
         key = "detections"
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         detections = []
         response = result["response"]
@@ -1041,10 +1002,7 @@ class FortiNDRCloudConnector(BaseConnector):
         endpoint = EndpointKey.GET_RULES
         key = "rules"
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         rules = []
         response = result["response"]
@@ -1074,10 +1032,7 @@ class FortiNDRCloudConnector(BaseConnector):
         detection = param.pop("detection_uuid", "")
         param.update({"detection_id": detection})
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         summary = {
             "response_count": 0,
@@ -1102,10 +1057,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         rule = param.pop("rule_uuid", "")
         param.update({"rule_id": rule})
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         events = []
         response = result["response"]
@@ -1133,10 +1085,7 @@ class FortiNDRCloudConnector(BaseConnector):
         endpoint = EndpointKey.GET_DETECTION_EVENTS
         key = "events"
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         detection_events = []
         events = []
@@ -1185,10 +1134,7 @@ class FortiNDRCloudConnector(BaseConnector):
         if "indicator_fields" in param:
             param = self._split_multivalue_args(param, ["indicator_fields"])
 
-        result = self._handle_fnc_endpoint(
-            endpoint=endpoint,
-            param=param
-        )
+        result = self._handle_fnc_endpoint(endpoint=endpoint, param=param)
 
         rule = {}
         response = result["response"]
