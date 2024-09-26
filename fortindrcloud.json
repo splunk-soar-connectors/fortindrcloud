@@ -16,7 +16,7 @@
         }
     ],
     "license": "Copyright (c) 2018-2023 Fortinet Inc.",
-    "app_version": "1.0.3",
+    "app_version": "1.1.0",
     "utctime_updated": "2024-01-24T15:25:34.000000Z",
     "package_name": "phantom_fortindrcloud",
     "main_module": "fortindrcloud_connector.py",
@@ -42,7 +42,6 @@
             "data_type": "string",
             "order": 2,
             "description": "First Poll (<number> <time unit>, e.g., 12 hours, 7 days)",
-            "default": "7 days",
             "name": "first_poll"
         },
         "muted": {
@@ -4068,7 +4067,7 @@
             },
             {
                 "module": "fnc",
-                "input_file": "wheels/shared/com.fortinet.fndrc.integrations.python_client-1.0.0-py3-none-any.whl"
+                "input_file": "wheels/shared/com.fortinet.fndrc.integrations.python_client-1.0.2-py3-none-any.whl"
             }
         ]
     }
