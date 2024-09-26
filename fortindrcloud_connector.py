@@ -511,8 +511,7 @@ class FortiNDRCloudConnector(BaseConnector):
             ):
                 detections = response.get('detections', [])
                 detections = list(
-                    filter(lambda d: (d['account_uuid']
-                           != TRAINING_ACC), detections)
+                    filter(lambda d: (d['account_uuid'] != TRAINING_ACC), detections)
                 )
 
                 if detections:
@@ -528,8 +527,7 @@ class FortiNDRCloudConnector(BaseConnector):
             ):
                 detections = response.get('detections', [])
                 detections = list(
-                    filter(lambda d: (d['account_uuid']
-                           != TRAINING_ACC), detections)
+                    filter(lambda d: (d['account_uuid'] != TRAINING_ACC), detections)
                 )
 
                 if detections:
