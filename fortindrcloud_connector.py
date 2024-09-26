@@ -93,8 +93,8 @@ class FortiNDRCloudConnector(BaseConnector):
         config = self.get_config()
 
         try:
-            api_key = config["api_key"]
-            domain = config["domain"]
+            api_key = config.get("api_key", '')
+            domain = config.get("domain", '')
             self.client = FncClient.get_api_client(
                 name=INTEGRATION_NAME,
                 api_token=api_key,
@@ -1145,7 +1145,7 @@ class FortiNDRCloudConnector(BaseConnector):
         response = result['response']
         if response and key in response:
             events = response.pop(key)
-        detection = param["detection_uuid"]
+        detection = param.get("detection_uuid", '')
 
         for e in events:
             event = self._flatten_nested_dict(d=e["event"], sep="_")
