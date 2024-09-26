@@ -208,6 +208,7 @@ class FortiNDRCloudConnector(BaseConnector):
         sensor_id = ""
         rule_severity = ""
         rule_confidence = ""
+        rule_category = ""
         created = ""
         first_seen = ""
         last_seen = ""
@@ -229,6 +230,8 @@ class FortiNDRCloudConnector(BaseConnector):
             rule_secondary_attack_id = detection["rule_secondary_attack_id"]
         if "rule_url" in detection:
             rule_url = detection["rule_url"]
+        if "rule_category" in detection:
+            rule_category = detection["rule_category"]
         if "created" in detection:
             created = detection["created"]
         if "first_seen" in detection:
@@ -257,6 +260,7 @@ class FortiNDRCloudConnector(BaseConnector):
             "fnc_first_seen": first_seen,
             "fnc_last_seen": last_seen,
             "fnc_severity": rule_severity,
+            "fnc_category": rule_category,
             "fnc_confidence": rule_confidence,
             "fnc_status": status,
             "fnc_detection_id": uuid,
