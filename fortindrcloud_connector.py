@@ -965,6 +965,11 @@ class FortiNDRCloudConnector(BaseConnector):
         if response and key in response:
             entity_file = response.pop(key)
 
+        summary = {
+            "response_count": 1 if entity_file else 0,
+            "request": endpoint.value,
+        }
+
         return self.validate_request(
             response={'entity_file': entity_file},
             request_summary=result['request_summary'],
