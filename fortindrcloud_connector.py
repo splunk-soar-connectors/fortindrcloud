@@ -394,7 +394,7 @@ class FortiNDRCloudConnector(BaseConnector):
                     artifact = self._create_artifact(cid, d)
                     ret_val, message, aid = self.save_artifacts([artifact])
                     if phantom.is_fail(ret_val):
-                        em = f"Unable to publish artifact for detection [{d["uuid"]}]: ({message})"
+                        em = f'Unable to publish artifact for detection [{d["uuid"]}]: ({message})'
                         self.save_progress(em)
                         self.logger.error(em)
                         af = af + 1
