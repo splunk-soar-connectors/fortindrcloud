@@ -85,8 +85,7 @@ class FortiNDRCloudConnector(BaseConnector):
         except Exception:
             m = "Error occurred while getting the Phantom server's"
             m += " Python major version."
-            self.logger.error(
-                f"FortiNDR Cloud Connector's initialization failed [{m}].")
+            self.logger.error(f"FortiNDR Cloud Connector's initialization failed [{m}].")
             return self.set_status(phantom.APP_ERROR, m)
 
         self._state = self.load_state()
@@ -95,15 +94,9 @@ class FortiNDRCloudConnector(BaseConnector):
         try:
             api_key = config.get("api_key", "")
             domain = config.get("domain", "")
-            self.client = FncClient.get_api_client(
-                name=INTEGRATION_NAME,
-                api_token=api_key,
-                domain=domain,
-                logger=self.logger
-            )
+            self.client = FncClient.get_api_client(name=INTEGRATION_NAME, api_token=api_key, domain=domain, logger=self.logger)
         except FncClientError as e:
-            self.logger.error(
-                f"FortiNDR Cloud Connector's initialization failed [ {e} ].")
+            self.logger.error(f"FortiNDR Cloud Connector's initialization failed [ {e} ].")
             return self.set_status(phantom.APP_ERROR, str(e))
 
         self.save_progress("FortiNDR Cloud Connector successfully initialized")
@@ -154,8 +147,7 @@ class FortiNDRCloudConnector(BaseConnector):
         if "rule_severity" in detection:
             rule_severity = self._map_severity(detection["rule_severity"])
         if "rule_confidence" in detection:
-            rule_confidence = self._map_confidence(
-                detection["rule_confidence"])
+            rule_confidence = self._map_confidence(detection["rule_confidence"])
         if "rule_category" in detection:
             rule_category = detection["rule_category"]
         if "created" in detection:
@@ -222,8 +214,7 @@ class FortiNDRCloudConnector(BaseConnector):
         if "rule_severity" in detection:
             rule_severity = self._map_severity(detection["rule_severity"])
         if "rule_confidence" in detection:
-            rule_confidence = self._map_confidence(
-                detection["rule_confidence"])
+            rule_confidence = self._map_confidence(detection["rule_confidence"])
         if "rule_primary_attack_id" in detection:
             rule_primary_attack_id = detection["rule_primary_attack_id"]
         if "rule_secondary_attack_id" in detection:
@@ -301,8 +292,7 @@ class FortiNDRCloudConnector(BaseConnector):
         for k, v in d.items():
             new_key = parent_key + sep + k if parent_key else k
             if isinstance(v, collections.MutableMapping):
-                items.extend(self._flatten_nested_dict(
-                    v, new_key, sep=sep).items())
+                items.extend(self._flatten_nested_dict(v, new_key, sep=sep).items())
             elif type(v) is list:
                 continue
             else:
@@ -316,30 +306,20 @@ class FortiNDRCloudConnector(BaseConnector):
         request_params = {
             "include_signature": True,
             "include_description": True,
-
             "start_date": config.get("first_poll", ""),
             "polling_delay": config.get("polling_delay", ""),
             "account_uuid": config.get("account_uuid", ""),
-
             "status": config.get("status", ""),
             "pull_muted_rules": config.get("muted_rule", False),
             "pull_muted_devices": config.get("muted_device", False),
             "pull_muted_detections": config.get("muted", False),
-            "filter_training_detections": True
+            "filter_training_detections": True,
         }
 
         self.logger.debug("Arguments retrieved.")
         return request_params
 
-    def validate_request(
-        self,
-        response,
-        request_summary,
-        exception,
-        summary,
-        action_result,
-        request
-    ):
+    def validate_request(self, response, request_summary, exception, summary, action_result, request):
         self.logger.info("Validating request.")
         # Check if the request failed
         if request_summary and hasattr(action_result, "add_debug_data"):
@@ -355,10 +335,7 @@ class FortiNDRCloudConnector(BaseConnector):
             self.save_progress(em)
             self.logger.error(em)
 
-            return RetVal(
-                action_result.set_status(
-                    phantom.APP_ERROR, str(exception)), None
-            )
+            return RetVal(action_result.set_status(phantom.APP_ERROR, str(exception)), None)
 
         # Return success
         m = f"The {request} request was successfully completed."
@@ -369,9 +346,7 @@ class FortiNDRCloudConnector(BaseConnector):
         if response is not None:
             action_result.add_data(response)
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, f"{request} request successfully handled."
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, f"{request} request successfully handled.")
 
     def _send_to_splunk(self, detections: list):
         c = 0
@@ -404,8 +379,7 @@ class FortiNDRCloudConnector(BaseConnector):
                 if af > 0:
                     em += f" {af} of them, where published without artifacts. The rest were not published at all."
                 self.logger.error(em)
-            self.logger.debug(
-                f"[{c} of {len(detections)}] containers successfully published.")
+            self.logger.debug(f"[{c} of {len(detections)}] containers successfully published.")
         return c
 
     def _handle_test_connectivity(self, param):
@@ -418,28 +392,19 @@ class FortiNDRCloudConnector(BaseConnector):
 
         response = None
         exception = None
-        request_summary = {
-            "status": "",
-            "error": "",
-            "info": ""
-        }
+        request_summary = {"status": "", "error": "", "info": ""}
 
         try:
             if self.client:
-                self.save_progress(
-                    f"Sending request to: {EndpointKey.GET_SENSORS.value} endpoint.")
-                _ = self.client.call_endpoint(
-                    endpoint=EndpointKey.GET_SENSORS, args=param)
+                self.save_progress(f"Sending request to: {EndpointKey.GET_SENSORS.value} endpoint.")
+                _ = self.client.call_endpoint(endpoint=EndpointKey.GET_SENSORS, args=param)
                 self.save_progress("Request successfully completed.")
                 request_summary.update({"status": "SUCCESS"})
-                request_summary.update(
-                    {"info": "Connection to the FortiNDR Cloud services successfully stablish."})
+                request_summary.update({"info": "Connection to the FortiNDR Cloud services successfully stablish."})
             else:
-                self.logger.error(
-                    f"{request} request failed. [FncApiClient was not properly created.]")
+                self.logger.error(f"{request} request failed. [FncApiClient was not properly created.]")
                 request_summary.update({"status": "FAILURE"})
-                request_summary.update(
-                    {"error": "FncApiClient was not properly created"})
+                request_summary.update({"error": "FncApiClient was not properly created"})
                 exception = Exception("FncApiClient was not properly created")
         except FncClientError as e:
             self.logger.error(f"{request} request failed. [{str(e)}]")
@@ -449,10 +414,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         result = {"sensors": response}
 
-        summary = {
-            "response_count": 1,
-            "request": request,
-        }
+        summary = {"response_count": 1, "request": request}
 
         self.debug_print("Validating result.")
         return self.validate_request(
@@ -461,7 +423,7 @@ class FortiNDRCloudConnector(BaseConnector):
             exception=exception,
             summary=summary,
             action_result=action_result,
-            request=request,
+            request=request
         )
 
     def _handle_on_poll(self, param):
@@ -501,18 +463,13 @@ class FortiNDRCloudConnector(BaseConnector):
                 h_context.update_history(history=history)
             else:
                 self.logger.info("Initializing the Context")
-                h_context, context = self.client.get_splitted_context(
-                    params)
+                h_context, context = self.client.get_splitted_context(params)
 
             # Pull current detections
             self.logger.info("Polling current detections.")
-            for response in self.client.continuous_polling(
-                context=context, args=params
-            ):
+            for response in self.client.continuous_polling(context=context, args=params):
                 detections = response.get("detections", [])
-                detections = list(
-                    filter(lambda d: (d["account_uuid"] != TRAINING_ACC), detections)
-                )
+                detections = list(filter(lambda d: (d["account_uuid"] != TRAINING_ACC), detections))
 
                 if detections:
                     rcs = self._send_to_splunk(detections=detections)
@@ -522,13 +479,9 @@ class FortiNDRCloudConnector(BaseConnector):
             self.logger.info("Polling historical data.")
 
             params.update({"limit": HISTORY_LIMIT})
-            for response in self.client.poll_history(
-                context=h_context, args=params
-            ):
+            for response in self.client.poll_history(context=h_context, args=params):
                 detections = response.get("detections", [])
-                detections = list(
-                    filter(lambda d: (d["account_uuid"] != TRAINING_ACC), detections)
-                )
+                detections = list(filter(lambda d: (d["account_uuid"] != TRAINING_ACC), detections))
 
                 if detections:
                     rhs = self._send_to_splunk(detections=detections)
@@ -546,22 +499,17 @@ class FortiNDRCloudConnector(BaseConnector):
             self.logger.debug("Updating last history checkpoint.")
             self._state["last_history"] = last_history
 
-            self.logger.info("Last poll checkpoint set at {0}".format(
-                last_poll))
-            self.logger.info("Last history checkpoint set at {0}".format(
-                last_history))
+            self.logger.info("Last poll checkpoint set at {0}".format(last_poll))
+            self.logger.info("Last history checkpoint set at {0}".format(last_history))
 
             self.logger.info("Completed processing Detections")
         except FncClientError as e:
-            self.logger.error(
-                "Exception occurred while processing Detections")
+            self.logger.error("Exception occurred while processing Detections")
             self.logger.error(f"[{str(e)}]")
             self.error_print(f"Unable to retrieve detections. [{str(e)}]")
             return RetVal(action_result.set_status(phantom.APP_ERROR, str(e)), None)
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, f"Created {rcs + rhs} containers"
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, f"Created {rcs + rhs} containers")
 
     def _handle_fnc_endpoint(self, endpoint: EndpointKey, param: dict):
         self.logger.info(f"Handling {endpoint.value} Request.")
@@ -572,31 +520,21 @@ class FortiNDRCloudConnector(BaseConnector):
 
         response = None
         exception = None
-        request_summary = {
-            "status": "",
-            "error": "",
-            "info": ""
-        }
+        request_summary = {"status": "", "error": "", "info": ""}
 
         try:
-            response = self.client.call_endpoint(
-                endpoint=endpoint, args=param)
+            response = self.client.call_endpoint(endpoint=endpoint, args=param)
 
             self.logger.info(f"{endpoint.value} successfully completed.")
             request_summary.update({"status": "SUCCESS"})
-            request_summary.update(
-                {"info": f"{len(response)} items retrieved."})
+            request_summary.update({"info": f"{len(response)} items retrieved."})
         except FncClientError as e:
             self.logger.error(f"{endpoint.value} Request Failed. [{str(e)}]")
             request_summary.update({"status": "FAILURE"})
             request_summary.update({"error": str(e)})
             exception = e
 
-        return {
-            "response": response,
-            "request_summary": request_summary,
-            "exception": exception
-        }
+        return {"response": response, "request_summary": request_summary, "exception": exception}
 
     #  Actions for Sensors API
 
