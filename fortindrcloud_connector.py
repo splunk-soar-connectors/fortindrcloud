@@ -418,12 +418,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         self.debug_print("Validating result.")
         return self.validate_request(
-            response=result,
-            request_summary=request_summary,
-            exception=exception,
-            summary=summary,
-            action_result=action_result,
-            request=request
+            response=result, request_summary=request_summary, exception=exception, summary=summary, action_result=action_result, request=request
         )
 
     def _handle_on_poll(self, param):
