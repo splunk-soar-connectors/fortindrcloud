@@ -6,7 +6,7 @@ Connector Version: 1.1.0
 Product Vendor: Fortinet Inc.  
 Product Name: FortiNDR Cloud  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 6.1.1  
+Minimum Product Version: 6.2.1  
 
 This app allows the use of the information provided by the FortiNDR Cloud Service to perform containment and investigative actions on Splunk SOAR
 
@@ -31,10 +31,10 @@ The below configuration variables are required for this Connector to operate.  T
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
 **api_key** |  required  | password | API Token to connect to FortiNDR Cloud RESTful APIs
-**domain** |  optional  | password | API Domain where to direct any call to FortiNDR Cloud RESTful APIs. By default request are sent to "icebrg.io"
-**first_poll** |  optional  | string | This define if historical data is required. It could be relative (‘1 day’) or explicit (‘2024-08-01T00:00:00.000000Z’). By default, no historical data is retrieved.
+**domain** |  optional  | string | Domain to where direct any API request.
+**first_poll** |  optional  | string | First Poll (<number> <time unit>, e.g., 12 hours, 7 days)
 **muted** |  optional  | boolean | Set to true to include muted detections. Default to false
-**polling_delay** |  optional  | numeric | Polling delay (in minute). This is required to allow time for the detections to be processed by the FortiNDR Cloud service before polling them. (Default 10 minutes)
+**polling_delay** |  optional  | numeric | Polling delay in minute. This is required to allow time for the detections to be added before polling them
 **muted_rule** |  optional  | boolean | Set to true to include muted rules. Default to false
 **account_uuid** |  optional  | string | Account UUID to filter retrieved detections
 **muted_device** |  optional  | boolean | Set to true to include muted devices. Default to false
@@ -780,7 +780,7 @@ action_result.data.\*.detection_events.\*.event_type | string |  |   dns
 action_result.data.\*.detection_events.\*.sensor_id | string |  |   sen1 
 action_result.data.\*.detection_events.\*.customer_id | string |  |   gig 
 action_result.data.\*.detection_events.\*.timestamp | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.detection_events.\*.host_domain | string |  |  
+action_result.data.\*.ruldetection_eventse_events.\*.host_domain | string |  |  
 action_result.data.\*.detection_events.\*.src_ip | string |  |   8.8.8.8 
 action_result.data.\*.detection_events.\*.src_port | numeric |  |   53 
 action_result.data.\*.detection_events.\*.dst_ip | string |  |   9.9.9.9 
