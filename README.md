@@ -2,7 +2,7 @@
 # FortiNDRCloud
 
 Publisher: Fortinet Inc.  
-Connector Version: 1.0.3  
+Connector Version: 1.1.0  
 Product Vendor: Fortinet Inc.  
 Product Name: FortiNDR Cloud  
 Product Version Supported (regex): ".\*"  
@@ -31,9 +31,10 @@ The below configuration variables are required for this Connector to operate.  T
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
 **api_key** |  required  | password | API Token to connect to FortiNDR Cloud RESTful APIs
-**first_poll** |  optional  | string | First Poll (<number> <time unit>, e.g., 12 hours, 7 days)
+**domain** |  optional  | password | API Domain where to direct any call to FortiNDR Cloud RESTful APIs. By default request are sent to "icebrg.io"
+**first_poll** |  optional  | string | This define if historical data is required. It could be relative (‘1 day’) or explicit (‘2024-08-01T00:00:00.000000Z’). By default, no historical data is retrieved.
 **muted** |  optional  | boolean | Set to true to include muted detections. Default to false
-**polling_delay** |  optional  | numeric | Polling delay in minute. This is required to allow time for the detections to be added before polling them
+**polling_delay** |  optional  | numeric | Polling delay (in minute). This is required to allow time for the detections to be processed by the FortiNDR Cloud service before polling them. (Default 10 minutes)
 **muted_rule** |  optional  | boolean | Set to true to include muted rules. Default to false
 **account_uuid** |  optional  | string | Account UUID to filter retrieved detections
 **muted_device** |  optional  | boolean | Set to true to include muted devices. Default to false
@@ -241,25 +242,25 @@ action_result.parameter.bpf | string |  |
 action_result.parameter.requested_start_date | string |  |  
 action_result.parameter.requested_end_date | string |  |  
 action_result.parameter.sensor_ids | string |  |  
-action_result.data.\*.tasks.\*.task_uuid | string |  |   32329e78-c51f-4da4-bd56-6bfb35d84a9c 
-action_result.data.\*.tasks.\*.name | string |  |   Meh-Ike phone 10001 
-action_result.data.\*.tasks.\*.description | string |  |  
-action_result.data.\*.tasks.\*.status | string |  |   inactive 
-action_result.data.\*.tasks.\*.account_code | string |  |   gig 
-action_result.data.\*.tasks.\*.sensor_ids | string |  |   ["sen1"] 
-action_result.data.\*.tasks.\*.bpf | string |  |   src host x.x.x.x and dst port 10001 
-action_result.data.\*.tasks.\*.created | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.tasks.\*.created_uuid | string |  |   32329e78-c51f-4da4-bd56-6bfb35d84a9c 
-action_result.data.\*.tasks.\*.created_email | string |  |   test@test.com 
-action_result.data.\*.tasks.\*.updated | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.tasks.\*.updated_uuid | string |  |   32329e78-c51f-4da4-bd56-6bfb35d84a9c 
-action_result.data.\*.tasks.\*.updated_email | string |  |   test@test.com 
-action_result.data.\*.tasks.\*.requested_start_time | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.tasks.\*.actual_start_time | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.tasks.\*.requested_end_time | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.tasks.\*.actual_end_time | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.tasks.\*.has_files | boolean |  |   True  False 
-action_result.data.\*.tasks.\*.files | string |  |    
+action_result.data.\*.task.task_uuid | string |  |   32329e78-c51f-4da4-bd56-6bfb35d84a9c 
+action_result.data.\*.task.name | string |  |   Meh-Ike phone 10001 
+action_result.data.\*.task.description | string |  |  
+action_result.data.\*.task.status | string |  |   inactive 
+action_result.data.\*.task.account_code | string |  |   gig 
+action_result.data.\*.task.sensor_ids | string |  |   ["sen1"] 
+action_result.data.\*.task.bpf | string |  |   src host x.x.x.x and dst port 10001 
+action_result.data.\*.task.created | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.task.created_uuid | string |  |   32329e78-c51f-4da4-bd56-6bfb35d84a9c 
+action_result.data.\*.task.created_email | string |  |   test@test.com 
+action_result.data.\*.task.updated | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.task.updated_uuid | string |  |   32329e78-c51f-4da4-bd56-6bfb35d84a9c 
+action_result.data.\*.task.updated_email | string |  |   test@test.com 
+action_result.data.\*.task.requested_start_time | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.task.actual_start_time | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.task.requested_end_time | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.task.actual_end_time | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.task.has_files | boolean |  |   True  False 
+action_result.data.\*.task.files | string |  |    
 
 ## action: 'get telemetry events'
 Get event telemetry data grouped by time
@@ -656,30 +657,30 @@ action_result.parameter.sort_by | string |  |
 action_result.parameter.sort_order | string |  |  
 action_result.parameter.offset | string |  |  
 action_result.parameter.limit | string |  |  
-action_result.data.\*.detection_rules.\*.uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
-action_result.data.\*.detection_rules.\*.account_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
-action_result.data.\*.detection_rules.\*.name | string |  |   AR T1595 
-action_result.data.\*.detection_rules.\*.category | string |  |   Attack:Infection Vector 
-action_result.data.\*.detection_rules.\*.description | string |  |  
-action_result.data.\*.detection_rules.\*.severity | string |  |   high  moderate  low 
-action_result.data.\*.detection_rules.\*.confidence | string |  |   high  moderate  low 
-action_result.data.\*.detection_rules.\*.auto_resolution_minutes | numeric |  |   10080 
-action_result.data.\*.detection_rules.\*.enabled | boolean |  |   True  False 
-action_result.data.\*.detection_rules.\*.query_signature | string |  |   ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns' 
-action_result.data.\*.detection_rules.\*.created | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.detection_rules.\*.created_user_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
-action_result.data.\*.detection_rules.\*.updated | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.detection_rules.\*.updated_user_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
-action_result.data.\*.detection_rules.\*.shared_account_uuids | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
-action_result.data.\*.detection_rules.\*.run_account_uuids | string |  |   ["55f39b72-2622-4137-9051-bc2ff364f059"] 
-action_result.data.\*.detection_rules.\*.rule_accounts | string |  |  
-action_result.data.\*.rule.critical_updated | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.rule.primary_attack_id | string |  |  
-action_result.data.\*.rule.secondary_attack_id | string |  |  
-action_result.data.\*.rule.specificity | string |  |  
-action_result.data.\*.rule.device_ip_fields | string |  |   DEFAULT 
-action_result.data.\*.rule.indicator_fields | string |  |   src.ip 
-action_result.data.\*.rule.source_excludes | string |  |   Zscaler   
+action_result.data.\*.rules.\*.uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
+action_result.data.\*.rules.\*.account_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
+action_result.data.\*.rules.\*.name | string |  |   AR T1595 
+action_result.data.\*.rules.\*.category | string |  |   Attack:Infection Vector 
+action_result.data.\*.rules.\*.description | string |  |  
+action_result.data.\*.rules.\*.severity | string |  |   high  moderate  low 
+action_result.data.\*.rules.\*.confidence | string |  |   high  moderate  low 
+action_result.data.\*.rules.\*.auto_resolution_minutes | numeric |  |   10080 
+action_result.data.\*.rules.\*.enabled | boolean |  |   True  False 
+action_result.data.\*.rules.\*.query_signature | string |  |   ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns' 
+action_result.data.\*.rules.\*.created | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.rules.\*.created_user_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
+action_result.data.\*.rules.\*.updated | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.rules.\*.updated_user_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
+action_result.data.\*.rules.\*.shared_account_uuids | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
+action_result.data.\*.rules.\*.run_account_uuids | string |  |   ["55f39b72-2622-4137-9051-bc2ff364f059"] 
+action_result.data.\*.rules.\*.rule_accounts | string |  |  
+action_result.data.\*.rules.\*.critical_updated | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.rules.\*.primary_attack_id | string |  |  
+action_result.data.\*.rules.\*.secondary_attack_id | string |  |  
+action_result.data.\*.rules.\*.specificity | string |  |  
+action_result.data.\*.rules.\*.device_ip_fields | string |  |   DEFAULT 
+action_result.data.\*.rules.\*.indicator_fields | string |  |   src.ip 
+action_result.data.\*.rules.\*.source_excludes | string |  |   Zscaler   
 
 ## action: 'resolve detection'
 Resolve a specific detection
@@ -774,17 +775,17 @@ action_result.parameter.offset | string |  |
 action_result.parameter.limit | string |  |  
 action_result.data.\*.detection_events.\*.detection_uuid | string |  |   a7015381-0484-11ee-a43f-067ff9e63f5b 
 action_result.data.\*.detection_events.\*.rule_uuid | string |  |   a7015381-0484-11ee-a43f-067ff9e63f5b 
-action_result.data.\*.rule_events.\*.uuid | string |  |   a7015381-0484-11ee-a43f-067ff9e63f5b 
-action_result.data.\*.rule_events.\*.event_type | string |  |   dns 
-action_result.data.\*.rule_events.\*.sensor_id | string |  |   sen1 
-action_result.data.\*.rule_events.\*.customer_id | string |  |   gig 
-action_result.data.\*.rule_events.\*.timestamp | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.rule_events.\*.host_domain | string |  |  
-action_result.data.\*.rule_events.\*.src_ip | string |  |   8.8.8.8 
-action_result.data.\*.rule_events.\*.src_port | numeric |  |   53 
-action_result.data.\*.rule_events.\*.dst_ip | string |  |   9.9.9.9 
-action_result.data.\*.rule_events.\*.dst_port | numeric |  |   32 
-action_result.data.\*.rule_events.\*.flow_id | string |  |   Cpv6xc2a3gA6fA8WE   
+action_result.data.\*.detection_events.\*.uuid | string |  |   a7015381-0484-11ee-a43f-067ff9e63f5b 
+action_result.data.\*.detection_events.\*.event_type | string |  |   dns 
+action_result.data.\*.detection_events.\*.sensor_id | string |  |   sen1 
+action_result.data.\*.detection_events.\*.customer_id | string |  |   gig 
+action_result.data.\*.detection_events.\*.timestamp | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.detection_events.\*.host_domain | string |  |  
+action_result.data.\*.detection_events.\*.src_ip | string |  |   8.8.8.8 
+action_result.data.\*.detection_events.\*.src_port | numeric |  |   53 
+action_result.data.\*.detection_events.\*.dst_ip | string |  |   9.9.9.9 
+action_result.data.\*.detection_events.\*.dst_port | numeric |  |   32 
+action_result.data.\*.detection_events.\*.flow_id | string |  |   Cpv6xc2a3gA6fA8WE   
 
 ## action: 'create detection rule'
 Create a new detection rule
@@ -833,23 +834,23 @@ action_result.parameter.device_ip_fields | string |  |
 action_result.parameter.indicator_fields | string |  |  
 action_result.parameter.run_account_uuids | string |  |  
 action_result.parameter.auto_resolution_minutes | string |  |  
-action_result.data.\*.detection_rules.\*.uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
-action_result.data.\*.detection_rules.\*.account_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
-action_result.data.\*.detection_rules.\*.name | string |  |   AR T1595 
-action_result.data.\*.detection_rules.\*.category | string |  |   Attack:Infection Vector 
-action_result.data.\*.detection_rules.\*.description | string |  |  
-action_result.data.\*.detection_rules.\*.severity | string |  |   high  moderate  low 
-action_result.data.\*.detection_rules.\*.confidence | string |  |   high  moderate  low 
-action_result.data.\*.detection_rules.\*.auto_resolution_minutes | numeric |  |   10080 
-action_result.data.\*.detection_rules.\*.enabled | boolean |  |   True  False 
-action_result.data.\*.detection_rules.\*.query_signature | string |  |   ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns' 
-action_result.data.\*.detection_rules.\*.created | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.detection_rules.\*.created_user_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
-action_result.data.\*.detection_rules.\*.updated | string |  |   2019-01-30T00:00:00.000Z 
-action_result.data.\*.detection_rules.\*.updated_user_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
-action_result.data.\*.detection_rules.\*.shared_account_uuids | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
-action_result.data.\*.detection_rules.\*.run_account_uuids | string |  |   ["55f39b72-2622-4137-9051-bc2ff364f059"] 
-action_result.data.\*.detection_rules.\*.rule_accounts | string |  |  
+action_result.data.\*.rule.uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
+action_result.data.\*.rule.account_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
+action_result.data.\*.rule.name | string |  |   AR T1595 
+action_result.data.\*.rule.category | string |  |   Attack:Infection Vector 
+action_result.data.\*.rule.description | string |  |  
+action_result.data.\*.rule.severity | string |  |   high  moderate  low 
+action_result.data.\*.rule.confidence | string |  |   high  moderate  low 
+action_result.data.\*.rule.auto_resolution_minutes | numeric |  |   10080 
+action_result.data.\*.rule.enabled | boolean |  |   True  False 
+action_result.data.\*.rule.query_signature | string |  |   ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns' 
+action_result.data.\*.rule.created | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.rule.created_user_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
+action_result.data.\*.rule.updated | string |  |   2019-01-30T00:00:00.000Z 
+action_result.data.\*.rule.updated_user_uuid | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
+action_result.data.\*.rule.shared_account_uuids | string |  |   55f39b72-2622-4137-9051-bc2ff364f059 
+action_result.data.\*.rule.run_account_uuids | string |  |   ["55f39b72-2622-4137-9051-bc2ff364f059"] 
+action_result.data.\*.rule.rule_accounts | string |  |  
 action_result.data.\*.rule.critical_updated | string |  |   2019-01-30T00:00:00.000Z 
 action_result.data.\*.rule.primary_attack_id | string |  |  
 action_result.data.\*.rule.secondary_attack_id | string |  |  

@@ -13,11 +13,7 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-USER_AGENT = "SplunkSOAR_FortiNDR.v1.0.2"
+INTEGRATION_NAME = "Fnc_SplunkSOAR_v1.1.0"
 
 TRAINING_ACC = "f6f6f836-8bcd-4f5d-bd61-68d303c4f634"
-MAX_DETECTIONS = 10000
-DEFAULT_LIMIT = 100
-DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
-DEFAULT_POLLING_DELAY = 10
-DEFAULT_FIRST_POLL = "7 days"
+HISTORY_LIMIT = 500
