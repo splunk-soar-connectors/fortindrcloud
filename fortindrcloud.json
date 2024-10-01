@@ -16,11 +16,11 @@
         }
     ],
     "license": "Copyright (c) 2018-2023 Fortinet Inc.",
-    "app_version": "1.0.2",
-    "utctime_updated": "2023-05-12T16:47:48.154912Z",
+    "app_version": "1.1.0",
+    "utctime_updated": "2024-01-24T15:25:34.000000Z",
     "package_name": "phantom_fortindrcloud",
     "main_module": "fortindrcloud_connector.py",
-    "min_phantom_version": "6.1.1",
+    "min_phantom_version": "6.2.1",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "api_key": {
@@ -30,15 +30,18 @@
             "description": "API Token to connect to FortiNDR Cloud RESTful APIs",
             "order": 0
         },
-        "ph": {
-            "data_type": "ph",
+        "domain": {
+            "name": "domain",
+            "data_type": "string",
+            "required": false,
+            "default": "icebrg.io",
+            "description": "Domain to where direct any API request.",
             "order": 1
         },
         "first_poll": {
             "data_type": "string",
             "order": 2,
             "description": "First Poll (<number> <time unit>, e.g., 12 hours, 7 days)",
-            "default": "7 days",
             "name": "first_poll"
         },
         "muted": {
@@ -823,7 +826,7 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.task_uuid",
+                    "data_path": "action_result.data.*.task.task_uuid",
                     "data_type": "string",
                     "example_values": [
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
@@ -832,7 +835,7 @@
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.name",
+                    "data_path": "action_result.data.*.task.name",
                     "data_type": "string",
                     "example_values": [
                         "Meh-Ike phone 10001"
@@ -841,13 +844,13 @@
                     "column_order": 1
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.description",
+                    "data_path": "action_result.data.*.task.description",
                     "data_type": "string",
                     "column_name": "Description",
                     "column_order": 2
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.status",
+                    "data_path": "action_result.data.*.task.status",
                     "data_type": "string",
                     "example_values": [
                         "inactive"
@@ -856,7 +859,7 @@
                     "column_order": 3
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.account_code",
+                    "data_path": "action_result.data.*.task.account_code",
                     "data_type": "string",
                     "example_values": [
                         "gig"
@@ -865,7 +868,7 @@
                     "column_order": 4
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.sensor_ids",
+                    "data_path": "action_result.data.*.task.sensor_ids",
                     "data_type": "string",
                     "example_values": [
                         "[\"sen1\"]"
@@ -874,7 +877,7 @@
                     "column_order": 5
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.bpf",
+                    "data_path": "action_result.data.*.task.bpf",
                     "data_type": "string",
                     "example_values": [
                         "src host x.x.x.x and dst port 10001"
@@ -883,7 +886,7 @@
                     "column_order": 6
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.created",
+                    "data_path": "action_result.data.*.task.created",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -892,7 +895,7 @@
                     "column_order": 7
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.created_uuid",
+                    "data_path": "action_result.data.*.task.created_uuid",
                     "data_type": "string",
                     "example_values": [
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
@@ -901,7 +904,7 @@
                     "column_order": 8
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.created_email",
+                    "data_path": "action_result.data.*.task.created_email",
                     "data_type": "string",
                     "example_values": [
                         "test@test.com"
@@ -910,7 +913,7 @@
                     "column_order": 9
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.updated",
+                    "data_path": "action_result.data.*.task.updated",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -919,7 +922,7 @@
                     "column_order": 10
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.updated_uuid",
+                    "data_path": "action_result.data.*.task.updated_uuid",
                     "data_type": "string",
                     "example_values": [
                         "32329e78-c51f-4da4-bd56-6bfb35d84a9c"
@@ -928,7 +931,7 @@
                     "column_order": 11
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.updated_email",
+                    "data_path": "action_result.data.*.task.updated_email",
                     "data_type": "string",
                     "column_name": "Updated Email",
                     "column_order": 12,
@@ -937,7 +940,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.requested_start_time",
+                    "data_path": "action_result.data.*.task.requested_start_time",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -946,7 +949,7 @@
                     "column_order": 13
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.actual_start_time",
+                    "data_path": "action_result.data.*.task.actual_start_time",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -955,7 +958,7 @@
                     "column_order": 14
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.requested_end_time",
+                    "data_path": "action_result.data.*.task.requested_end_time",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -964,7 +967,7 @@
                     "column_order": 15
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.actual_end_time",
+                    "data_path": "action_result.data.*.task.actual_end_time",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -973,7 +976,7 @@
                     "column_order": 16
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.has_files",
+                    "data_path": "action_result.data.*.task.has_files",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -983,7 +986,7 @@
                     "column_order": 17
                 },
                 {
-                    "data_path": "action_result.data.*.tasks.*.files",
+                    "data_path": "action_result.data.*.task.files",
                     "data_type": "string",
                     "column_name": "Files",
                     "column_order": 18
@@ -2888,7 +2891,7 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.uuid",
+                    "data_path": "action_result.data.*.rules.*.uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -2897,7 +2900,7 @@
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.account_uuid",
+                    "data_path": "action_result.data.*.rules.*.account_uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -2906,7 +2909,7 @@
                     "column_order": 1
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.name",
+                    "data_path": "action_result.data.*.rules.*.name",
                     "data_type": "string",
                     "example_values": [
                         "AR T1595"
@@ -2915,7 +2918,7 @@
                     "column_order": 2
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.category",
+                    "data_path": "action_result.data.*.rules.*.category",
                     "data_type": "string",
                     "example_values": [
                         "Attack:Infection Vector"
@@ -2924,13 +2927,13 @@
                     "column_order": 3
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.description",
+                    "data_path": "action_result.data.*.rules.*.description",
                     "data_type": "string",
                     "column_name": "Description",
                     "column_order": 4
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.severity",
+                    "data_path": "action_result.data.*.rules.*.severity",
                     "data_type": "string",
                     "example_values": [
                         "high",
@@ -2941,7 +2944,7 @@
                     "column_order": 5
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.confidence",
+                    "data_path": "action_result.data.*.rules.*.confidence",
                     "data_type": "string",
                     "example_values": [
                         "high",
@@ -2952,7 +2955,7 @@
                     "column_order": 6
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.auto_resolution_minutes",
+                    "data_path": "action_result.data.*.rules.*.auto_resolution_minutes",
                     "data_type": "numeric",
                     "example_values": [
                         10080
@@ -2961,7 +2964,7 @@
                     "column_order": 7
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.enabled",
+                    "data_path": "action_result.data.*.rules.*.enabled",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -2971,7 +2974,7 @@
                     "column_order": 8
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.query_signature",
+                    "data_path": "action_result.data.*.rules.*.query_signature",
                     "data_type": "string",
                     "example_values": [
                         "ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns'"
@@ -2980,7 +2983,7 @@
                     "column_order": 9
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.created",
+                    "data_path": "action_result.data.*.rules.*.created",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -2989,7 +2992,7 @@
                     "column_order": 10
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.created_user_uuid",
+                    "data_path": "action_result.data.*.rules.*.created_user_uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -2998,7 +3001,7 @@
                     "column_order": 11
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.updated",
+                    "data_path": "action_result.data.*.rules.*.updated",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -3007,7 +3010,7 @@
                     "column_order": 12
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.updated_user_uuid",
+                    "data_path": "action_result.data.*.rules.*.updated_user_uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3016,7 +3019,7 @@
                     "column_order": 13
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.shared_account_uuids",
+                    "data_path": "action_result.data.*.rules.*.shared_account_uuids",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3025,7 +3028,7 @@
                     "column_order": 14
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.run_account_uuids",
+                    "data_path": "action_result.data.*.rules.*.run_account_uuids",
                     "data_type": "string",
                     "example_values": [
                         "[\"55f39b72-2622-4137-9051-bc2ff364f059\"]"
@@ -3034,13 +3037,13 @@
                     "column_order": 15
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.rule_accounts",
+                    "data_path": "action_result.data.*.rules.*.rule_accounts",
                     "data_type": "string",
                     "column_name": "Rule Accounts",
                     "column_order": 16
                 },
                 {
-                    "data_path": "action_result.data.*.rule.critical_updated",
+                    "data_path": "action_result.data.*.rules.*.critical_updated",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -3049,25 +3052,25 @@
                     "column_order": 17
                 },
                 {
-                    "data_path": "action_result.data.*.rule.primary_attack_id",
+                    "data_path": "action_result.data.*.rules.*.primary_attack_id",
                     "data_type": "string",
                     "column_name": "Primary Attack ID",
                     "column_order": 18
                 },
                 {
-                    "data_path": "action_result.data.*.rule.secondary_attack_id",
+                    "data_path": "action_result.data.*.rules.*.secondary_attack_id",
                     "data_type": "string",
                     "column_name": "Secondary Attack ID",
                     "column_order": 19
                 },
                 {
-                    "data_path": "action_result.data.*.rule.specificity",
+                    "data_path": "action_result.data.*.rules.*.specificity",
                     "data_type": "string",
                     "column_name": "Specificity",
                     "column_order": 20
                 },
                 {
-                    "data_path": "action_result.data.*.rule.device_ip_fields",
+                    "data_path": "action_result.data.*.rules.*.device_ip_fields",
                     "data_type": "string",
                     "example_values": [
                         "DEFAULT"
@@ -3076,7 +3079,7 @@
                     "column_order": 21
                 },
                 {
-                    "data_path": "action_result.data.*.rule.indicator_fields",
+                    "data_path": "action_result.data.*.rules.*.indicator_fields",
                     "data_type": "string",
                     "example_values": [
                         "src.ip"
@@ -3085,7 +3088,7 @@
                     "column_order": 22
                 },
                 {
-                    "data_path": "action_result.data.*.rule.source_excludes",
+                    "data_path": "action_result.data.*.rules.*.source_excludes",
                     "data_type": "string",
                     "example_values": [
                         "Zscaler"
@@ -3476,7 +3479,7 @@
                     "column_order": 1
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.uuid",
+                    "data_path": "action_result.data.*.detection_events.*.uuid",
                     "data_type": "string",
                     "example_values": [
                         "a7015381-0484-11ee-a43f-067ff9e63f5b"
@@ -3485,7 +3488,7 @@
                     "column_order": 2
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.event_type",
+                    "data_path": "action_result.data.*.detection_events.*.event_type",
                     "data_type": "string",
                     "example_values": [
                         "dns"
@@ -3494,7 +3497,7 @@
                     "column_order": 3
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.sensor_id",
+                    "data_path": "action_result.data.*.detection_events.*.sensor_id",
                     "data_type": "string",
                     "example_values": [
                         "sen1"
@@ -3503,7 +3506,7 @@
                     "column_order": 4
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.customer_id",
+                    "data_path": "action_result.data.*.detection_events.*.customer_id",
                     "data_type": "string",
                     "example_values": [
                         "gig"
@@ -3512,7 +3515,7 @@
                     "column_order": 5
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.timestamp",
+                    "data_path": "action_result.data.*.detection_events.*.timestamp",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -3521,13 +3524,13 @@
                     "column_order": 6
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.host_domain",
+                    "data_path": "action_result.data.*.ruldetection_eventse_events.*.host_domain",
                     "data_type": "string",
                     "column_name": "Host Domain",
                     "column_order": 7
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.src_ip",
+                    "data_path": "action_result.data.*.detection_events.*.src_ip",
                     "data_type": "string",
                     "example_values": [
                         "8.8.8.8"
@@ -3536,7 +3539,7 @@
                     "column_order": 8
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.src_port",
+                    "data_path": "action_result.data.*.detection_events.*.src_port",
                     "data_type": "numeric",
                     "example_values": [
                         53
@@ -3545,7 +3548,7 @@
                     "column_order": 9
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.dst_ip",
+                    "data_path": "action_result.data.*.detection_events.*.dst_ip",
                     "data_type": "string",
                     "example_values": [
                         "9.9.9.9"
@@ -3554,7 +3557,7 @@
                     "column_order": 10
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.dst_port",
+                    "data_path": "action_result.data.*.detection_events.*.dst_port",
                     "data_type": "numeric",
                     "example_values": [
                         32
@@ -3563,7 +3566,7 @@
                     "column_order": 11
                 },
                 {
-                    "data_path": "action_result.data.*.rule_events.*.flow_id",
+                    "data_path": "action_result.data.*.detection_events.*.flow_id",
                     "data_type": "string",
                     "example_values": [
                         "Cpv6xc2a3gA6fA8WE"
@@ -3790,7 +3793,7 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.uuid",
+                    "data_path": "action_result.data.*.rule.uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3799,7 +3802,7 @@
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.account_uuid",
+                    "data_path": "action_result.data.*.rule.account_uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3808,7 +3811,7 @@
                     "column_order": 1
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.name",
+                    "data_path": "action_result.data.*.rule.name",
                     "data_type": "string",
                     "example_values": [
                         "AR T1595"
@@ -3817,7 +3820,7 @@
                     "column_order": 2
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.category",
+                    "data_path": "action_result.data.*.rule.category",
                     "data_type": "string",
                     "example_values": [
                         "Attack:Infection Vector"
@@ -3826,13 +3829,13 @@
                     "column_order": 3
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.description",
+                    "data_path": "action_result.data.*.rule.description",
                     "data_type": "string",
                     "column_name": "Description",
                     "column_order": 4
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.severity",
+                    "data_path": "action_result.data.*.rule.severity",
                     "data_type": "string",
                     "example_values": [
                         "high",
@@ -3843,7 +3846,7 @@
                     "column_order": 5
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.confidence",
+                    "data_path": "action_result.data.*.rule.confidence",
                     "data_type": "string",
                     "example_values": [
                         "high",
@@ -3854,7 +3857,7 @@
                     "column_order": 6
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.auto_resolution_minutes",
+                    "data_path": "action_result.data.*.rule.auto_resolution_minutes",
                     "data_type": "numeric",
                     "example_values": [
                         10080
@@ -3863,7 +3866,7 @@
                     "column_order": 7
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.enabled",
+                    "data_path": "action_result.data.*.rule.enabled",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -3873,7 +3876,7 @@
                     "column_order": 8
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.query_signature",
+                    "data_path": "action_result.data.*.rule.query_signature",
                     "data_type": "string",
                     "example_values": [
                         "ip IN ('1.1.1.1','2.2.2.2') AND event_type = 'dns'"
@@ -3882,7 +3885,7 @@
                     "column_order": 9
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.created",
+                    "data_path": "action_result.data.*.rule.created",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -3891,7 +3894,7 @@
                     "column_order": 10
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.created_user_uuid",
+                    "data_path": "action_result.data.*.rule.created_user_uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3900,7 +3903,7 @@
                     "column_order": 11
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.updated",
+                    "data_path": "action_result.data.*.rule.updated",
                     "data_type": "string",
                     "example_values": [
                         "2019-01-30T00:00:00.000Z"
@@ -3909,7 +3912,7 @@
                     "column_order": 12
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.updated_user_uuid",
+                    "data_path": "action_result.data.*.rule.updated_user_uuid",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3918,7 +3921,7 @@
                     "column_order": 13
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.shared_account_uuids",
+                    "data_path": "action_result.data.*.rule.shared_account_uuids",
                     "data_type": "string",
                     "example_values": [
                         "55f39b72-2622-4137-9051-bc2ff364f059"
@@ -3927,7 +3930,7 @@
                     "column_order": 14
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.run_account_uuids",
+                    "data_path": "action_result.data.*.rule.run_account_uuids",
                     "data_type": "string",
                     "example_values": [
                         "[\"55f39b72-2622-4137-9051-bc2ff364f059\"]"
@@ -3936,7 +3939,7 @@
                     "column_order": 15
                 },
                 {
-                    "data_path": "action_result.data.*.detection_rules.*.rule_accounts",
+                    "data_path": "action_result.data.*.rule.rule_accounts",
                     "data_type": "string",
                     "column_name": "Rule Accounts",
                     "column_order": 16
@@ -4012,11 +4015,11 @@
             },
             {
                 "module": "pytz",
-                "input_file": "wheels/shared/pytz-2021.1-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/pytz-2024.1-py2.py3-none-any.whl"
             },
             {
                 "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.3.2.post1-py3-none-any.whl"
+                "input_file": "wheels/py3/soupsieve-2.5-py3-none-any.whl"
             }
         ]
     },
@@ -4032,7 +4035,7 @@
             },
             {
                 "module": "dateparser",
-                "input_file": "wheels/shared/dateparser-1.1.8-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/dateparser-1.2.0-py2.py3-none-any.whl"
             },
             {
                 "module": "python_dateutil",
@@ -4040,7 +4043,7 @@
             },
             {
                 "module": "pytz",
-                "input_file": "wheels/shared/pytz-2021.1-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/pytz-2024.1-py2.py3-none-any.whl"
             },
             {
                 "module": "regex",
@@ -4055,8 +4058,28 @@
                 "input_file": "wheels/py3/soupsieve-2.5-py3-none-any.whl"
             },
             {
+                "module": "jmespath",
+                "input_file": "wheels/shared/jmespath-1.0.1-py3-none-any.whl"
+            },
+            {
                 "module": "tzlocal",
-                "input_file": "wheels/py3/tzlocal-5.1-py3-none-any.whl"
+                "input_file": "wheels/py3/tzlocal-5.2-py3-none-any.whl"
+            },
+            {
+                "module": "botocore",
+                "input_file": "wheels/shared/botocore-1.35.10-py3-none-any.whl"
+            },
+            {
+                "module": "s3transfer",
+                "input_file": "wheels/shared/s3transfer-0.10.2-py3-none-any.whl"
+            },
+            {
+                "module": "boto3",
+                "input_file": "wheels/shared/boto3-1.35.10-py3-none-any.whl"
+            },
+            {
+                "module": "fnc",
+                "input_file": "wheels/shared/com.fortinet.fndrc.integrations.python_client-1.0.2-py3-none-any.whl"
             }
         ]
     }
