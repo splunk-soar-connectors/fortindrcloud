@@ -1,6 +1,6 @@
 # File: fortindrcloud_connector.py
 #
-# Copyright (c) 2018-2023 Fortinet Inc.
+# Copyright (c) 2018-2025 Fortinet Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 import collections
 import json
 import sys
-from typing import Dict, List
 
 import phantom.app as phantom
 import requests
@@ -27,6 +26,7 @@ from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
 from fortindrcloud_consts import HISTORY_LIMIT, INTEGRATION_NAME, TRAINING_ACC
+
 
 # Usage of the consts file is recommended
 
@@ -72,7 +72,7 @@ class FortiNDRCloudConnector(BaseConnector):
     def __init__(self):
         self.logger = FncSplunkSOARLogger(connector=self)
 
-        super(FortiNDRCloudConnector, self).__init__()
+        super().__init__()
         self._state = None
         self._python_version = None
         self.client = None
@@ -265,7 +265,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         return artifact
 
-    def _split_multivalue_args(self, args, multiple_values: List = []):
+    def _split_multivalue_args(self, args, multiple_values: list = []):
         """Update the arguments contained in the multiple_values list
         from a comma separated string into a list of string.
         :parm Dict[str, Any] args: Arguments to be processed
@@ -299,7 +299,7 @@ class FortiNDRCloudConnector(BaseConnector):
                 items.append((new_key, v))
         return dict(items)
 
-    def _get_poll_detections_request_params(self) -> Dict:
+    def _get_poll_detections_request_params(self) -> dict:
         self.logger.info("Retrieving params for Detections polling.")
 
         config = self.get_config()
@@ -330,7 +330,7 @@ class FortiNDRCloudConnector(BaseConnector):
 
         if exception is not None:
             em = f"The {request} request failed "
-            em += f"with message: {str(exception)}."
+            em += f"with message: {exception!s}."
 
             self.save_progress(em)
             self.logger.error(em)
@@ -361,7 +361,7 @@ class FortiNDRCloudConnector(BaseConnector):
                 container = self._create_container(d)
                 ret_val, message, cid = self.save_container(container)
                 if phantom.is_fail(ret_val):
-                    em = f'Unable to publish container for detection [{d["uuid"]}]: ({message})'
+                    em = f"Unable to publish container for detection [{d['uuid']}]: ({message})"
                     self.save_progress(em)
                     self.logger.error(em)
                     cf = cf + 1
@@ -369,7 +369,7 @@ class FortiNDRCloudConnector(BaseConnector):
                     artifact = self._create_artifact(cid, d)
                     ret_val, message, aid = self.save_artifacts([artifact])
                     if phantom.is_fail(ret_val):
-                        em = f'Unable to publish artifact for detection [{d["uuid"]}]: ({message})'
+                        em = f"Unable to publish artifact for detection [{d['uuid']}]: ({message})"
                         self.save_progress(em)
                         self.logger.error(em)
                         af = af + 1
@@ -407,7 +407,7 @@ class FortiNDRCloudConnector(BaseConnector):
                 request_summary.update({"error": "FncApiClient was not properly created"})
                 exception = Exception("FncApiClient was not properly created")
         except FncClientError as e:
-            self.logger.error(f"{request} request failed. [{str(e)}]")
+            self.logger.error(f"{request} request failed. [{e!s}]")
             request_summary.update({"status": "FAILURE"})
             request_summary.update({"error": str(e)})
             exception = e
@@ -494,14 +494,14 @@ class FortiNDRCloudConnector(BaseConnector):
             self.logger.debug("Updating last history checkpoint.")
             self._state["last_history"] = last_history
 
-            self.logger.info("Last poll checkpoint set at {0}".format(last_poll))
-            self.logger.info("Last history checkpoint set at {0}".format(last_history))
+            self.logger.info(f"Last poll checkpoint set at {last_poll}")
+            self.logger.info(f"Last history checkpoint set at {last_history}")
 
             self.logger.info("Completed processing Detections")
         except FncClientError as e:
             self.logger.error("Exception occurred while processing Detections")
-            self.logger.error(f"[{str(e)}]")
-            self.error_print(f"Unable to retrieve detections. [{str(e)}]")
+            self.logger.error(f"[{e!s}]")
+            self.error_print(f"Unable to retrieve detections. [{e!s}]")
             return RetVal(action_result.set_status(phantom.APP_ERROR, str(e)), None)
 
         return action_result.set_status(phantom.APP_SUCCESS, f"Created {rcs + rhs} containers")
@@ -524,7 +524,7 @@ class FortiNDRCloudConnector(BaseConnector):
             request_summary.update({"status": "SUCCESS"})
             request_summary.update({"info": f"{len(response)} items retrieved."})
         except FncClientError as e:
-            self.logger.error(f"{endpoint.value} Request Failed. [{str(e)}]")
+            self.logger.error(f"{endpoint.value} Request Failed. [{e!s}]")
             request_summary.update({"status": "FAILURE"})
             request_summary.update({"error": str(e)})
             exception = e
@@ -1090,7 +1090,6 @@ class FortiNDRCloudConnector(BaseConnector):
         )
 
     def handle_action(self, param):
-
         ret_val = phantom.APP_SUCCESS
 
         # Get the action that we are supposed to execute for this App Run
@@ -1158,7 +1157,6 @@ def main():
     verify = args.verify
 
     if username is not None and password is None:
-
         # User specified a username but not a password, so ask
         import getpass
 
@@ -1186,7 +1184,7 @@ def main():
             r2 = requests.post(login_url, verify=verify, data=data, headers=headers)
             session_id = r2.cookies["sessionid"]
         except Exception as e:
-            em = f"Unable to get session id from the platform. Error: {str(e)}"
+            em = f"Unable to get session id from the platform. Error: {e!s}"
             print(em)
             sys.exit(1)
 
