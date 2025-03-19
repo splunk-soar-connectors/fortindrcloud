@@ -15,7 +15,7 @@
             "name": "Eduardo Mesa Barrameda"
         }
     ],
-    "license": "Copyright (c) 2018-2023 Fortinet Inc.",
+    "license": "Copyright (c) 2018-2025 Fortinet Inc.",
     "app_version": "1.1.0",
     "utctime_updated": "2024-01-24T15:25:34.000000Z",
     "package_name": "phantom_fortindrcloud",
@@ -2163,7 +2163,10 @@
                 },
                 {
                     "data_path": "action_result.parameter.hash",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": [
+                        "hash"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.entity_file.entity",
