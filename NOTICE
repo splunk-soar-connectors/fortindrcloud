@@ -1,0 +1,45 @@
+Splunk SOAR FortiNDRCloud
+Copyright (c) 2018-2025 Fortinet Inc.
+
+Third Party Software Attributions:
+
+Name: beautifulsoup4
+Version: 4.9.1
+Author: Leonard Richardson
+License: MIT
+
+Name: dateparser
+Version: 1.2.0
+Author: Scrapinghub
+License: BSD
+
+Name: python-dateutil
+Version: 2.9.0.post0
+Author: Gustavo Niemeyer
+License: Dual License
+
+Name: pytz
+Version: 2024.1
+Author: Stuart Bishop
+License: MIT
+
+Name: regex
+Version: 2023.10.3
+Author: Matthew Barnett
+License: Apache Software License
+
+Name: six
+Version: 1.17.0
+Author: Benjamin Peterson
+License: MIT
+
+Name: soupsieve
+Version: 2.6
+Author: 
+License: 
+
+Name: tzlocal
+Version: 5.3.1
+Author: 
+License: MIT
+
