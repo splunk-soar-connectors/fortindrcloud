@@ -1,7 +1,7 @@
 # FortiNDRCloud
 
 Publisher: Fortinet Inc. \
-Connector Version: 1.1.0 \
+Connector Version: 1.1.1 \
 Product Vendor: Fortinet Inc. \
 Product Name: FortiNDR Cloud \
 Minimum Product Version: 6.2.1

@@ -16,8 +16,8 @@
         }
     ],
     "license": "Copyright (c) 2018-2025 Fortinet Inc.",
-    "app_version": "1.1.0",
-    "utctime_updated": "2024-01-24T15:25:34.000000Z",
+    "app_version": "1.1.1",
+    "utctime_updated": "2025-04-11T19:16:33.694716Z",
     "package_name": "phantom_fortindrcloud",
     "main_module": "fortindrcloud_connector.py",
     "min_phantom_version": "6.2.1",
