@@ -4010,22 +4010,6 @@
             "versions": "EQ(*)"
         }
     ],
-    "pip3_dependencies": {
-        "wheel": [
-            {
-                "module": "beautifulsoup4",
-                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
-            },
-            {
-                "module": "pytz",
-                "input_file": "wheels/shared/pytz-2024.1-py2.py3-none-any.whl"
-            },
-            {
-                "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.5-py3-none-any.whl"
-            }
-        ]
-    },
     "fips_compliant": false,
     "latest_tested_versions": [
         ""
@@ -4033,16 +4017,8 @@
     "pip39_dependencies": {
         "wheel": [
             {
-                "module": "beautifulsoup4",
-                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
-            },
-            {
                 "module": "dateparser",
                 "input_file": "wheels/shared/dateparser-1.2.0-py2.py3-none-any.whl"
-            },
-            {
-                "module": "python_dateutil",
-                "input_file": "wheels/shared/python_dateutil-2.8.2-py2.py3-none-any.whl"
             },
             {
                 "module": "pytz",
@@ -4050,39 +4026,31 @@
             },
             {
                 "module": "regex",
-                "input_file": "wheels/py39/regex-2023.10.3-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
-            },
-            {
-                "module": "six",
-                "input_file": "wheels/shared/six-1.16.0-py2.py3-none-any.whl"
-            },
-            {
-                "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.5-py3-none-any.whl"
-            },
-            {
-                "module": "jmespath",
-                "input_file": "wheels/shared/jmespath-1.0.1-py3-none-any.whl"
+                "input_file": "wheels/py39/regex-2023.10.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "tzlocal",
-                "input_file": "wheels/py3/tzlocal-5.2-py3-none-any.whl"
+                "input_file": "wheels/py3/tzlocal-5.3.1-py3-none-any.whl"
+            }
+        ]
+    },
+    "pip313_dependencies": {
+        "wheel": [
+            {
+                "module": "dateparser",
+                "input_file": "wheels/shared/dateparser-1.2.0-py2.py3-none-any.whl"
             },
             {
-                "module": "botocore",
-                "input_file": "wheels/shared/botocore-1.35.10-py3-none-any.whl"
+                "module": "pytz",
+                "input_file": "wheels/shared/pytz-2024.1-py2.py3-none-any.whl"
             },
             {
-                "module": "s3transfer",
-                "input_file": "wheels/shared/s3transfer-0.10.2-py3-none-any.whl"
+                "module": "regex",
+                "input_file": "wheels/py313/regex-2023.10.3-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
-                "module": "boto3",
-                "input_file": "wheels/shared/boto3-1.35.10-py3-none-any.whl"
-            },
-            {
-                "module": "fnc",
-                "input_file": "wheels/shared/com.fortinet.fndrc.integrations.python_client-1.0.2-py3-none-any.whl"
+                "module": "tzlocal",
+                "input_file": "wheels/py3/tzlocal-5.3.1-py3-none-any.whl"
             }
         ]
     }
